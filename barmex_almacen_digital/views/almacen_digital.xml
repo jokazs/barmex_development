@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- almacen_digital model -->
+        <record id="view_tree_almacen_digital" model="ir.ui.view">
+            <field name="name">view.tree.almacen.digital</field>
+            <field name="model">almacen.digital</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="tipo_de_comprobante == 'E'">
+                    <field name="fecha_comprobante"/>
+                    <field name="name"/>
+                    <field name="serie"/>
+                    <field name="folio"/>
+                    <field name="rfc_emisor"/>
+                    <field name="nombre_emisor"/>
+                    <field name="compra_gasto" />
+                    <!--<field name="compra_gasto"/> falta determinar qué es compra y gasto -->
+                    <field name="impuestos"/>
+                    <field name="total"/>
+                    <field name="moneda"/>
+                    <field name="tipo_de_cambio"/>
+                    <field name="tipo_de_comprobante"/>
+                    <field name="cantidad_pagada"/>
+
+                    <field name="status_folio"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_almacen_digital" model="ir.ui.view">
+            <field name="name">view.form.almacen.digital</field>
+            <field name="model">almacen.digital</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="fecha_comprobante" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="serie" readonly="1"/>
+                            <field name="folio" readonly="1"/>
+                            <field name="rfc_emisor" readonly="1"/>
+                            <field name="nombre_emisor" readonly="1"/>
+                            <field name="moneda" readonly="1"/>
+                            <field name="tipo_de_cambio" readonly="1"/>
+                            <field name="impuestos" readonly="1"/>
+                            <field name="total" readonly="1"/>
+                            <field name="forma_de_pago" readonly="1"/>
+                            <field name="tipo_de_comprobante" readonly="1"/>
+                            <field name="cantidad_pagada" readonly="1"/>
+                            <field name="saldo" readonly="1"/>
+                            <field name="compra_gasto" />
+                            <field name="status_folio" attrs="{'readonly': [('status_folio_check','=', True)]}"/>
+                            <field name="status_folio_check" readonly="1" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="pagos_ad_ids" widget="many2many_tags" readonly="1"/>
+                            
+                        </group>
+                        <group>
+                            <field name="move_ids" widget="many2many_tags" readonly="1"/>
+                            
+                        </group>
+                        <group>
+                            <field name="productos_ids" readonly="1">
+                                <tree>
+                                    <field name="name" readonly="1"/>
+                                    <field name="cantidad" readonly="1"/>
+                                    <field name="precio" readonly="1" sum="Total"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="notas" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_search_almacen_digital" model="ir.ui.view">
+            <field name="name">view.search.almacen.digital</field>
+            <field name="model">almacen.digital</field>
+            <field name="arch" type="xml">
+                <search string="Busqueda">
+                    <field name="fecha_comprobante"/>
+                    <field name="name"/>
+                    <field name="serie"/>
+                    <field name="folio"/>
+                    <field name="rfc_emisor"/>
+                    <field name="nombre_emisor"/>
+                    <field name="moneda"/>
+                    <field name="forma_de_pago"/>
+                    <field name="tipo_de_comprobante"/>
+                    <group expand="0" string="Extended Filters">
+                        <filter string="Factura de Proveedor" name="tipo_de_comprobante" domain="[('tipo_de_comprobante','=','I')]"/>
+                        <filter string="Notas de Crédito" name="tipo_de_comprobante" domain="[('tipo_de_comprobante','=','E')]"/>
+                        <filter string="Traslado" name="tipo_de_comprobante" domain="[('tipo_de_comprobante','=','T')]"/>
+                        <filter string="Pagos" name="tipo_de_comprobante" domain="[('tipo_de_comprobante','=','P')]"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Nombre Emisor" name="nombre_emisor" context="{'group_by':'nombre_emisor'}"/>
+                        <filter string="RFC" name="rfc_emisor" context="{'group_by':'rfc_emisor'}"/>
+                        <filter string="Emisor" name="nombre_emisor" context="{'group_by':'nombre_emisor'}"/>
+                        <filter string="Fecha" name="fecha_comprobante" context="{'group_by':'fecha_comprobante'}"/>
+                        <filter string="Tipo Comprobante" name="tipo_de_comprobante" context="{'group_by':'tipo_de_comprobante'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="action_view_almacen_digital" model="ir.actions.act_window">
+            <field name="name">Folios Fiscales</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">almacen.digital</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_search_almacen_digital"/>
+        </record>
+
+        <!-- save_credentials model -->
+
+        <record id="view_form_credentials" model="ir.ui.view">
+            <field name="name">view.form.credentials</field>
+            <field name="model">credenciales</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="password_fiel" password="True" invisible="0"/>
+                            <field name="cer_fiel_name" readonly="1"/>
+                            <field name="cer_fiel" filename="cer_fiel_name"  attrs="{'invisible': [('datos_enviados', '=', True)]}"/>
+                            <field name="key_fiel_name" readonly="1"/>
+                            <field name="key_fiel" filename="key_fiel_name"  attrs="{'invisible': [('datos_enviados', '=', True)]}"  />
+                            <field name="datos_enviados"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_credenciales" model="ir.actions.act_window">
+            <field name="name">Lista de credenciales</field>
+            <field name="res_model">credenciales</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_form_sincronizacion" model="ir.ui.view">
+            <field name="name">view.form.sincronizacion</field>
+            <field name="model">almacen.digital_sincronizacion</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="api" readonly="1"/>
+                            <field name="fecha_sincronizacion" readonly="1"/>
+                            <field name="status" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_sincronizacion" model="ir.ui.view">
+            <field name="name">view.form.sincronizacion</field>
+            <field name="model">almacen.digital_sincronizacion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="api"/>
+                    <field name="fecha_sincronizacion"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_sincronizacion" model="ir.actions.act_window">
+            <field name="name">Historico de sincronizaciones</field>
+            <field name="res_model">almacen.digital_sincronizacion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- menus -->
+        <menuitem name="Almacen Digital" id="almacen_digital_root" parent="account_accountant.menu_accounting" sequence="25"/>
+        <menuitem name="Almacen Digital" id="almacen_digital_menu" parent="almacen_digital_root" action="action_view_almacen_digital" sequence="90"/>
+        <menuitem name="Credenciales" id="credenciales_ad_menu" parent="almacen_digital_root" action="action_view_credenciales" sequence="91"/>
+        <menuitem name="Historico sincronización Manual" id="sincronizacion_ad_menu" parent="almacen_digital_root" action="action_view_sincronizacion" sequence="195"/>
+    </data>
+</odoo>

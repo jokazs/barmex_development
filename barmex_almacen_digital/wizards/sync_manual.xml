@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="barmex_sync_manual" model="ir.ui.view">
+        <field name="name">Sync Manual</field>
+        <field name="model">barmex.sync_manual</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <button
+                        string="Enviar peticion al SAT para sincronizar"
+                        class="oe_highlight"
+                        name="ejecutar"
+                        type="object"
+                    />
+                    
+                </group>
+
+                <footer>
+                    
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="action_barmex_sync_manual" model="ir.actions.act_window">
+        <field name="name">Sync Manual</field>
+        <field name="res_model">barmex.sync_manual</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Sync Manual" id="sync_manual_menu" parent="almacen_digital_root" action="action_barmex_sync_manual" sequence="190"/>
+
+</odoo>

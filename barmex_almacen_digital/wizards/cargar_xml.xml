@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="barmex_cargar_xml" model="ir.ui.view">
+        <field name="name">Cargar XML</field>
+        <field name="model">barmex.cargar_xml</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+<!--                     <field name="archivo_xml" />
+ -->                    <field name="archivos_xml" widget="many2many_binary" colspan="2" string="Cargar multiples archivos XML SAT" nolabel="1"/>
+
+                    
+                </group>
+
+                <footer>
+                    <button
+                        string="Cargar archivo XML en Almacen Digital"
+                        class="oe_highlight"
+                        name="cargar"
+                        type="object"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="action_barmex_cargar_xml" model="ir.actions.act_window">
+        <field name="name">Cargar XML</field>
+        <field name="res_model">barmex.cargar_xml</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Cargar XML" id="cargar_xml_menu" parent="almacen_digital_root" action="action_barmex_cargar_xml" sequence="190"/>
+
+</odoo>
