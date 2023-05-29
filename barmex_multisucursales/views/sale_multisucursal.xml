@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="barmex_sale_order_form" model="ir.ui.view">
+        <field name="name">barmex_sale_order_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='customer_credit_available']" position="after">
+               <field name="sucursal_credit_available" string="Credito disponible sucursal"/>
+            </xpath>
+        </field>
+         </record>
+
+
+    </data>
+</odoo>
