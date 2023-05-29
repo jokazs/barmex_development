@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--barmex.registroc-->
+        <!--View search-->
+        <record id="barmex_registroc_search" model="ir.ui.view">
+            <field name="name">barmex.registroc.search</field>
+            <field name="model">barmex.registroc</field>
+            <field name="arch" type="xml">
+                <search string="registroc search">
+                    <field name="unidad_id"/>
+                    <field name="realizada"/>
+                    <group expand="0" string="Extended Filters">
+                        <filter string="Hoy" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=0)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ayer" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Antier" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=2)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 7 días" name="realizada" domain="[('realizada','&gt;=',((context_today()-datetime.timedelta(days=7)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 14 días" name="realizada" domain="[('realizada','&gt;=',((context_today()-datetime.timedelta(days=14)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimo Mes" name="realizada" domain="[('realizada','&gt;=',(context_today().strftime('%Y-%m-1')))]"/>
+                        <filter string="Año" name="realizada" domain="[('realizada','&gt;=',(context_today().strftime('%Y-1-1')))]"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter name="unidad_id" string="Unidad" context ="{'group_by': 'unidad_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--View tree-->
+        <record id="barmex_registroc_tree" model="ir.ui.view">
+            <field name="name">barmex.registroc.tree</field>
+            <field name="model">barmex.registroc</field>
+            <field name="arch" type="xml">
+                <tree string="registroc tree">
+                    <field name="name" />
+                    <field name="unidad_id" />
+                    <field name="realizada" />
+                    <field name="litros" />
+                    <field name="total" />
+                    <field name="hubodometro" />
+                    <field name="km_recorrido" />
+                    <field name="rendimiento" />
+                </tree>
+            </field>
+        </record>
+        
+        <!--View form-->
+        <record id="barmex_registroc_form" model="ir.ui.view">
+            <field name="name">barmex.registroc.form</field>
+            <field name="model">barmex.registroc</field>
+            <field name="arch" type="xml">
+                <form string="barmex form">
+                    <sheet>
+                        <group string="Datos Generales">
+                            <group name="group_right">
+                                <field name="name" readonly="1"/>
+                            </group>
+                            <group name="group_right">    
+                                <field name="unidad_id" required="1"/>
+                                <field name="realizada" required="1"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="litros" required="1"/>
+                                <field name="costo_litro" required="1"/>
+                                <field name="total"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="hubodometro" required="1"/>
+                                <field name="km_recorrido"/>
+                                <field name="rendimiento"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="lugar_combustible"/>
+                                <field name="gasolineria_id"/>
+                            </group>
+                        </group>
+                        <group name="group_right" colspan="4">
+                            <field name="comentarios"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--View graph-->
+        <record id="barmex_registroc_graph" model="ir.ui.view">
+            <field name="name">barmex.registroc.graph</field>
+            <field name="model">barmex.registroc</field>
+            <field name="arch" type="xml">
+                <graph string="registroc graph" orientation="horizontal" type="bar" stacked="False">
+                    <field name="realizada" interval="month"/>
+                    <field name="unidad_id" group="True"/>
+                    <field name="rendimiento" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!--Action registroc-->
+        <record id="barmex_registroc_action" model="ir.actions.act_window">
+            <field name="name">Registro de Consumo de Combustible</field>
+            <field name="res_model">barmex.registroc</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="search_view_id" ref="barmex_registroc_search"/>
+            <!-- <field name="context"></field>-->
+            <field name="help" type="html">
+            <p>
+                Menú de ayuda con descripción
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

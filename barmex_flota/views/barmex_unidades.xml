@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--barmex.unidades-->
+        <!--View search-->
+        <record id="barmex_unidades_search" model="ir.ui.view">
+            <field name="name">barmex.unidades.search</field>
+            <field name="model">barmex.unidades</field>
+            <field name="arch" type="xml">
+                <search string="unidades search">
+                    <field name="name"/>
+                    <field name="placa"/>
+                    <field name="tipo_combustible"/>
+                    <field name="tipo_unidad"/>
+                    <field name="disponibilidad"/>
+                </search>
+            </field>
+        </record>
+        
+        <!--View tree-->
+        <record id="barmex_unidades_tree" model="ir.ui.view">
+            <field name="name">barmex.unidades.tree</field>
+            <field name="model">barmex.unidades</field>
+            <field name="arch" type="xml">
+                <tree string="unidades tree">
+                    <field name="name" />
+                    <field name="placa" />
+                    <field name="no_corto" />
+                    <field name="capacidad_lt" />
+                    <field name="tambores" />
+                    <field name="capacidad_kg" />
+                    <field name="disponibilidad" />
+                </tree>
+            </field>
+        </record>
+        
+        <!--View form-->
+        <record id="barmex_unidades_form" model="ir.ui.view">
+            <field name="name">barmex.unidades.form</field>
+            <field name="model">barmex.unidades</field>
+            <field name="arch" type="xml">
+                <form string="barmex form">
+                    <sheet>
+                        <group string="Generales">
+                            <group name="group_right">
+                                <field name="name" required="1"/>
+                                <field name="marca"/>
+                                <field name="anio" required="1"/>
+                                <field name="conductor"/>
+                                <field name="serie"/>
+                                <field name="no_motor"/>
+                                <field name="no_corto"/>
+                            </group>
+                            <group name="group_right">    
+                                <field name="placa" required="1"/>
+                                <field name="modelo" required="1"/>
+                                <field name="tipo_unidad"/>
+                                <field name="tipopermisosct"/>
+                                <field name="permisosct"/>
+                                <field name="conf_vehicular"/>
+                            </group>
+                        </group>
+                        <group string="Caracteristicas">
+                            <group name="group_right">
+                                <field name="capacidad_kg"/>
+                                <field name="capacidad_lt"/>
+                                <field name="tipo_combustible"/>
+                            </group>
+                            <group name="group_right">    
+                                <field name="tambores"/>
+                                <field name="capacidad_t"/>
+                            </group>
+                        </group>
+                        <group string="Comentarios">
+                            <field name="comentarios" nolabel="1" colspan="4"/>
+                        </group>
+                        <group>
+                            <field name="disponibilidad" colspan="2"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Registro de Combustible">
+                                <field name="registroc_ids" nolabel="1" colspan="2">
+                                    <tree editable="top">
+                                        <field name="name"/>
+                                        <field name="realizada"/>
+                                        <field name="litros"/>
+                                        <field name="hubodometro"/>
+                                        <field name="km_recorrido"/>
+                                        <field name="rendimiento"/>
+                                        <field name="lugar_combustible"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Pólizas de seguro">
+                                <field name="polizas_ids" nolabel="1" colspan="2">
+                                    <tree editable="top">
+                                        <field name="name"/>
+                                        <field name="aseguradora"/>
+                                        <field name="inicio_contrato"/>
+                                        <field name="vigencia"/>
+                                        <field name="state"/>
+                                        <field name="comentariosp"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!--Action unidades-->
+        <record id="barmex_unidades_action" model="ir.actions.act_window">
+            <field name="name">Unidades</field>
+            <field name="res_model">barmex.unidades</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="barmex_unidades_search"/>
+            <!-- <field name="context"></field>-->
+            <field name="help" type="html">
+            <p>
+                Menú de ayuda con descripción
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

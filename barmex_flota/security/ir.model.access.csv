@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_barmex_catalogo_mto,barmex.access_barmex_catalogo_mto,model_barmex_catalogo_mto,base.group_user,1,1,1,1
+access_barmex_mantenimiento,barmex.access_barmex_mantenimiento,model_barmex_mantenimiento,base.group_user,1,1,1,1
+access_barmex_operadores,barmex.access_barmex_operadores,model_barmex_operadores,base.group_user,1,1,1,1
+access_barmex_polizass,barmex.access_barmex_polizass,model_barmex_polizass,base.group_user,1,1,1,1
+access_barmex_registroc,barmex.access_barmex_registroc,model_barmex_registroc,base.group_user,1,1,1,1
+access_barmex_unidades,barmex.access_barmex_unidades,model_barmex_unidades,base.group_user,1,1,1,1
+access_barmex_cursos,barmex.access_barmex_cursos,model_barmex_cursos,base.group_user,1,1,1,1
+access_barmex_gasolinerias,barmex.access_barmex_gasolinerias,model_barmex_gasolinerias,base.group_user,1,1,1,1

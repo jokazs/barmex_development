@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Top menu item -->
+        <menuitem id='menu_barmex' name='barmex' sequence="105"/>
+        
+        <record id="barmex_reporte_action" model="ir.actions.act_url">
+                <field name="name">Reporte de Rutas</field>
+                <field name="type">ir.actions.act_url</field>
+                <field name="target">self</field>
+                <field name="url">http://192.168.1.5:8080/pentaho/content/reporting/reportviewer/report.html?solution=Solvmex&amp;path=%2Ftrafico&amp;name=hoja_ruta_por_producto_barmex.prpt&amp;userid=joe&amp;password=password&amp;locale=es_MX</field>
+        </record>
+
+        <!-- Primer nivel -->
+        <menuitem name="Unidades" parent="menu_barmex" id="menu_barmex_unidades" sequence="52"/>
+        <menuitem name="Catálogos" parent="menu_barmex" id="menu_barmex_catalogos" sequence="54"/>
+
+        <!-- Segundo Nivel -->
+        <menuitem name="Registro de consumo de combustible" parent="menu_barmex_unidades" id="menu_barmex_unidades_registro_combustible" sequence="60" action="barmex_registroc_action"/>
+        <menuitem name="Pólizas de Seguro" parent="menu_barmex_unidades" id="menu_barmex_unidades_polizas_seguro" sequence="62" action="barmex_polizass_action"/>
+        <menuitem name="Mantenimiento" parent="menu_barmex_unidades" id="menu_barmex_unidades_mantenimiento" sequence="64" action="barmex_mantenimiento_action"/>
+        
+        <menuitem name="Operadores" parent="menu_barmex_catalogos" id="menu_barmex_catalogos_operadores" sequence="60" action="barmex_operadores_action"/>
+        <menuitem name="Unidades" parent="menu_barmex_catalogos" id="menu_barmex_catalogos_unidades" sequence="62" action="barmex_unidades_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--barmex.operadores-->
+        <!--View search-->
+        <record id="barmex_operadores_search" model="ir.ui.view">
+            <field name="name">barmex.operadores.search</field>
+            <field name="model">barmex.operadores</field>
+            <field name="arch" type="xml">
+                <search string="operadores search">
+                    <field name="fecha_ven"/>
+                    <field name="licencia"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        
+        <!--View tree-->
+        <record id="barmex_operadores_tree" model="ir.ui.view">
+            <field name="name">barmex.operadores.tree</field>
+            <field name="model">barmex.operadores</field>
+            <field name="arch" type="xml">
+                <tree string="operadores tree">
+                    <field name="name" />
+                    <field name="fecha_ven" />
+                    <field name="licencia" />
+                </tree>
+            </field>
+        </record>
+        
+        <!--View form-->
+        <record id="barmex_operadores_form" model="ir.ui.view">
+            <field name="name">barmex.operadores.form</field>
+            <field name="model">barmex.operadores</field>
+            <field name="arch" type="xml">
+                <form string="barmex form">
+                    <sheet>
+                        <group string="Datos Personales">
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="rfc" required="1"/>
+                                <field name="calle"/>
+                                <field name="numero"/>
+                                <field name="c_p"/>
+                            </group>
+                            <group>    
+                                <field name="alta"/>
+                                <field name="sangre"/>
+                                <field name="cel"/>
+                            </group>
+                        </group>
+                        <group string="Datos Generales">
+                            <group>
+                                <field name="licencia" required="1"/>
+                                <field name="fecha_ven"/>
+                                <field name="rs"/>
+                                <field name="comentarios"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Unidades">
+                                <field name="unidades_ids" widget="many2many_checkboxes"/>
+                            </page>
+                            <page string="Cursos">
+                                <field name="cursos_ids" widget="many2many_tags" options="{'no_create_edit': True}" colspan="4" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!--Action operadores-->
+        <record id="barmex_operadores_action" model="ir.actions.act_window">
+            <field name="name">Operadores</field>
+            <field name="res_model">barmex.operadores</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="barmex_operadores_search"/>
+            <!-- <field name="context"></field>-->
+            <field name="help" type="html">
+            <p>
+                Menú de ayuda con descripción
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

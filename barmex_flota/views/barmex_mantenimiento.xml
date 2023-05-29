@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>        
+        <!--barmex.mantenimiento-->
+        <!--View search-->
+        <record id="barmex_mantenimiento_search" model="ir.ui.view">
+            <field name="name">barmex.mantenimiento.search</field>
+            <field name="model">barmex.mantenimiento</field>
+            <field name="arch" type="xml">
+                <search string="registroc search">
+                    <field name="unidad_id"/>
+                    <field name="realizada"/>
+                    <group expand="0" string="Extended Filters">
+                        <filter string="Hoy" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=0)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ayer" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Antier" name="realizada" domain="[('realizada','=',((context_today()-datetime.timedelta(days=2)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 7 días" name="realizada" domain="[('realizada','&gt;=',((context_today()-datetime.timedelta(days=7)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 14 días" name="realizada" domain="[('realizada','&gt;=',((context_today()-datetime.timedelta(days=14)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimo Mes" name="realizada" domain="[('realizada','&gt;=',(context_today().strftime('%Y-%m-1')))]"/>
+                        <filter string="Año" name="realizada" domain="[('realizada','&gt;=',(context_today().strftime('%Y-1-1')))]"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter name="unidad_id" string="Unidad" context ="{'group_by': 'unidad_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--View tree-->
+        <record id="barmex_mantenimiento_tree" model="ir.ui.view">
+            <field name="name">barmex.mantenimiento.tree</field>
+            <field name="model">barmex.mantenimiento</field>
+            <field name="arch" type="xml">
+                <tree string="mantenimiento tree">
+                    <field name="name"/>
+                    <field name="unidad_id" />
+                    <field name="kilometraje" />
+                    <field name="realizada" />
+                    <field name="costo" />
+                </tree>
+            </field>
+        </record>
+
+        <!--View form-->
+        <record id="barmex_mantenimiento_form" model="ir.ui.view">
+            <field name="name">barmex.mantenimiento.form</field>
+            <field name="model">barmex.mantenimiento</field>
+            <field name="arch" type="xml">
+                <form string="barmex form">
+                    <sheet>
+                        <group string="Datos Generales">
+                            <group name="group_right">
+                                <field name="name" readonly="1"/>
+                                <field name="unidad_id"/>
+                                <field name="kilometraje"/>
+                                <field name="realizada"/>
+                            </group>
+                            <group name="group_right">
+                                <!-- <field name="concepto_mantenimiento"
+                                        widget="many2many_tags" /> -->
+                                <field name="descripcion"/>
+                                <field name="costo"/>
+                                <field name="fuera_servicio"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="comentarios"/>
+                            <field name="refacciones"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--Action mantenimiento-->
+        <record id="barmex_mantenimiento_action" model="ir.actions.act_window">
+            <field name="name">Mantenimiento</field>
+            <field name="res_model">barmex.mantenimiento</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="barmex_mantenimiento_search"/>
+            <!-- <field name="context"></field>-->
+            <field name="help" type="html">
+            <p>
+                Menú de ayuda con descripción
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

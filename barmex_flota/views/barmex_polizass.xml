@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--barmex.polizass-->
+        <!--View search-->
+        <record id="barmex_polizass_search" model="ir.ui.view">
+            <field name="name">barmex.polizass.search</field>
+            <field name="model">barmex.polizass</field>
+            <field name="arch" type="xml">
+                <search string="registroc search">
+                    <field name="unidad_id"/>
+                    <field name="inicio_contrato"/>
+                    <field name="vigencia"/>
+                    <group expand="0" string="Extended Filters">
+                        <filter string="Hoy" name="inicio_contrato" domain="[('inicio_contrato','=',((context_today()-datetime.timedelta(days=0)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ayer" name="inicio_contrato" domain="[('inicio_contrato','=',((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Antier" name="inicio_contrato" domain="[('inicio_contrato','=',((context_today()-datetime.timedelta(days=2)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 7 días" name="inicio_contrato" domain="[('inicio_contrato','&gt;=',((context_today()-datetime.timedelta(days=7)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimos 14 días" name="inicio_contrato" domain="[('inicio_contrato','&gt;=',((context_today()-datetime.timedelta(days=14)).strftime('%Y-%m-%d')))]"/>
+                        <filter string="Ultimo Mes" name="inicio_contrato" domain="[('inicio_contrato','&gt;=',(context_today().strftime('%Y-%m-1')))]"/>
+                        <filter string="Año" name="inicio_contrato" domain="[('inicio_contrato','&gt;=',(context_today().strftime('%Y-1-1')))]"/>
+                        <filter string="A vencer" name="vigencia" domain="[('vigencia','&lt;=',(context_today().strftime('%Y-1-1')))]"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter name="unidad_id" string="Unidad" context ="{'group_by': 'unidad_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!--View tree-->
+        <record id="barmex_polizass_tree" model="ir.ui.view">
+            <field name="name">barmex.polizass.tree</field>
+            <field name="model">barmex.polizass</field>
+            <field name="arch" type="xml">
+                <tree string="polizass tree">
+                    <field name="name" />
+                    <field name="aseguradora" />
+                    <field name="unidad_id" />
+                    <field name="vigencia" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+        
+        <!--View form-->
+        <record id="barmex_polizass_form" model="ir.ui.view">
+            <field name="name">barmex.polizass.form</field>
+            <field name="model">barmex.polizass</field>
+            <field name="arch" type="xml">
+                <form string="barmex form">
+                    <sheet>
+                        <group string="Datos Generales">
+                            <group name="group_right">
+                                <field name="name"/>
+                                <field name="unidad_id"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="aseguradora"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="inicio_contrato"/>
+                                <field name="vigencia"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="state"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="comentariosp"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!--Action polizass-->
+        <record id="barmex_polizass_action" model="ir.actions.act_window">
+            <field name="name">Pólizas de Seguro</field>
+            <field name="res_model">barmex.polizass</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="barmex_polizass_search"/>
+            <!-- <field name="context"></field>-->
+            <field name="help" type="html">
+            <p>
+                Menú de ayuda con descripción
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>
