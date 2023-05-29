@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_bmx_product_template" inherit_id="website_sale.product">
+        <xpath expr="//ol[@class='breadcrumb']" position="inside">
+            <li class="breadcrumb-item active">
+                <span t-field="product.default_code"/>
+            </li>
+        </xpath>
+    </template>
+    <template id="custom_bmx_product_price_template" inherit_id="website_sale.product_price">
+    <!--Valor de atributo en la posición que le permite cambiar / reemplazar el valor del atributo-->
+         <xpath expr="//span[@itemprop='priceCurrency']" position="attributes">
+             <attribute name="style">display:inline;</attribute>
+         </xpath>
+        <xpath expr="//h4[@class='oe_price_h4 css_editable_mode_hidden']" position="after"> <!--El cuerpo del nodo se inserta justo después del nodo de contexto-->
+            <li class="breadcrumb-item active">
+                <span t-field="product.default_code"/>
+            </li>
+            <br/>
+        </xpath>
+    </template>
+</odoo>
