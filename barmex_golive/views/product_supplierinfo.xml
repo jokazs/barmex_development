@@ -1,0 +1,18 @@
+<odoo>
+     <record id="product_supplierinfo_form_golive" model="ir.ui.view">
+        <field name="name">product.supplierinfo.form.golive</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='product_uom']" position="replace">
+                    <field name="product_uom" options="{'no_create_edit': True, 'no_create': True}" />
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="replace">
+                    <field name="currency_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

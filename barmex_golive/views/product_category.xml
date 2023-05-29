@@ -1,0 +1,15 @@
+<odoo>
+    <record id="product_category_inherit_golive" model="ir.ui.view">
+        <field name="name">product.category.form.golive</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="stock.product_category_form_view_inherit"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='713']" position="attributes">
+                    <attribute name="groups"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

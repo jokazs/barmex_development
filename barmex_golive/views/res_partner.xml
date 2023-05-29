@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_accion" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="inherit_id" ref="barmex.barmex_res_partner_form"/>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>   
+            <field name="arch" type="xml">
+                <data>
+                    <field name="email_complementos_pago" position="after">
+                        <field name="email_pago_proveedores"  widget="email" />
+                    </field> 
+                    <field name="category_id" position="after">
+                        <field name="proveedor" string="Proveedor" widget="boolean_toggle" readonly="0"/>
+                        <field name="cliente" string="Cliente" widget="boolean_toggle" readonly="0"/>
+                    </field> 
+
+                    <field name="street" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="vat" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="phone" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="email" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="l10n_mx_edi_usage" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="property_account_receivable_id" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+                    <field name="property_account_payable_id" position="attributes">
+                        <attribute name="required">True</attribute>
+                    </field>
+
+
+
+                    <!-- Campos de venta:Cliente -->
+                    
+                    <field name="cobrador_employee_ids" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="property_account_position_id" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="lco_customer_type" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="x_studio_tipo_de_mercado_1" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="barmex_id_cust" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="proveedor_employee" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="property_payment_term_id" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="lco_property_product_pricelist" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <field name="lco_property_product_pricelist_usd" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>
+                    <!-- <field name="invoicing_mail" position="attributes">
+                        <attribute name="attrs">{"required": [["customer_rank","=",1]]}</attribute>
+                    </field>                                                     -->
+                </data>
+            </field>
+               
+        </record>
+    </data>
+</odoo>

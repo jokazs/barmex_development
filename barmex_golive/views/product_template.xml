@@ -1,0 +1,262 @@
+<odoo>
+    <record id="product_template_supplier_form_inherit_golive" model="ir.ui.view">
+        <field name="name">product.template.supplier.form.inherit.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='bill']" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_common_form_golive" model="ir.ui.view">
+        <field name="name">product.template.common.form.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_invoice_policy_golive" model="ir.ui.view">
+        <field name="name">product.template.invoice.policy.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_invoice_policy"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='expense_policy']" position="replace">
+                <field name="expense_policy" widget="radio" />
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_product_form_golive" model="ir.ui.view">
+        <field name="name">product.template.product.form.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_quality_golive" model="ir.ui.view">
+        <field name="name">product.template.quality.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="quality_control.product_template_form_view_quality_control"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_see_quality_control_points']" position="replace">
+                <!-- <attribute name="groups"/> -->
+                <button name="action_see_quality_control_points" type="object" class="oe_stat_button" icon="fa-check">
+                    <field string="Quality Points" name="quality_control_point_qty" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_see_quality_checks']" position="replace">
+                <!-- <attribute name="invisible">0</attribute> -->
+                <button name="action_see_quality_checks" type="object" class="oe_stat_button" icon="fa-check">
+                    <div class="o_field_widget o_stat_info mr4">
+                        <span class="o_stat_text">Pass:</span>
+                        <span class="o_stat_text">Fail:</span>
+                    </div>
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="quality_pass_qty"/></span>
+                        <span class="o_stat_value"><field name="quality_fail_qty"/></span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_procurement_golive" model="ir.ui.view">
+        <field name="name">product.template.procurement.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="mrp.product_template_form_view_bom_button"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='786']" position="replace">
+                <button class="oe_stat_button" name="786" type="action" icon="fa-flask">
+                    <field string="Bill of Materials" name="bom_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_used_in_bom']" position="replace">
+                <button class="oe_stat_button" name="action_used_in_bom" type="object" icon="fa-level-up">
+                    <field string="Used In" name="used_in_bom_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_view_mos']" position="replace">
+                <button class="oe_stat_button" name="action_view_mos" type="object"  icon="fa-list-alt" help="Manufactured in the last 365 days">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="mrp_product_qty" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">Manufactured</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_inherit_form_golive" model="ir.ui.view">
+        <field name="name">product.template.inherit.form.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale_stock.product_template_view_form_inherit_stock"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_sales']" position="replace">
+                <button class="oe_stat_button" name="action_view_sales" type="object" icon="fa-signal"  help="Sold in the last 365 days">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sales_count" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">Sold</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_template_procurement_golive" model="ir.ui.view">
+        <field name="name">product.template.template.procurement.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_quants']" position="replace">
+                <button type="object" name="action_open_quants" class="oe_stat_button" icon="fa-cubes">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value" widget="statinfo">
+                            <field name="qty_available" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">On Hand</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_product_tmpl_forecast_report']" position="replace">
+                <button type="object" name="action_product_tmpl_forecast_report" context="{'default_product_tmpl_id': id}" class="oe_stat_button" icon="fa-cubes">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="virtual_available" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">Forecasted</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_view_stock_move_lines']" position="replace">
+                <button string="Traceability" type="object" name="action_view_stock_move_lines" class="oe_stat_button" icon="fa-exchange"/>
+            </xpath>
+            <xpath expr="//button[@name='action_view_orderpoints']" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <!-- <button name="715" type="action" class="oe_stat_button" icon="fa-refresh">
+                    <div class="o_field_widget o_stat_info mr4">
+                        <span class="o_stat_text">Min :</span>
+                        <span class="o_stat_text">Max:</span>
+                    </div>
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="reordering_min_qty"/></span>
+                        <span class="o_stat_value"><field name="reordering_max_qty"/></span>
+                    </div>
+                </button>
+                <button type="action" name="715" class="oe_stat_button" icon="fa-refresh">
+                    <field name="nbr_reordering_rules" widget="statinfo"/>
+                </button> -->
+            </xpath>
+            <xpath expr="//button[@name='action_open_product_lot']" position="replace">
+                <button string="Lot/Serial Numbers" type="object" name="action_open_product_lot" class="oe_stat_button" icon="fa-bars"/>
+            </xpath>
+            <xpath expr="//button[@name='710']" position="replace">
+                <button string="Routes" type="action" name="710" class="oe_stat_button" icon="fa-cogs" context="{'default_product_tmpl_id': id}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_view_related_putaway_rules']" position="replace">
+                <button string="Putaway Rules" type="object" name="action_view_related_putaway_rules" class="oe_stat_button" icon="fa-random" context="{'invisible_handle': True, 'single_product': product_variant_count == 1,}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_purchase_button_inherit_golive" model="ir.ui.view">
+        <field name="name">product.template.purchase.button.inherit.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="purchase.view_product_template_purchase_buttons_from"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_po']" position="replace">
+                <button class="oe_stat_button" name="action_view_po" type="object" icon="fa-shopping-cart" help="Purchased in the last 365 days">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="purchased_product_qty" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">Purchased</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <!-- <record id="product_template_sale_order_button_golive" model="ir.ui.view">
+        <field name="name">product.template.sale.order.button.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_sales']" position="replace">
+                <button class="oe_stat_button" name="action_view_sales" type="object" icon="fa-signal" help="Sold in the last 365 days">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sales_count" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">Sold</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record> -->
+    <record id="product_template_stock_property_form_inherit_golive" model="ir.ui.view">
+        <field name="name">product.template.stock.property.form.inherit.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.view_template_property_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="attributes">
+                <attribute name="groups"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_form_inherit_golive" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='invoicing']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_prod_form_inh_l10n_mx_golive" model="ir.ui.view">
+        <field name="name">view.prod.form.inh.l10n.mx.golive</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_prod_form_inh_l10n_mx"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='conta']" position="replace">
+                <page string="Contabilidad" name="conta" >
+                    <group name="properties">
+                        <group string="Pendientes de cobro">
+                            <field name="property_account_income_id" domain="[('internal_type','=','other'),('deprecated','=',False)]" groups="account.group_account_user"/>
+                        </group>
+                        <group string="Por pagar" name="payables">
+                            <field name="property_account_expense_id" domain="[('internal_type','=','other'),('deprecated','=',False)]" groups="account.group_account_user"/>
+                        </group>
+                        </group>
+                        <group string="CFDI">
+                            <field name="l10n_mx_edi_code_sat_id" options="{&quot;no_create&quot;: True}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

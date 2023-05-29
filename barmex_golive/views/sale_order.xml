@@ -1,0 +1,18 @@
+<odoo>
+    <record id="sale_order_inherit_golive" model="ir.ui.view">
+        <field name="name">sale.order.form.golive</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='292']" position="attributes">
+                    <attribute name="groups">__export__.res_groups_894</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_addenda_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

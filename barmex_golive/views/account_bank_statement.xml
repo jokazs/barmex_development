@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="golive_account_bank_statement" model="ir.ui.view">
+            <field name="name">golive_account_bank_statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="model">account.bank.statement</field>
+            <field name="arch" type="xml">                
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='line_ids']/tree[1]/field[@name='date']" position="after">
+                        <field name="cobrador_id" domain="[('parent_id','=',False)]" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                    </xpath>
+            </field>               
+        </record>
+</odoo>

@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* barmex_merge_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-09 16:38+0000\n"
+"PO-Revision-Date: 2022-11-09 16:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__display_alert
+msgid "Alert"
+msgstr "Alerta"
+
+#. module: barmex_merge_partner
+#: code:addons/barmex_merge_partner/wizard/wizard_merge_partner.py:0
+#, python-format
+msgid "Task successfully completed"
+msgstr "Tarea completada correctamente"
+
+#. module: barmex_merge_partner
+#: model_terms:ir.ui.view,arch_db:barmex_merge_partner.wizard_merge_partner_form_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: barmex_merge_partner
+#: model_terms:ir.ui.view,arch_db:barmex_merge_partner.wizard_merge_partner_form_view
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model,name:barmex_merge_partner.model_res_partner
+msgid "Description"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model_terms:ir.ui.view,arch_db:barmex_merge_partner.wizard_merge_partner_form_view
+msgid ""
+"If you confirm the operation, you can assign the selected records to the "
+"company as contacts. If you want to review, select the Cancel option.."
+msgstr ""
+"Si confirma la operación, puede asignar como contactos los registros "
+"seleccionados a la empresa . Si desea revisar, seleccione la opción Cancelar."
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: barmex_merge_partner
+#: model:ir.actions.act_window,name:barmex_merge_partner.wizard_merge_partner_act_window
+#: model:ir.actions.server,name:barmex_merge_partner.wizard_merge_partner_action_server
+#: model_terms:ir.ui.view,arch_db:barmex_merge_partner.wizard_merge_partner_form_view
+msgid "Merge partner"
+msgstr "Addicionar Contactos"
+
+#. module: barmex_merge_partner
+#: model:ir.model,name:barmex_merge_partner.model_wizard_merge_partner
+msgid "Merge res Partner"
+msgstr "Addicionar Contactos"
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: barmex_merge_partner
+#: model:ir.model.fields,field_description:barmex_merge_partner.field_wizard_merge_partner__partner_ids
+msgid "Partners"
+msgstr "Contactos"
+
+#. module: barmex_merge_partner
+#: code:addons/barmex_merge_partner/wizard/wizard_merge_partner.py:0
+#, python-format
+msgid "Warning"
+msgstr "Alerta"

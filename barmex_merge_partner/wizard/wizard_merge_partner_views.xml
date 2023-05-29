@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wizard_merge_partner_form_view" model="ir.ui.view">
+            <field name="name">wizard.merge.partner.form</field>
+            <field name="model">wizard.merge.partner</field>
+            <field name="arch" type="xml">
+                <form string="Merge partner">
+                    <sheet>
+                        <group colspan="2" class="w-50">
+                            <field name="partner_id"/>
+                            <field name="display_alert" invisible="1"/>
+                        </group>
+                        <div attrs="{'invisible': [('display_alert', '=', False)]}">
+                                If you confirm the operation, you can assign the selected records to the company as contacts. If you want to review, select the Cancel option..
+                            </div>
+                    </sheet>
+                    <footer>
+                        <button name="merge_partner" icon="fa-user" string="Confirm" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="wizard_merge_partner_act_window" model="ir.actions.act_window">
+            <field name="name">Merge partner</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.merge.partner</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record id="wizard_merge_partner_action_server" model="ir.actions.server">
+        <field name="name">Merge partner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_merge_partner()</field>
+    </record>
+
+    </data>
+</odoo>
