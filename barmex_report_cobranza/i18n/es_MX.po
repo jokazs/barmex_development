@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* barmex_report_cobranza
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-14 15:39+0000\n"
+"PO-Revision-Date: 2023-04-14 15:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: barmex_report_cobranza
+#: model_terms:ir.ui.view,arch_db:barmex_report_cobranza.report_cobranza_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields.selection,name:barmex_report_cobranza.selection__wizard_report_cobranza__partner_type__customer
+msgid "Customer"
+msgstr "Cliente"
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model_terms:ir.ui.view,arch_db:barmex_report_cobranza.report_cobranza_wizard_form
+msgid "Export Excel"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__date_from
+msgid "Fecha"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__id
+msgid "ID"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields,field_description:barmex_report_cobranza.field_wizard_report_cobranza__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: barmex_report_cobranza
+#: model:ir.model,name:barmex_report_cobranza.model_wizard_report_cobranza
+msgid "Reporte Caobranza"
+msgstr "Reporte de Cobranza"
+
+#. module: barmex_report_cobranza
+#: model:ir.actions.act_window,name:barmex_report_cobranza.action_report_cobranza_wizard
+#: model:ir.ui.menu,name:barmex_report_cobranza.menu_account_reporting_payment_cobranza
+#: model_terms:ir.ui.view,arch_db:barmex_report_cobranza.report_cobranza_wizard_form
+msgid "Reporte de Cobranza"
+msgstr "Reporte de Cobranza"
+
+#. module: barmex_report_cobranza
+#: model:ir.model.fields.selection,name:barmex_report_cobranza.selection__wizard_report_cobranza__partner_type__supplier
+msgid "Vendor"
+msgstr "Proveedor"
