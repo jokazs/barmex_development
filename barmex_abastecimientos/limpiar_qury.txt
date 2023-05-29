@@ -1,0 +1,10 @@
+
+DELETE FROM product_supplierinfo WHERE id IN (
+SELECT si.id
+
+FROM product_supplierinfo si, res_partner rp
+WHERE si.name = rp.id and rp.supplier_rank = 0);
+
+--Comentario
+
+--asidhoaisjdoaisd

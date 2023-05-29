@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+almacen_digital_facturas,almacen_digital_facturas,barmex_almacen_digital.model_almacen_digital,base.group_user,1,1,1,1
+almacen_digital_credenciales,almacen_digital_credenciales,barmex_almacen_digital.model_credenciales,base.group_user,1,1,1,1
+almacen_digital_productos,almacen_digital_productos,barmex_almacen_digital.model_almacen_digital_productos,base.group_user,1,1,1,1
