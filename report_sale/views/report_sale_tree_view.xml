@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_sale_tree_view" model="ir.ui.view">
+            <field name="name">reporte.sale.tree</field>
+            <field name="model">sale.report</field>
+            <field name="arch" type="xml">
+                <tree string="Reporte Venta">
+                    <field name="move_name" string="Factura"/>
+                    <field name="product_id" string="Productos"/>
+                    <field name="categ_id" string="Categoría"/>
+                    <field name="price" string="Precio"/>
+                    <field name="standart_price" string="Costo"/>
+                    <field name="utilidad"/>
+                    <field name="margen" class="text-right"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="report_sale_act_window" model="ir.actions.act_window">
+            <field name="name">Reporte de venta</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="report_sale.report_sale_tree_view"/>
+        </record>
+
+        <menuitem name="Reporte de venta" id="report_sale_menu" parent="sale.menu_sale_report" action="report_sale_act_window"/>
+
+    </data>
+</odoo>
