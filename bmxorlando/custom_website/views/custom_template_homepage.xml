@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+      <!--Logo-->
+      <template id="custom_bmx_logo_template" inherit_id="website.layout">
+         <xpath expr="//header//a[hasclass('navbar-brand')]" position="replace">
+            <a href="/" class="navbar-brand logo">
+               <img src="https://www.barmex.com.mx/assets/images/logo.png" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name" />
+            </a>
+         </xpath>
+      </template>
+      <!--Homepage-->
+      <template id="custom_bmx_homepage_template" inherit_id="website.homepage">
+         <xpath expr="//div[@id='wrap']" position="inside">
+            <div id="wrap" class="oe_structure oe_empty">
+               <section class="s_cover parallax s_parallax_is_fixed bg-black-50 pt96 pb96 s_parallax_no_overflow_hidden" data-scroll-background-ratio="1" data-name="Cover" style="background-image: none;">
+                  <span class="s_parallax_bg oe_img_bg oe_custom_bg" style="background-image: url(&quot;https://e-barmex.com.mx/distribuidores/content/themes/distribuidores/images/bg-01.jpg&quot;); background-position: 50% 0px;" />
+                  <div class="container">
+                     <div class="row s_nb_column_fixed">
+                        <div class="col-lg-12 s_title" data-name="Title">
+                           <h1 class="s_title_thin" style="font-size: 62px; text-align: center;">BARMEX</h1>
+                        </div>
+                        <div class="col-lg-12 s_text pt16 pb16" data-name="Text">
+                           <p class="lead" style="text-align: center;">
+                              “Solución Integral para la Industria”
+                              <br />
+                              Con más de 50 años de experiencia.
+                           </p>
+                        </div>
+                        <div class="col-lg-12 s_btn text-center pt16 pb16" data-name="Buttons">
+                           <a href="/aboutus" class="btn btn-delta rounded-circle" data-original-title="" title="" aria-describedby="tooltip360784">Sobre nosotros</a>
+                           <a href="/contactus" class="btn btn-primary rounded-circle o_default_snippet_text">Contacta con nosotros</a>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </xpath>
+      </template>
+      <!--Footer-->
+      <record id="custom_bmx_footer_template" model="ir.ui.view">
+         <field name="name">custom.bmx.footer</field>
+         <field name="inherit_id" ref="website.footer_custom" />
+         <field name="arch" type="xml">
+            <xpath expr="//h5" position="replace">
+               <h5>Nuestros Productos y Servicios</h5>
+            </xpath>
+            <xpath expr="//div[@id='connect']/h5" position="replace">
+               <h5>Contacte con Nosotros</h5>
+            </xpath>
+            <xpath expr="//a[@href='/contactus']" position="replace">
+               <a href="/contactus">Contacte con BARMEX</a>
+            </xpath>
+            <xpath expr="//*[@id='connect']/p/a[3]" position="replace" />
+            <xpath expr="//*[@id='connect']/p/a[5]" position="replace" />
+            <xpath expr="//*[@id='footer']/section/div/div/div[3]/p[1]" position="replace">
+               <p>“Solución Integral para la Industria”
+                                Con más de 50 años de experiencia.</p>
+               <p>Barmex nace en 1969 como una empresa dedicada a comercializar las mejores marcas y productos disponibles a nivel mundial en materia de transmisión de potencia y control de movimiento.
+Representamos marcas líderes con productos exitosos en el ámbito internacional de manera directa y a través de nuestra red de distribuidores, fortaleciendo relaciones comerciales a largo plazo.
+Nuestros asesores de ventas y un gran equipo de ingenieros especializados brindan soporte técnico y capacitación en todo el territorio nacional, dándole así, una solución integral de gran valor.
+Tenemos 50 años de experiencia estando a la vanguardia para brindarle la mejor opción a sus necesidades, y desarrollando nuevos mercados en el sector industrial.
+En refacciones industriales somos los mejores, además de ser especialistas en equipos de automatización.</p>
+            </xpath>
+            <xpath expr="//*[@id='footer']/section/div/div/div[3]/p[2]" position="replace">
+               <p>Somos un equipo de personas apasionadas cuyo objetivo es mejorar la vida a través de productos disruptivos. Creamos excelentes productos para resolver su problemas comerciales.</p>
+               <p>Nuestros productos están diseñados para pequeñas y medianas empresas dispuestas a optimizar
+                                Su desempeño.</p>
+            </xpath>
+         </field>
+      </record>
+</odoo>

@@ -1,0 +1,65 @@
+<odoo>
+   <data>
+       <record model="ir.ui.view" id="custom_bmx_employee_form_inherited">
+         <field name="name">custom.bmx.employee.form.inherited</field>
+         <field name="model">hr.employee</field>
+         <field name="inherit_id" ref="hr.view_employee_form" />
+         <field name="arch" type="xml">
+            <!-- Estos campos fueron creados con la herramienta Odoo Studio por parte de LaSo y es complicado acceder a ellos mediante codigo.-->
+            <!-- Por lo tanto, los cambios de estos campos se realizarán atravez del mismo Odoo Studio-->
+            <!-- Para este campo en este caso será de ocultarlo (invisible)
+            <xpath expr="//field[@name='x_studio_corporativo']" position="replace">
+            </xpath> -->
+            <!--Sección Información del Trabajo-->
+            <xpath expr="//field[@name='coach_id']" position="replace">
+               <field name="authorizes_travel" string="Autoriza viáticos" placeholder="Autoriza viáticos" />
+            </xpath>
+            <!-- Estos campos fueron creados con la herramienta Odoo Studio por parte de LaSo y es complicado acceder a ellos mediante codigo.-->
+            <!-- Por lo tanto, los cambios de estos campos se realizarán atravez del mismo Odoo Studio-->
+            <!-- Para este campo en este caso será renombrar
+             <xpath expr="//field[@name='expense_manager_id']" position="attributes">
+               <field name="authorizes_gasoline" string="Autoriza gasolina" placeholder="Autoriza gasolina" />
+            </xpath>  -->
+            <!--Sección Información Privada-->
+            <xpath expr="//field[@name='phone']" position="attributes">
+               <attribute name="string">Teléfono de Casa</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="after">
+               <field name="personal_phone" string="Télefono Personal" placeholder="Teléfono Personal" />
+            </xpath>
+            <xpath expr="//field[@name='km_home_work']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='identification_id']" position="attributes">
+               <attribute name="string">RFC</attribute>
+            </xpath>
+            <xpath expr="//field[@name='passport_id']" position="attributes">
+               <attribute name="string">CURP</attribute>
+            </xpath>
+            <xpath expr="//group[@name='work_permit']" position="before">
+             <group string="Beneficiarios">
+                <field name="beneficiario_1" string="Beneficiario 1" placeholder="Beneficiario 1" />
+                <field name="beneficiario_2" string="Beneficiario 2" placeholder="Beneficiario 2" />
+                <field name="beneficiario_3" string="Beneficiario 3" placeholder="Beneficiario 3" /> 
+             </group>
+            </xpath>
+            <xpath expr="//group[@name='work_permit']" position="attributes">
+               <attribute name="string">Trabajo</attribute>
+            </xpath>
+            <xpath expr="//field[@name='visa_no']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='permit_no']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='visa_expire']" position="attributes">
+               <attribute name="invisible">1</attribute>
+            </xpath>
+             <!--Sección Configuración RRHH-->
+            <xpath expr="//label[@for='barcode']" position="attributes">
+               <attribute name="string">Número de empleado</attribute>
+            </xpath>
+         </field>
+      </record>
+   </data>
+</odoo>
