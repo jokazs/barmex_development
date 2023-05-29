@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sh_disable_followers_web_assets_backend" inherit_id="web.assets_backend" name="Disbale Follower assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/sh_all_in_one_disable_followers/static/src/js/followers.js"></script>
+        </xpath>
+    </template>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='general_settings']" position="inside">
+                <h2>Disable/Restrict to add Followers</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_confirm_sale" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_confirm_sale" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_validate_invoice" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_validate_invoice" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_email" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_email" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_create_picking" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_create_picking" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="sh_sale_config_setting_view" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']" position="inside">
+                <h2>Disable to add Salesperson as follower configuration</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_salesperson" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_salesperson" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="sh_purchase_config_setting_view" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='purchase']" position="inside">
+                <h2>Disable to add Purchase Representative as follower configuration</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_pr_purchase" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_pr_purchase" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="sh_picking_config_setting_view" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='stock']" position="inside">
+                <h2>Disable to add Responsible as follower configuration</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_responsible_picking" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_responsible_picking" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="sh_account_config_setting_view" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='account']" position="inside">
+                <h2>Disable to add Salesperson as follower configuration</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-6 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="sh_disable_follower_salesperson_account" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sh_disable_follower_salesperson_account" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
