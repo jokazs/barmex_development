@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report
+            id="report_sistemas"
+            model="sistemas.asignaciones"
+            string="Carta responsiva"
+            report_type="qweb-pdf"
+            name="sistemas.reporte_asignacion"
+            file="sistemas.reporte_asignacion"
+            
+        />
+    </data>
+</odoo>

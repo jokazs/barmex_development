@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <!-- Modo lista -->
+        <record model="ir.ui.view" id="barmex_sistemas.vistaEnlaces">
+            <field name="name">Enlaces</field>
+            <field name="model">barmex_sistemas.enlaces</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="velocidad_enlace"/>
+                    <field name="cuenta_enlace"/>
+                    <field name="compania_enlace"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Modo formulario a la hora de crear un registro-->
+        <record id="sistemas_enlaces" model="ir.ui.view">
+            <field name="name">barmex_sistemas.form</field>
+            <field name="model">barmex_sistemas.enlaces</field>
+            <field name="arch" type="xml">
+                <form string="Nuevo enlace">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="velocidad_enlace"/>
+                                <field name="cuenta_enlace"/>
+                                <field name="compania_enlace"/>
+                                <field name="sucursal_enlace"/>
+                            </group>
+                            <group>
+                                <field name="numero_cliente_enlace"/>
+                                <field name="numero_reportes_enlace"/>
+                                <field name="numero_ventas_enlace"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="enlaces_action_window">
+            <field name="name">Enlaces</field>
+            <field name="res_model">barmex_sistemas.enlaces</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+          Agrega un nuevo enlace
+                </p>
+                <p>
+          Administra todos los enlaces de sistemas
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Enlaces" id="menuEnlaces" parent="menuConfiguracion" action="enlaces_action_window" sequence="60"/>
+    </data>
+</odoo>

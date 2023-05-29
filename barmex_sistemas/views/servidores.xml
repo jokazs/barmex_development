@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+        <!-- Modo lista -->
+        <record model="ir.ui.view" id="barmex_sistemas.vistaServidores">
+            <field name="name">Servidores</field>
+            <field name="model">barmex_sistemas.servidores</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ubicacion_servidor"/>
+                    <field name="ip_servidor"/>
+                    <field name="dominio_servidor"/>
+                    <field name="so_servidor"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Modo formulario a la hora de crear un registro-->
+        <record id="sistemas_servidores" model="ir.ui.view">
+            <field name="name">barmex_sistemas.form</field>
+            <field name="model">barmex_sistemas.servidores</field>
+            <field name="arch" type="xml">
+                <form string="Nuevo servidor">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="ubicacion_servidor"/>
+                                <field name="ip_servidor"/>
+                                <field name="dominio_servidor"/>
+                                <field name="password_servidor"/>
+                                <field name="so_servidor"/>
+                                <field name="recuperacion_servidor"/>
+                            </group>
+                            <group>
+                                <field name="teamviewer_servidor"/>
+                                <field name="pass_teamviewer_servidor"/>
+                            </group>
+                            <group>
+                                <field name="pass_tplink_teamviewer_servidor"/>
+                                <field name="tplink_servidor"/>
+                                <field name="usuario_tplink_teamviewer_servidor"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="servidores_action_window">
+            <field name="name">Servidores</field>
+            <field name="res_model">barmex_sistemas.servidores</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+          Agrega un nuevo servidor
+                </p>
+                <p>
+          Administra todos los servidores de sistemas
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Servidores" id="menuServidores" parent="menuConfiguracion" action="servidores_action_window" sequence="50"/>
+    </data>
+</odoo>

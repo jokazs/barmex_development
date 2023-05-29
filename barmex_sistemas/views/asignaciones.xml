@@ -1,0 +1,84 @@
+<odoo>
+  <data>
+    <!-- Modo lista -->
+    <record model="ir.ui.view" id="barmex_sistemas.list">
+      <field name="name">Sistemas list</field>
+      <field name="model">barmex_sistemas.asignaciones</field>
+      <field name="arch" type="xml">        
+        <tree>        
+          <field name="folio"/>
+          <field name="fecha_asignacion"/>
+          <field name="usuario_asignacion"/>
+          <field name="equipos_asignacion_id"/>
+          <field name="perifericos_asignacion_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Modo formulario a la hora de crear un registro-->
+    <record id="sistemas_form" model="ir.ui.view">
+      <field name="name">barmex_sistemas.form</field>
+      <field name="model">barmex_sistemas.asignaciones</field>
+      <field name="arch" type="xml">
+        <form string="Nueva asignación">
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="folio" readonly="1"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="usuario_asignacion"/>
+              </group>
+              <group>
+                <field name="fecha_asignacion"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Equipos">
+                <group>
+                  <field name="equipos_asignacion_id" options="{'no_create_edit': True,}"/>
+                </group>
+              </page>
+              <page string="Perifericos">
+                <group>
+                  <field name="perifericos_asignacion_id" options="{'no_create_edit': True,}"/>
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="barmex_sistemas.action_window">
+      <field name="name">Asignaciones de equipo</field>
+      <field name="res_model">barmex_sistemas.asignaciones</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Agrega una nueva relación
+        </p>
+        <p>
+          Con un par de clic's administra la relación de tus equipos y los usuarios.
+        </p>
+      </field>
+    </record>
+
+    <!-- Titulo del modulo -->
+    <menuitem name="Sistemas" id="menuPrincipal" action="barmex_sistemas.action_window" web_icon="barmex_sistemas,static/description/icon.png" sequence="250"/>
+    <!-- Menu's -->
+    <menuitem name="Asignaciones de equipos" id="asignacionesMenu" parent="menuPrincipal" action="barmex_sistemas.action_window" sequence="10"/>
+    <menuitem name="Configuración equipos" id="menuEquipos" parent="menuPrincipal" sequence="20"/>
+    <menuitem name="Configuración perifericos" id="menuPerifericos" parent="menuPrincipal" sequence="30"/>            
+    <menuitem name="Otros" id="menuConfiguracion" parent="menuPrincipal" sequence="70"/>
+    <!-- Submenus -->    
+  </data>
+</odoo>

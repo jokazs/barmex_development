@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <!-- Modo lista -->
+        <record model="ir.ui.view" id="barmex_sistemas.vistaLicencias">
+            <field name="name">Licencias</field>
+            <field name="model">barmex_sistemas.licencias</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id_licencia"/>
+                    <field name="key_licencia"/>
+                    <field name="so_licencia"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Modo formulario a la hora de crear un registro-->
+        <record id="sistemas_licencias" model="ir.ui.view">
+            <field name="name">barmex_sistemas.form</field>
+            <field name="model">barmex_sistemas.licencias</field>
+            <field name="arch" type="xml">
+                <form string="Nuevo licencia">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id_licencia"/>
+                                <field name="key_licencia"/>
+                            </group>
+                            <group>
+                                <field name="so_licencia"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="licencias_action_window">
+            <field name="name">Licencias</field>
+            <field name="res_model">barmex_sistemas.licencias</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+          Agrega una nuevo licencia
+                </p>
+                <p>
+          Administra todas las licencias de tus SO.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Licencias" id="licenciasMenu" parent="menuConfiguracion" action="licencias_action_window" sequence="13"/>
+    </data>
+</odoo>

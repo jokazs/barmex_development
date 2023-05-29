@@ -1,0 +1,121 @@
+<odoo>
+  <data>
+    <!-- Modo lista -->
+    <record model="ir.ui.view" id="barmex_sistemas.vistaEquipos">
+      <field name="name">Equipos</field>
+      <field name="model">barmex_sistemas.equipos</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre_equipo"/>
+          <field name="numero_serie"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Modo formulario a la hora de crear un registro-->
+    <record id="sistemas_formas" model="ir.ui.view">
+      <field name="name">barmex_sistemas.form</field>
+      <field name="model">barmex_sistemas.equipos</field>
+      <field name="arch" type="xml">
+        <form string="Nuevo equipo">
+          <sheet>
+            <group>
+              <group>
+                <field name="nombre_equipo"/>
+                <field name="numero_serie"/>
+                <field name="numero_producto"/>
+                <field name="estatus_equipo"/>
+                <field name="tipo_equipo"/>
+              </group>
+              <group>
+                <field name="numero_factura"/>
+                <field name="proveedor"/>
+                <field name="monto_factura"/>
+                <field name="fecha_factura"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Datos del equipo">
+                <sheet>
+                  <group>
+                    <group>
+                      <field name="modelo"/>
+                      <field name="marca"/>
+                      <field name="ram"/>
+                      <field name="rom"/>
+                    </group>
+                    <group>
+                      <field name="procesador"/>
+                      <field name="sistema_operativo"/>
+                      <field name="product_key"/>
+                    </group>
+                  </group>
+                </sheet>
+              </page>
+              <page string="Datos de envío">
+                <sheet>
+                  <group>
+                    <group>
+                      <field name="fecha_envio"/>
+                      <field name="fecha_llegada"/>
+                    </group>
+                    <group>
+                      <field name="guia"/>
+                    </group>
+                  </group>
+                </sheet>
+              </page>
+              <page string="Programas">
+                <group>
+                  <field name="programas_id" options="{'no_create_edit': True,}"/>
+                </group>
+              </page>
+              <page string="Configuraciones">
+                <group>
+                  <field name="configuraciones_id" options="{'no_create_edit': True,}"/>
+                </group>
+              </page>
+              <page string="Respaldos">
+                <group>
+                  <field name="respaldos_id" options="{'no_create_edit': True,}"/>
+                </group>
+              </page>
+              <page string="Seguimiento">
+                <group>
+                  <field name="seguimiento"/>
+                </group>
+              </page>
+              <page string="Comentarios">
+                <group>
+                  <field name="comentarios"/>
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="equipos_action_window">
+      <field name="name">Equipos</field>
+      <field name="res_model">barmex_sistemas.equipos</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Agrega un nuevo equipo
+        </p>
+        <p>
+          Administra todas las maquinas de tu lugar de trabajo.
+        </p>
+      </field>
+    </record>
+
+    <menuitem name="Equipos" id="equiposMenu" parent="menuEquipos" action="equipos_action_window" sequence="11"/>
+  </data>
+</odoo>

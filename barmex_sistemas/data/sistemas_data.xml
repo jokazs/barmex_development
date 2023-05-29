@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_sistemas" model="ir.sequence">
+            <field name="name">Sistemas foliador</field>
+            <field name="code">sistemas.asignaciones.sequence</field>
+            <field name="prefix">AE</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>        
+    </data>
+</odoo>

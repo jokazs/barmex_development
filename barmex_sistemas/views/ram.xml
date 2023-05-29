@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <!-- Modo lista -->
+        <record model="ir.ui.view" id="barmex_sistemas.ram">
+            <field name="name">Tamaño de RAM</field>
+            <field name="model">barmex_sistemas.ram</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="capacidad"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Modo formulario a la hora de crear un registro-->
+        <record id="sistemas_ram" model="ir.ui.view">
+            <field name="name">barmex_sistemas.form</field>
+            <field name="model">barmex_sistemas.ram</field>
+            <field name="arch" type="xml">
+                <form string="Nuevo tamaño de RAM">
+                    <sheet>
+                        <group>
+                            <field name="capacidad"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level":1}'/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="ram_action_window">
+            <field name="name">RAM</field>
+            <field name="res_model">barmex_sistemas.ram</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Agrega una nuevo RAM
+                </p>
+                <p>
+                    Administra todos los tamaños de RAM.
+                </p>
+            </field>
+        </record>
+        <menuitem name="RAM" id="ramMenu" parent="menuEquipos" action="ram_action_window" sequence="21"/>
+    </data>
+</odoo>
