@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_account_journal" model="ir.ui.view">
+        <field name="name">barmex_account_journal_form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after" >
+                <field name="nota_credito_cuenta"  options='{"no_create": True}'/>
+            </xpath>
+        </field>
+    </record>
+
+  
+</odoo>

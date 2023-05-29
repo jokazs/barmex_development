@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<odoo>
+        <record model="ir.module.category" id="barmex_group_category">
+            <field name="name">Barmex</field>
+            <field name="sequence">110</field>
+        </record>
+        <record model="res.groups" id="encargado_compras_group">
+        	<field name="name"> Encargado de Compras / Soporte de Compras </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+        <record model="res.groups" id="cxc_group">
+        	<field name="name"> Cuentas por cobrar </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+        <record model="res.groups" id="cxp_group">
+        	<field name="name"> Cuentas por Pagar </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+		<record model="res.groups" id="almacenista_group">
+        	<field name="name"> Almacenista </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+		<record model="res.groups" id="encargado_almacen_group">
+        	<field name="name"> Encargado Almacen / Encargado de capturar datos </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+        <record model="res.groups" id="facturista_group">
+        	<field name="name"> Facturista </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+        <record model="res.groups" id="facturista_z_group">
+        	<field name="name"> Facturista Zonas </field>
+        	<field name="category_id" ref="barmex_group_category"/>
+    	</record>
+</odoo>

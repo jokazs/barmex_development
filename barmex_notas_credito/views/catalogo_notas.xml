@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="tree_view_pronto_pago" model="ir.ui.view">
+            <field name="name">barmex.pronto_pago_catalogo</field>
+            <field name="model">barmex.pronto_pago_catalogo</field>
+            <field name="arch" type="xml">
+                <tree>
+                            <field name="name"/>
+                            <field name="plazo_pago_id"/>
+                            
+                            <field name="dias_credito"/>
+                            <field name="dias_pp"/>
+                            <field name="dias_pp_por"/>
+                            <field name="dias_pp_seg"/>
+                            <field name="dias_pp_seg_por"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="form_view_pronto_pago" model="ir.ui.view">
+            <field name="name">barmex.pronto_pago_catalogo</field>
+            <field name="model">barmex.pronto_pago_catalogo</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="plazo_pago_id"/>
+                        </group>
+                        <group>
+                            <field name="dias_credito"/>
+                            <field name="dias_pp"/>
+                            <field name="dias_pp_por"/>
+                            <field name="dias_pp_seg"/>
+                            <field name="dias_pp_seg_por"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_pronto_pago" model="ir.actions.act_window">
+            <field name="name">Catalogo pronto pago</field>
+            <field name="res_model">barmex.pronto_pago_catalogo</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- menus -->
+        <menuitem name="Catalogo pronto pago" 
+            id="pronto_pago_root" 
+            parent="account_reports.account_reports_partners_reports_menu" 
+            sequence="25"/>
+
+        <menuitem id="pronto_pago_action"
+                     name="Pronto pago"
+                     action="action_view_pronto_pago"
+                     parent="pronto_pago_root"/>
+
+    </data>
+</odoo>

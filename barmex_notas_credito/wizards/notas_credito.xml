@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="barmex_pronto_pago" model="ir.ui.view">
+        <field name="name">Notas de credito Pronto pago</field>
+        <field name="model">barmex.pronto_pago</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <field name="fecha_inicial" />
+                    <field name="fecha_final" />
+                    
+                </group>
+                <group>
+                    <field string="Facturas en el periodo" name="facturas_ids"  >
+                            <tree  string="Facturas en el periodo"  editable="top" >
+                                    <field name="invoice_id"  readonly="1"/>
+                                    <field name="fecha_factura"  readonly="1"/>
+                                    <field name="fecha_ultimo_pago"  readonly="1"/>
+                                    <field name="dias_pago"  readonly="1"/>
+
+                                    <field name="pagos" sum="Pagos" readonly="1"/>
+                                    <field name="saldo" sum="Saldo" readonly="1"/>
+                                    <field name="currency_id" readonly="1"/>
+                                    <field name="descuento_aplicar" sum="Saldo"/>
+                                    <field name="aplicar" />
+                            </tree>
+                        </field>
+                </group>
+                <footer>
+                    <button
+                        string="Aplicar"
+                        class="oe_highlight"
+                        name="aplicar"
+                        type="object"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+      <record id="action_pronto_pago_nc" model="ir.actions.server">
+            <field name="name">Notas de credito pronto pago</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_barmex_pronto_pago"/>
+            <field name="state">code</field>
+            <field name="code">action = env['barmex.pronto_pago'].create_wizard()</field> 
+        </record>
+
+
+
+    <record id="barmex_nc_bonificacion" model="ir.ui.view">
+        <field name="name">Notas de credito Bonificacion</field>
+        <field name="model">barmex.bonificacion</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <field name="fecha_inicial" />
+                    <field name="fecha_final" />
+                    
+                </group>
+                <group>
+                    <field string="Facturas en el periodo" name="facturas_ids"  >
+                            <tree  string="Facturas en el periodo" editable="top">
+                                    <field name="invoice_id"  readonly="1"/>
+                                    <field name="fecha_factura"  readonly="1"/>
+                                    <field name="amount_total" sum="Total" readonly="1"/>
+                                    <field name="saldo" sum="Saldo" readonly="1"/>
+                                    <field name="currency_id" readonly="1"/>
+                                    <field name="descuento_aplicar"/>
+                                    <field name="aplicar" />
+                            </tree>
+                        </field>
+                </group>
+                <footer>
+                    <button
+                        string="Aplicar"
+                        class="oe_highlight"
+                        name="aplicar"
+                        type="object"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+      <record id="action_bonificacion_nc" model="ir.actions.server">
+            <field name="name">Notas de credito bonificacion</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_barmex_bonificacion"/>
+            <field name="state">code</field>
+            <field name="code">action = env['barmex.bonificacion'].create_wizard()</field> 
+        </record>
+</odoo>
