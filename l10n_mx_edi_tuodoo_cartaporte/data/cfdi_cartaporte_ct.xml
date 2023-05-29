@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cfdi_cartaporte_ct">
+        <cfdi:Comprobante
+            t-att-Fecha="cfdi_date"
+            t-att-Folio="folio_number"
+            t-att-Serie="serie"
+            t-att-LugarExpedicion="lugar_expedicion"
+            Moneda="XXX"
+            Serie="CartaPorte"
+            SubTotal="0"
+            TipoDeComprobante="T"
+            Exportacion="01"
+            Total="0"
+            Version="4.0"
+            xmlns:cartaporte20="http://www.sat.gob.mx/CartaPorte20"
+            xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/CartaPorte20 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte20.xsd http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte20/CartaPorte20.xsd">
+            <cfdi:CfdiRelacionados t-if="origin_uuids" t-att-TipoRelacion="origin_type">
+                <t t-foreach="origin_uuids" t-as="uuid">
+                    <cfdi:CfdiRelacionado t-att-UUID="uuid"/>
+                </t>
+            </cfdi:CfdiRelacionados>
+            <cfdi:Emisor
+                t-att-Nombre="supplier.name[:254]"
+                t-att-RegimenFiscal="supplier.l10n_mx_edi_fiscal_regime"
+                t-att-Rfc="supplier.vat"/>
+            <cfdi:Receptor 
+                t-att-Nombre="supplier.name[:254]" 
+                t-att-Rfc="supplier.vat" 
+                UsoCFDI="S01" 
+                t-att-DomicilioFiscalReceptor="supplier.zip" 
+                t-att-RegimenFiscalReceptor="supplier.l10n_mx_edi_fiscal_regime"/>
+
+            <cfdi:Conceptos>
+                <t t-foreach="moves" t-as="move" t-key="move_index">
+                    <cfdi:Concepto
+                        t-att-Cantidad="format_float(move.quantity_done, 6)"
+                        t-att-ClaveProdServ="move.product_id.l10n_mx_edi_code_sat_id.code"
+                        t-att-ClaveUnidad="move.product_uom.l10n_mx_edi_code_sat_id.code"
+                        t-att-Descripcion="move.description_picking or move.product_id.name"
+                        Importe="0.00"
+                        ValorUnitario="0.00"
+                        t-att-Unidad="move.product_uom.name"
+                        NoIdentificacion="01"
+                        ObjetoImp="01">
+                        <cfdi:InformacionAduanera
+                            xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+                            t-if="record.l10n_mx_edi_is_export and record.l10n_mx_edi_customs_no"
+                            t-att-NumeroPedimento="record.l10n_mx_edi_customs_no" />
+                    </cfdi:Concepto>
+                </t>
+            </cfdi:Conceptos>
+        </cfdi:Comprobante>
+    </template>
+</odoo>
