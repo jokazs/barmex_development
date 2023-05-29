@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="barmex.barmex_account_payment_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_partner_id']" position="after">
+                    <field name="payment_factoring" attrs="{'invisible':[('factoraje', '=', False)]}"/>
+                    <field name="no_timbrar" />
+                </xpath>
+                 <xpath expr="//button[@name='action_draft']" position="after">
+                                             <button name="l10n_mx_edi_retry" string="Reinentar complemento de pago CFDI" type="object" class="oe_highlight" attrs="{'invisible': [('l10n_mx_edi_pac_status', 'in', ('signed', 'to_cancel', 'cancelled', 'none'))]}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_payment_exchange_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.exchange.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="after">
+                    <group col="4" colspan="2">
+                        <field name="exchange_rate" widget="boolean_toggle"/><!--attrs="{'invisible':[('partner_type', '=', 'customer')]}"-->
+                        <field name="currency_rate" attrs="{'invisible':[('exchange_rate','=',False)]}"/>
+                        <field name="redondeo" attrs="{'invisible': [('l10n_mx_edi_pac_status', 'in', ('signed', 'to_cancel', 'cancelled', 'none'))]}"/>
+                        <field name="digitos_descuadre_monto" attrs="{'invisible': [('l10n_mx_edi_pac_status', 'in', ('signed', 'to_cancel', 'cancelled', 'none'))]}"/>
+                    </group>
+                    <notebook> <!--attrs="{'invisible':[('partner_type', '!=', 'supplier')]}"> -->
+                        <page string="Invoices">
+                            <field name="invoice_ids" widget="one2many_list" mode="tree" attrs="{'readonly':[('exchange_rate','=',False), ('factoraje','=',False)]}">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="amount_total" sum="amount_total" string="Original Amount"/>
+                                    <field name="amount_residual" sum="amount_residual" string="Amount Due"/>
+                                    <field name="currency_name"/>
+                                    <field name="barmex_currency_rate" digits="[12,6]" />
+                                    <field name="amount_total_signed" sum="amount_total_signed" string="Monto MXN"/>
+                                    <field name="to_pay" sum="to_pay"/>
+                                    <field name="balance" sum="balance"/>
+                                    <field name="balance_pay_mxn" sum="balance_pay_mxn"/>
+                                    <field name="currency_rate_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" string="Moneda Pago"/>
+                                    <field name="currency_rate" digits="[12,6]"/>
+                                    <field name="amount_currency_rate" sum="amount_currency_rate"/>
+                                    <field name="profit_loss" sum="profit_loss"/>
+                                    <field name="payment_factoring" sum="payment_factoring"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="alm" string="Almacen Digital">
+                            <group name="almacen_digital" colspan="4">
+                                <field name="journal_currency" invisible="1"/>
+                                    <!-- <field string="Almacen Digital" name="folios_ap_ids" domain="['&amp;', '&amp;', ('moneda','=',journal_currency or 'MXN') , '|', ('status_folio','=','no_asignado'), ('status_folio','=','parcialmente')]" attrs="{'invisible': [('type', '!=', 'entry')]}"> -->
+                                <field string="Almacen Digital" name="folios_ap_ids" domain="['&amp;', '&amp;', ('moneda','=',journal_currency or 'MXN') , '|', ('status_folio','=','no_asignado'), ('status_folio','=','parcialmente')]">
+                                    <tree editable="bottom" string="Almacen Digital" >
+                                            <field name="fecha_comprobante" force_save="1" readonly="1"/>
+                                            <field name="name" force_save="1" readonly="1"/>
+                                            <field name="folio" force_save="1" readonly="1"/>
+                                            <field name="rfc_emisor" force_save="1" readonly="1"/>
+                                            <field name="total" sum="Total" force_save="1" readonly="1"/>
+                                            <field name="moneda" force_save="1" readonly="1"/>
+                                            <field name="cantidad_pagada"/>
+                                            <field name="saldo" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

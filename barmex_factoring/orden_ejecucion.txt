@@ -1,0 +1,11 @@
+Boton "Crear pago" en Wizard de account.payment.register
++ create_payments - Barmex personalizado
++ create_payments - Original
++ get_payments_vals - Original
++ _prepare_payment_vals - Barmex personalizado
++ _prepare_payment_vals - Original
++ _compute_payment_amount - Original
++ payment.create - Original
++ payment.post - Original
++ _prepare_payment_moves - Barmex personalizado
++ _prepare_payment_moves - Original

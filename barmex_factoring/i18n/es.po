@@ -1,0 +1,266 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* barmex_factoring
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-03 20:59+0000\n"
+"PO-Revision-Date: 2023-01-03 20:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_account_account
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__amount_currency_rate
+msgid "Amount Currency Rate"
+msgstr "Importe Moneda Tasa"
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "Amount Due"
+msgstr "Saldo Pendiente"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__balance
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__balance_pay_mxn
+msgid "Balance Pay MXN"
+msgstr "Monto Pag MXN"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__currency_name
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,help:barmex_factoring.field_account_move__currency_name
+msgid "Currency Code (ISO 4217)"
+msgstr ""
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__currency_rate_id
+msgid "Currency convert"
+msgstr "Moneda Pago"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__currency_rate
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment__currency_rate
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__currency_rate
+msgid "Currency rate"
+msgstr "Tipo Cambio"
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_res_partner
+msgid "Description"
+msgstr "Descricción"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__enabled_factoraje_field
+msgid "Enabled Factoring Field?"
+msgstr "¿Campo de factoraje habilitado?"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__exchange_rate
+msgid "Exchange rate"
+msgstr "Cambio monetario"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_account__factoraje
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment__factoraje
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__factoraje
+#: model:ir.model.fields,field_description:barmex_factoring.field_res_partner__factoraje
+#: model:ir.model.fields,field_description:barmex_factoring.field_res_users__factoraje
+msgid "Factoring"
+msgstr "Factoraje"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment__payment_partner_id
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__payment_partner_id
+#: model:ir.model.fields,field_description:barmex_factoring.field_res_partner__payment_partner_id
+#: model:ir.model.fields,field_description:barmex_factoring.field_res_users__payment_partner_id
+msgid "Invoice partner"
+msgstr "Compañía a facturar"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__invoice_ids
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "Moneda Pago"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "Monto MXN"
+msgstr ""
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "No PAC credentials specified."
+msgstr "No se especificaron credenciales de PAC."
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "No PAC specified."
+msgstr "PAC no especificado"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "No valid certificate found"
+msgstr "No se ha encontrado ningún certificado válido"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "Only a draft payment can be posted."
+msgstr "Solo un pago en borrador puede ser publicado."
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "Original Amount"
+msgstr "Monto Original"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__payment_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment__payment_factoring
+msgid "Payment Factoring"
+msgstr "Pago por Factoraje"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__payment_id_lco
+msgid "Payment ID"
+msgstr ""
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "Please check your configuration: "
+msgstr "Compruebe su configuración: "
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__profit_loss
+msgid "Profit or Loss"
+msgstr "Perdia y Ganancia"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_payment_register__payment_date_lco
+msgid "Real Payment Date"
+msgstr "Fecha real del pago"
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_account_payment_register
+msgid "Register Payment"
+msgstr "Registrar pago"
+
+#. module: barmex_factoring
+#: model:ir.model,name:barmex_factoring.model_sale_order
+msgid "Sale order"
+msgstr ""
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "The amount to pay cannot be greater than the invoice amount"
+msgstr ""
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "The factoring amount cannot be greater than the invoice amount"
+msgstr "El monto del factoraje no puede ser mayor que el monto de la factura"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "The payment cannot be processed because the invoice is not open!"
+msgstr "¡No se puede procesar el pago porque la factura no está abierta!"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_account.py:0
+#, python-format
+msgid ""
+"There cannot be more than one account in the company with active factoring"
+msgstr ""
+"No puede haber más de una cuenta en la Empresa con factoraje habilitado"
+
+#. module: barmex_factoring
+#: model:ir.model.fields,field_description:barmex_factoring.field_account_move__to_pay
+msgid "To pay"
+msgstr "A Pagar"
+
+#. module: barmex_factoring
+#: code:addons/barmex_factoring/models/account_payment.py:0
+#, python-format
+msgid "You have to define a sequence for %s in your company."
+msgstr "Debes definir una secuencia para %s en tu empresa."
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "amount_currency_rate"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "amount_total"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "amount_total_signed"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "balance"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "balance_pay_mxn"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "payment_factoring"
+msgstr "Pago por Factoraje"
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "profit_loss"
+msgstr ""
+
+#. module: barmex_factoring
+#: model_terms:ir.ui.view,arch_db:barmex_factoring.account_payment_register_form_inherit
+msgid "to_pay"
+msgstr ""

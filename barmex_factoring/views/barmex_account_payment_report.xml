@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="barmex_header_account_payment">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+                <!-- Page -->
+                <div class="header">
+                    <div class="row" style="padding:1px;font-size:10px">
+                        <div class="col-2">
+                            <img src="/web/binary/company_logo" class="float-left"
+                                 style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                        </div>
+                        <div class="col-4 col-xs-4 col-sm-4 col-lg-4"
+                             style="border: solid 1px;">
+                            <div class="row">
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-left">DOCUMENTO:</div>
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-right">COMPLEMENTO DE PAGO</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-left">SERIE:</div>
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-right">
+                                    <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                        <span t-esc="xml.get('serie', xml.get('Serie'))"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-left">FOLIO:</div>
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-right">
+                                    <span t-esc="xml.get('folio', xml.get('Folio'))"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-left">FECHA:</div>
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-right">
+                                    <span t-esc="o.payment_date"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6 text-left">TIPO COMPROBANTE:</div>
+                                <div class="col-6 col-xs-6 col-sm-6 col-lg-6  text-right">
+                                    <span t-esc="xml.get('descripcion', xml.get('Descripcion'))"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-xs-6 col-sm-6 col-lg-6">
+                            <div class="row" style="border-top: solid 1px;border-right: solid 1px;">
+                                <div class="col-4 col-xs-4 col-sm-4 col-lg-4 text-left" style="padding:1px">FECHA
+                                    TIMBRADO:
+                                </div>
+                                <div class="col-8 col-xs-8 col-sm-8 col-lg-8 text-left" style="padding:1px">
+                                    <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                        <span t-esc="tfd.get('FechaTimbrado', '').replace('T', ' ')"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="border-right: solid 1px;">
+                                <div class="col-4 col-xs-4 col-sm-4 col-lg-4 text-left" style="padding:1px">CERTIFICADO
+                                    SAT:
+                                </div>
+                                <div class="col-8 col-xs-8 col-sm-8 col-lg-8 text-left" style="padding:1px">
+                                    <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                        <span t-esc="tfd.get('NoCertificadoSAT')"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="border-right: solid 1px;border-bottom: solid 1px;">
+                                <div class="col-4 col-xs-4 col-sm-4 col-lg-4 text-left" style="padding:1px">FOLIO
+                                    FISCAL:
+                                </div>
+                                <div class="col-8 col-xs-8 col-sm-8 col-lg-8 text-left" style="padding:1px">
+                                    <span t-esc="o.l10n_mx_edi_cfdi_uuid"/>
+                                </div>
+                            </div>
+                            <div class="row" style="border-right: solid 1px">
+                                <div class="col-12 col-xs-12 col-sm-12 col-lg-12 text-right" style="padding:1px">N°
+                                    CERTIFICADO
+                                </div>
+                            </div>
+                            <div class="row" style="border-right: solid 1px;border-bottom: solid 1px;">
+                                <div class="col-12 col-xs-12 col-sm-12 col-lg-12 text-right" style="padding:1px">
+                                    <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                        <span t-esc="xml.get('noCertificado', xml.get('NoCertificado', 'No identificado'))"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="barmex_report_payment_receipt">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                        <t t-set="xml" t-value="o.l10n_mx_edi_get_xml_etree()"/>
+                        <t t-set="tfd" t-value="o.l10n_mx_edi_get_tfd_etree(xml)"/>
+                        <t t-set="uso" t-value="o.l10n_mx_edi_get_receptor_cfdi(xml)"/>
+                        <t t-set="pago" t-value="o.l10n_mx_edi_get_payment_pago10_etree(xml)"/>
+                        <t t-set="tfd_original_string" t-value="o._get_l10n_mx_edi_cadena()"/>
+                    </t>
+                    <div class="page">
+                        <t t-call="barmex.barmex_header_account_payment"/>
+                        <br></br>
+                        <table class="table table-bordered"
+                               style="border-left: solid 1px;border-top: solid 1px;border-right: solid 1px;border-bottom: solid 1px;font-size:10px;">
+                            <thead>
+                                <tr>
+                                    <th>EMISOR</th>
+                                    <th>LUGAR EMISIÓN</th>
+                                    <th>CONSIGNAR A</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span t-esc="o.company_id.name"/>
+                                        <br></br>
+                                        <span t-esc="o.company_id.vat"/>
+                                        <br></br>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '601'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - General de Ley Personas Morales
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '603'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Personas Morales con Fines no Lucrativos
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '605'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Sueldos y Salarios e Ingresos Asimilados a Salarios
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '606'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Arrendamiento
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '607'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Régimen de Enajenación o Adquisición de Bienes
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '608'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Demás ingresos
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '609'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Consolidación
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '610'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Residentes en el Extranjero sin Establecimiento Permanente en México
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '611'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Ingresos por Dividendos (socios y accionistas)
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '612'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Personas Físicas con Actividades Empresariales y Profesionales
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '614'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Ingresos por intereses
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '615'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Régimen de los ingresos por obtención de premios
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '616'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Sin obligaciones fiscales
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '620'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Sociedades Cooperativas de Producción que optan por diferir sus ingresos
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '621'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Incorporación Fiscal
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '622'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '623'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Opcional para Grupos de Sociedades
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '624'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Coordinados
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '625'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Régimen de las Actividades Empresariales con ingresos a través de
+                                            Plataformas Tecnológicas
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '628'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Hidrocarburos
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '629'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - De los Regímenes Fiscales Preferentes y de las Empresas Multinacionales
+                                        </t>
+                                        <t t-if="o.company_id.l10n_mx_edi_fiscal_regime == '630'">
+                                            <span t-esc="o.company_id.l10n_mx_edi_fiscal_regime"/>
+                                            - Enajenación de acciones en bolsa de valores
+                                        </t>
+                                        <br></br>
+                                        <span t-field="o.company_id.street_name"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.street2"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.l10n_mx_edi_colony"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.l10n_mx_edi_locality"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.l10n_mx_edi_locality_id.name"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.city"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.state_id.name"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.zip"/>
+                                        <br></br>
+                                        <span t-field="o.company_id.country_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.partner_id.name"/>
+                                        <br></br>
+                                        <t t-if="o.partner_id.street_name">
+                                            <span t-field="o.partner_id.street_name"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.street2">
+                                            <span t-field="o.partner_id.street2"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.l10n_mx_edi_colony">
+                                            <span t-field="o.partner_id.l10n_mx_edi_colony"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.l10n_mx_edi_locality">
+                                            <span t-field="o.partner_id.l10n_mx_edi_locality"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.l10n_mx_edi_locality_id">
+                                            <span t-field="o.partner_id.l10n_mx_edi_locality_id.name"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.city">
+                                            <span t-field="o.partner_id.city"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            <span t-field="o.partner_id.state_id.name"/>
+                                            <br></br>
+                                        </t>
+                                        <t t-if="o.partner_id.zip">
+                                            <span t-field="o.partner_id.zip"/>
+                                            <br></br>
+                                        </t>
+                                        <span t-field="o.partner_id.country_id.name"/>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered"
+                               style="border-left: solid 1px;border-top: solid 1px;border-right: solid 1px;border-bottom: solid 1px;font-size:10px;">
+                            <tr>
+                                <td class="text-center">RECEPTOR</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span t-esc="o.partner_id.barmex_id_cust"/>
+                                            -
+                                            <span t-esc="o.partner_id.name"/>
+                                            <br/>
+                                            <span t-field="o.partner_id.street_name"/>
+                                            <span t-field="o.partner_id.street_number"/>
+                                            <br/>
+                                            <span t-field="o.partner_id.city"/>
+                                            <br/>
+                                            <span t-field="o.partner_id.state_id.name"/>
+                                            <span t-esc="o.partner_id.zip"/>
+                                            <span t-esc="o.partner_id.country_id.name"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                                <div class="row">
+                                                    <div class="col-3">RFC:</div>
+                                                    <div class="col-9 text-left">
+                                                        <span t-esc="o.partner_id.vat"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3">USO CFDI:</div>
+                                                    <div class="col-9">
+                                                        <span t-if="pago == '01'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Efectivo
+                                                        </span>
+                                                        <span t-if="pago == '02'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Cheque nominativo
+                                                        </span>
+                                                        <span t-if="pago == '03'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Transferencia electrónica de fondos
+                                                        </span>
+                                                        <span t-if="pago == '04'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Tarjeta de crédito
+                                                        </span>
+                                                        <span t-if="pago == '05'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Monedero electrónico
+                                                        </span>
+                                                        <span t-if="pago== '06'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Dinero electrónico
+                                                        </span>
+                                                        <span t-if="pago== '08'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Vales de despensa
+                                                        </span>
+                                                        <span t-if="pago== '12'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Dación en pago
+                                                        </span>
+                                                        <span t-if="pago== '13'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Pago por subrogación
+                                                        </span>
+                                                        <span t-if="pago== '14'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Pago por consignación
+                                                        </span>
+                                                        <span t-if="pago== '15'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Condonación
+                                                        </span>
+                                                        <span t-if="pago== '17'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Compensación
+                                                        </span>
+                                                        <span t-if="pago== '23'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Novación
+                                                        </span>
+                                                        <span t-if="pago== '24'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Confusión
+                                                        </span>
+                                                        <span t-if="pago== '25'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Remisión de deuda
+                                                        </span>
+                                                        <span t-if="pago== '26'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Prescripción o caducidad
+                                                        </span>
+                                                        <span t-if="pago== '27'">
+                                                            <span t-esc="uso"/>
+                                                            - Asatisfacción del acreedor
+                                                        </span>
+                                                        <span t-if="pago== '28'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Tarjeta de débito
+                                                        </span>
+                                                        <span t-if="pago== '29'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Tarjeta de servicios
+                                                        </span>
+                                                        <span t-if="pago== '30'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Aplicación de anticipos
+                                                        </span>
+                                                        <span t-if="pago== '31'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Intermediario pagos
+                                                        </span>
+                                                        <span t-if="pago== '99'">
+                                                            <span t-esc="uso"/>
+                                                            -
+                                                            Por definir
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <div class="row">
+                                                <div class="col-3">FECHA PAGO:</div>
+                                                <div class="col-9">
+                                                    <span t-esc="o.payment_date"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table">
+                            <thead class="table-dark" style="font-size:10px">
+                                <tr>
+                                    <th>CLAVE SAT</th>
+                                    <th>U.M. SAT</th>
+                                    <th>CLAVE BARMEX</th>
+                                    <th colspan="3">DESCRIPCIÓN BARMEX</th>
+                                    <th>U.M. BARMEX</th>
+                                    <th>CANTIDAD</th>
+                                    <th>PRECIO</th>
+                                    <th>IMPORTE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.invoice_ids.invoice_line_ids" t-as="inv">
+                                    <td>
+                                        <span t-esc="inv.product_id.l10n_mx_edi_code_sat_id.code"/>
+                                    </td>
+                                    <td class="text-right" t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('Version')">
+                                        <span t-esc="inv.product_uom_id.l10n_mx_edi_code_sat_id.code"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inv.product_id.default_code"/>
+                                    </td>
+                                    <td colspan="3">
+                                        <span t-field="inv.product_id.name"/>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <span t-field="inv.quantity"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inv.price_unit"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inv.move_id.amount_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <thead class="table-dark" style="font-size:10px">
+                                <tr>
+                                    <th>CUENTA BENEFICIARIO</th>
+                                    <th>RFC BENEFICIARIO</th>
+                                    <th>CUENTA ORDENANTE</th>
+                                    <th>RFC ORDENANTE</th>
+                                    <th>FORMA PAGO</th>
+                                    <th>MONTO</th>
+                                    <th>MONEDA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td>
+                                    <span t-esc="o.partner_id.bank_ids[0].acc_number"/>
+                                </td>
+                                <td>
+                                    <span t-esc="o.partner_id.vat"/>
+                                </td>
+                                <td>
+                                    <span t-esc="o.company_id.partner_id.bank_ids[0].acc_number"/>
+                                </td>
+                                <td>
+                                    <span t-esc="o.company_id.partner_id.vat"/>
+                                </td>
+                                <td>
+                                    <span t-esc="o.l10n_mx_edi_payment_method_id.code"/>
+                                    -
+                                    <span t-esc="o.l10n_mx_edi_payment_method_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.amount"/>
+                                </td>
+                                <td>
+                                    <span t-esc="o.barmex_currency_id.name"/>
+                                </td>
+                                <br></br>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <thead class="table-dark" style="font-size:10px">
+                                <tr>
+                                    <th>FOLIO FACTURA</th>
+                                    <th>FOLIO FISCAL</th>
+                                    <th>METODO PAGO</th>
+                                    <th>N° PARCIALIDAD</th>
+                                    <th>IMPORTE PAGADO</th>
+                                    <th>MONEDA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.invoice_ids" t-as="inv">
+                                    <t t-if="inv.l10n_mx_edi_cfdi_uuid">
+                                        <t t-set="xml1" t-value="inv.l10n_mx_edi_get_xml_etree()"/>
+                                        <t t-set="tfd" t-value="inv.l10n_mx_edi_get_tfd_etree(xml)"/>
+                                        <t t-set="tfd_original_string" t-value="inv._get_l10n_mx_edi_cadena()"/>
+                                        <t t-set="external" t-value="inv.l10n_mx_edi_get_et_etree(xml)"/>
+                                    </t>
+                                    <td>
+                                        <span t-esc="inv.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="xml1.get('folio', xml1.get('Folio', 'No identificado'))"/>
+                                    </td>
+                                    <td>
+                                        <!--span t-esc="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado'))"/-->
+                                        <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'I'">
+                                            Entry
+                                        </span>
+                                        <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'E'">
+                                            Egress
+                                        </span>
+                                        <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'T'">
+                                            Transfer
+                                        </span>
+                                        <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'N'">
+                                            Paysheet
+                                        </span>
+                                        <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'P'">
+                                            Payment
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span t-if="xml1.get('metodoPago', xml1.get('MetodoPago', 'No identificado')) == 'PUE'">
+                                            Pago en Una sola Exhibición
+                                        </span>
+                                        <span t-if="xml1.get('metodoPago', xml1.get('MetodoPago', 'No identificado')) == 'PPD'">
+                                            Pago en Parcialidades o Diferido
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="inv.amount_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inv.currency_id.name"/>
+                                    </td>
+                                </t>
+                            </tbody>
+                        </table>
+                        <t t-if="o.factoraje">
+                            <table class="table">
+                                <thead class="table-dark" style="font-size:10px">
+                                    <tr>
+                                        <th>CUENTA BENEFICIARIO</th>
+                                        <th>RFC BENEFICIARIO</th>
+                                        <th>CUENTA ORDENANTE</th>
+                                        <th>RFC ORDENANTE</th>
+                                        <th>FORMA PAGO</th>
+                                        <th>MONTO</th>
+                                        <th>MONEDA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td>
+                                        <t t-if="o.payment_partner_id.bank_ids">
+                                            <span t-esc="o.payment_partner_id.bank_ids[0].acc_number"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.payment_partner_id.vat"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.company_id.partner_id.bank_ids[0].acc_number"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.company_id.partner_id.vat"/>
+                                    </td>
+                                    <td>
+                                        <span>17</span>
+                                        -
+                                        <span>COMPENSACIÓN</span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="sum(o.invoice_ids.mapped('payment_factoring'))"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.barmex_currency_id.name"/>
+                                    </td>
+                                    <br></br>
+                                </tbody>
+                            </table>
+                            <table class="table">
+                                <thead class="table-dark" style="font-size:10px">
+                                    <tr>
+                                        <th>FOLIO FACTURA</th>
+                                        <th>FOLIO FISCAL</th>
+                                        <th>METODO PAGO</th>
+                                        <th>N° PARCIALIDAD</th>
+                                        <th>IMPORTE PAGADO</th>
+                                        <th>MONEDA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.invoice_ids" t-as="inv">
+                                        <t t-if="inv.l10n_mx_edi_cfdi_uuid">
+                                            <t t-set="xml1" t-value="inv.l10n_mx_edi_get_xml_etree()"/>
+                                            <t t-set="tfd" t-value="inv.l10n_mx_edi_get_tfd_etree(xml)"/>
+                                            <t t-set="tfd_original_string" t-value="inv._get_l10n_mx_edi_cadena()"/>
+                                            <t t-set="external" t-value="inv.l10n_mx_edi_get_et_etree(xml)"/>
+                                        </t>
+                                        <td>
+                                            <span t-esc="inv.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="xml1.get('folio', xml1.get('Folio', 'No identificado'))"/>
+                                        </td>
+                                        <td>
+                                            <!--span t-esc="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado'))"/-->
+                                            <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'I'">
+                                                Entry
+                                            </span>
+                                            <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'E'">
+                                                Egress
+                                            </span>
+                                            <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'T'">
+                                                Transfer
+                                            </span>
+                                            <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'N'">
+                                                Paysheet
+                                            </span>
+                                            <span t-if="xml1.get('tipoDeComprobante', xml1.get('TipoDeComprobante', 'No identificado')) == 'P'">
+                                                Payment
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-if="xml1.get('metodoPago', xml1.get('MetodoPago', 'No identificado')) == 'PUE'">
+                                                Pago en Una sola Exhibición
+                                            </span>
+                                            <span t-if="xml1.get('metodoPago', xml1.get('MetodoPago', 'No identificado')) == 'PPD'">
+                                                Pago en Parcialidades o Diferido
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span t-esc="inv.payment_factoring"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="inv.currency_id.name"/>
+                                        </td>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <div class="row">
+                            <div class="col-4 text-left">
+                                MONEDA:
+                                <span t-esc="o.company_id.currency_id.name"/>
+                            </div>
+                            <div class="col-8 text-left">
+                                FORMA DE PAGO:
+                                <span t-esc="o.l10n_mx_edi_payment_method_id.code"/>
+                                -
+                                <span t-esc="o.l10n_mx_edi_payment_method_id.name"/>
+                            </div>
+                        </div>
+                        <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                            <div class="row" id="complement">
+                                <div class="barcode col-2">
+                                    <t t-set="sello" t-value="xml.get('Sello', 'No identificado')[-8:]"/>
+                                    <img alt="Barcode"
+                                         t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=128&amp;height=128' % quote_plus('https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(re=o.company_id.vat, rr=o.partner_id.vat,tt='%.*f' % (o.currency_id.decimal_places, o.amount), id=o.l10n_mx_edi_cfdi_uuid) + '&amp;fe=%s' % quote_plus(sello, 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
+                                </div>
+                                <div class="complement-details col-10">
+                                    <div class="digital-stamp">
+                                        <span>Digital stamp of the emitter</span>
+                                    </div>
+                                    <div class="digital-stamp-content">
+                                        <span t-esc="xml.get('sello', xml.get('Sello', 'No identificado'))"/>
+                                    </div>
+                                    <div class="digital-stamp">
+                                        <span>Digital stamp SAT</span>
+                                    </div>
+                                    <div class="digital-stamp-content">
+                                        <span t-esc="tfd.get('selloSAT', tfd.get('SelloSAT', 'No identificado'))"/>
+                                    </div>
+                                    <div class="digital-stamp">
+                                        <span>Original chain complement of digital certification SAT</span>
+                                    </div>
+                                    <div class="digital-stamp-content">
+                                        <span t-esc="tfd_original_string"/>
+                                    </div>
+                                    <div t-if="xml.Emisor.xpath('cfdi:ExpedidoEn', namespaces=xml.nsmap)"
+                                         class="digital-stamp">
+                                        <span>Issued from</span>
+                                    </div>
+                                    <div t-if="xml.Emisor.xpath('cfdi:ExpedidoEn', namespaces=xml.nsmap)"
+                                         class="digital-stamp-content">
+                                        <span t-esc="' | '.join([ '%s: %s' % (key, value) for key, value in xml.Emisor.ExpedidoEn.items()])"/>
+                                    </div>
+                                    <div class="digital-stamp-content text-center">
+                                        <strong>This document is a printed representation of a CFDI</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="footer">
+                            <div class="row">
+                                <div t-if="report_type == 'pdf'" class="col-4 text-muted text-right">
+                                    Page:
+                                    <span class="page"/>
+                                    /
+                                    <span class="topage"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>
