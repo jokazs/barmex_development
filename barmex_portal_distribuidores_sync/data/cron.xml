@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="sync_product_stock" model="ir.cron">
+      <field name="name">Sync Product Stock to Customer Portal</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">minutes</field>
+      <field name="numbercall">-1</field>
+      <field name="nextcall" eval="(DateTime.now() + timedelta(seconds=10)).strftime('%Y-%m-%d %H:%M:%S')" />
+      <field name="doall" eval="False"/>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="model_id" ref="model_product_stock"/>
+      <field name="code">env['product.stock'].sync_to_mysql(host="db2", user="root", password="m4mm4m02", database="info", port=3306)</field>
+    </record>
+
+    <record id="sync_product_stock_all" model="ir.cron">
+      <field name="name">Sync All Product Stock to Customer Portal All</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="nextcall" eval="DateTime.combine(DateTime.today(), DateTime.min.time() - timedelta(hours=6)).strftime('%Y-%m-%d %H:%M:%S')" />
+      <field name="doall" eval="False"/>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="model_id" ref="model_product_stock"/>
+      <field name="code">env['product.stock'].sync_to_mysql(host="db2", user="root", password="m4mm4m02", database="info", port=3306, sync_all=True)</field>
+    </record>
+
+</odoo>
