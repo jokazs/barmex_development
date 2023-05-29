@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="barmex_crm_team_inherit_view_form" model="ir.ui.view">
+            <field name="name">barmex.crm.team.inherit.view.form</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="agente_ventas_crm"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="pos_golive_account_move_line_tree" model="ir.ui.view">
+        <field name="name">pos.golive.account.move.line</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <tree string="Partidas de Facturas" create="false" edit="false">
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="product_uom_id"/>
+                <field name="grupo_n2"/>
+                <field name="grupo_n3" invisible="1"/>
+                <field name="sub_grupo_n2"/>
+                <field name="sub_grupo_n3" invisible="1"/>
+                <field name="marca_n2"/>
+                <field name="marca_n3" invisible="1"/>
+                <field name="move_id"/>
+                <field name="partner_id"/>
+                <field name="quantity"/>
+                <field name="price_total"/>
+                <field name="moneda_n2"/>
+                <field name="moneda_n3" invisible="1"/>
+                <field name="subtotal_n2"/>
+                <field name="impuestos_n2"/>
+                <field name="descuento_n2"/>
+                <field name="monto_mxn_n2"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_golive_account_move_line_action" model="ir.actions.act_window">
+        <field name="name">Partidas de Facturas</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pos_golive_account_move_line_tree"/>
+        <field name="domain">[('parent_state','=','posted'),('line_type','in',('out_invoice','out_refund')),('exclude_from_invoice_tab','=',False),('account_id','in',(7978,32,7888,3364,3506,2543,3500,2396,2395,8,3382,8015,3293))]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new account move line
+            </p>
+        </field>
+    </record>
+
+    <record id="pgaml" model="ir.ui.menu">
+        <field name="name">Partidas de Facturas</field>
+        <field name="parent_id" ref="account_accountant.menu_accounting"/>
+        <field name="action" ref="pos_golive_account_move_line_action"/>
+        <field name="sequence" type="int">30</field>
+    </record>
+
+    <record id="pos_golive_account_move_line_tree2" model="ir.ui.view">
+        <field name="name">pos.golive.account.move.line.tree</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <tree string="Rentabilidad" create="false" edit="false">
+                <field name="partner_id" string="Cliente"/>
+                <field name="cliente_n2"/>
+                <field name="move_id" string="Factura"/>
+                <field name="date" string="Fecha Movimiento"/>
+                <field name="fecha_n2" string="Fecha Factura T"/>
+                <field name="fecha_n3" invisible="1"/>
+                <field name="name" string="Producto"/>
+                <!-- <field name="product_uom_id"/> -->
+                <field name="grupo_n2"/>
+                <field name="grupo_n3" invisible="1"/>
+                <field name="sub_grupo_n2"/>
+                <field name="sub_grupo_n3" invisible="1"/>
+                <field name="marca_n2"/>
+                <field name="marca_n3" invisible="1"/>
+                <field name="quantity"/>
+                <field name="subtotal_n2"/>
+                <field name="subtotal_n3" invisible="1"/>
+                <field name="costo_n2"/>
+                <field name="margen_n2"/>
+                <!-- <field name="moneda_n2"/>
+                <field name="moneda_n3" invisible="1"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_golive_account_move_line_action2" model="ir.actions.act_window">
+        <field name="name">Rentabilidad</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pos_golive_account_move_line_tree2"/>
+        <field name="domain">[('parent_state','=','posted'),('line_type','in',('out_invoice','out_refund')),('exclude_from_invoice_tab','=',False),('account_id','in',(7978,32,7888,3364,3506,2543,3500,2396,2395,8,3382,8015,3293))]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new account move line
+            </p>
+        </field>
+    </record>
+
+    <record id="pgaml2" model="ir.ui.menu">
+        <field name="name">Rentabilidad 2.0</field>
+        <field name="parent_id" ref="account_accountant.menu_accounting"/>
+        <field name="action" ref="pos_golive_account_move_line_action2"/>
+        <field name="sequence" type="int">35</field>
+    </record>
+</data>
+</odoo>

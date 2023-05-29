@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_inherit_view_form" model="ir.ui.view">
+            <field name="name">crm.lead.inherit.view.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="after">
+                    <field name="currency_lead"/>
+                </field>
+                <field name="team_id" position="after">
+                    <field name="agente_venta_cliente" readonly="1"/>
+                    <field name="zona_venta_cliente" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="crm_lead_inherit_view_test" model="ir.ui.view">
+            <field name="name">crm.lead.view.inherit.test</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <!-- <kanban> -->
+                <field name="planned_revenue" position="after">
+                    <field name="currency_lead"/>
+                </field>
+                <!-- </kanban> test -->
+            </field>
+        </record>
+
+        <record id="crm_lead_inherit_view_kanban" model="ir.ui.view">
+            <field name="name">crm.lead.view.inherit.kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <!-- <kanban> -->
+                    <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[2]/div[3]/t[1]/field[@name='planned_revenue']" position="after">
+                        <field name="currency_lead"/>
+                    </xpath>
+                <!-- </kanban> kanban -->
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="viscofan" name="VISCOFAN">
+            <Viscofan>
+                <ordenCompra><t t-esc="record.addenda_id.po"/></ordenCompra>
+                <noAcreedor><t t-esc="record.addenda_id.acreedor_addenda"/></noAcreedor>
+                <plantaEntrega><t t-esc="record.addenda_id.planta_entrega_addenda"/></plantaEntrega>
+                <noLineaArticulo><t t-esc="record.addenda_id.nolineaart_addenda"/></noLineaArticulo>
+                <e-mail><t t-esc="record.addenda_id.email_addenda"/></e-mail>
+            </Viscofan>
+        </template>
+        <record id="viscofan" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

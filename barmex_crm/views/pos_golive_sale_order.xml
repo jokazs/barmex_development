@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_sale_order_form" model="ir.ui.view">
+        <field name="name">barmex_sale_order_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="agente_venta_cliente" readonly="1"/>
+                <field name="zona_venta_cliente" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
