@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--view form-->
+        <record id="action_move_products" model="ir.ui.view">
+            <field name="name">barmex.move.products.form</field>
+            <field name="model">barmex.move.products</field>
+            <field name="arch" type="xml">
+                <form string="Mover productos a otro pedido de compra">
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="purchase_id" context="{'default_purchase_id': active_id}" invisible="1"/>
+                        <field name="order_line_ids" required="1" widget="many2many_tags" placeholder="Agregar productos" string="Productos a mover" options="{'no_create_edit': True}"/>
+                    </group>
+                    <footer>
+                        <button name="action_barmex_move_products_apply" string="Enviar" type="object" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_barmex_move_products" model="ir.actions.act_window">
+            <field name="name">Mover productos a otro Pedido de compra</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">barmex.move.products</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="action_move_products"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

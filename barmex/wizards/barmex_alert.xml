@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="barmex_credit_alert" model="ir.ui.view">
+        <field name="name">Barmex Credit Alert</field>
+        <field name="model">barmex.alert</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_id" nolabel="1" class="oe_inline"/>
+                    <field name="exception_msg" colspan="2" nolabel="1" class="oe_inline"/>
+                </group>
+                <footer>
+                    <button
+                        string="Continue"
+                        class="oe_highlight"
+                        name="button_continue"
+                        type="object"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

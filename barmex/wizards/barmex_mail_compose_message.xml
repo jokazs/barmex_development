@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_mail_compose_message_form" model="ir.ui.view">
+        <field name="name">barmex_mail_compose_message_form_view</field>
+        <field name="model">mail.compose.message</field>
+        <field name="inherit_id" ref="mail.email_compose_message_wizard_form" />
+        <field name="arch" type="xml">
+            <span name="document_followers_text" position="replace">
+            </span>
+            <field name="partner_ids" position="replace"> 
+                <field name="email_recepient" widget="email"/>           
+                <field name="partner_ids" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

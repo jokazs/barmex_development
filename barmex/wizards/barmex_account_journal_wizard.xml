@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="barmex_account_journal_report_wizard" model="ir.ui.view" >
+    <field name="name">Account Journal Report Wizard</field>
+    <field name="model">barmex.account.journal.report</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Accoun Journal Wizard">
+            <group>
+                <group string="Date">
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </group>
+                <group string="Journal">
+                    <field name="journal_ids" widget="many2many_tags" options="{'no_create': True}" />
+                </group>
+                <group string="Account Move">
+                    <field name="move_id" domain="[('state','=','posted')]"/>
+                </group>
+            </group>
+            <footer>
+                <button name="get_report" string="Print" type="object" class="oe_highlight"/>
+                <button string="Cancel" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+</odoo>

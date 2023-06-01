@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--barmex_cfdi_relacionado view form-->
+        <record id="action_barmex_cfdi_relacionado_view" model="ir.ui.view">
+            <field name="name">barmex.cfdi.relacionado.form</field>
+            <field name="model">barmex.cfdi.relacionado</field>
+            <field name="arch" type="xml">
+                <form string="CFDI relacionados" context="{'default_partner_id': partner_id}">
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <field name="tipo_relacionado"/>
+                        <field name="account_move_id" required="1" domain="[('partner_id','=',partner_id)]" options="{'no_create_edit': True}"/>
+                        <field name="partner_id" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_barmex_cfdi_relacionado_apply" string="Registrar" type="object" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_barmex_cfdi_relacionado" model="ir.actions.act_window">
+            <field name="name">CFDI relacionados</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">barmex.cfdi.relacionado</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="action_barmex_cfdi_relacionado_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
