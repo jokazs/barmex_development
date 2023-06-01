@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sanmina" name="SANMINA">
+            <SANMINA:AP
+                        xsi:schemaLocation="https://webapps2.sanmina-sci.com/partners-access https://webapps2.sanmina.sci.com/partners-access/addenda-sanmina.xsd"
+                        t-att-PONumber="record.addenda_id.po"
+                        t-att-email="record.partner_id.addenda_id.correo"
+                        t-att-LegalEntityName="record.partner_id.addenda_id.san_name"
+                        t-att-CustomerCode="record.partner_id.addenda_id.san_cust"
+                        t-att-Currency="record.currency_id.name"
+                        t-att-ExchangeRate="record.rate()"
+                        t-att-InternalInvoiceNumber="record.name"
+                        xmlns:SANMINA="https://webapps2.sanmina-sci.com/partners-access"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        </template>
+        <record id="sanmina" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

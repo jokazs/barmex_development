@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="porcelanite" name="Porcelanite Lamosa">
+            <if:FacturaInterfactura
+                                    xsi:schemaLocation="https://www.interfactura.com/Schemas/Documentos https://www.interfactura.com/Schemas/Documentos/DocumentoInterfactura.xsd"
+                                    xmlns:if="https://www.interfactura.com/Schemas/Documentos"
+                                    TipoDocumento="Factura"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <if:Emisor t-att-RI="record.partner_id.addenda_id.por_emisor" t-att-NumProveedor="record.partner_id.addenda_id.proveedor" />
+                <if:Receptor t-att-RI="record.partner_id.addenda_id.por_receptor" />
+                <t t-if="record.amount_tax &gt; 0" t-set="tax" t-value="16" />
+                <t t-else="" t-set="tax" t-value="0" />
+                <if:Encabezado
+                               t-att-formaDePago="record.l10n_mx_edi_payment_method_id.name"
+                               t-att-SubTotal="record.amount_untaxed"
+                               t-att-IVAPCT="tax"
+                               t-att-Iva="record.amount_tax"
+                               t-att-Total="record.amount_total"
+                               t-att-Moneda="record.currency_id.name"
+                               TipoDocumento="Factura"
+                               t-att-PlantaEmite="record.partner_id.addenda_id.por_planta"
+                               t-att-FolioOrdenCompra="record.addenda_id.por_folio"
+                               t-att-FolioNotaRecepcion="record.addenda_id.recepcion"
+                               t-att-NumProveedor="record.partner_id.addenda_id.proveedor"
+                               t-att-Sociedad="record.partner_id.addenda_id.sociedad" ProcesoId="1">
+                    <t t-set="num" t-value="1" />
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
+                        <if:Cuerpo t-att-Cantidad="line.quantity" t-att-Concepto="line.name" t-att-PUnitario="line.price_unit" t-att-Importe="line.price_subtotal" t-att-LineaOC="num" />
+                        <t t-set="num" t-value="num + 1" />
+                    </t>
+                </if:Encabezado>
+            </if:FacturaInterfactura>
+        </template>
+        <record id="porcelanite" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

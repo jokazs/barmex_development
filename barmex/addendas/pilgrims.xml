@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="pilgrims" name="PILGRIMS PRIDE">
+            <Pilgrims>
+                <Proveedor><t t-esc="record.partner_id.addenda_id.proveedor" /></Proveedor>
+                <Proceso><t t-esc="record.partner_id.addenda_id.pil_proceso" /></Proceso>
+                <t t-set="num" t-val="10" />
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <Partida t-att-Pedido="record.addenda_id.po" t-att-Posicion="num">
+                        <Referencia><t t-esc="record.name" /></Referencia>
+                    </Partida>
+                    <t t-set="num" t-val="num + 10" />
+                </t>
+            </Pilgrims>
+        </template>
+        <record id="pilgrims" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

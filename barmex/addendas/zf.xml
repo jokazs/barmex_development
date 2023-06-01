@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="zf" name="ZF SUSPENSION TECHNOLOGY">
+            <Addenda_ZF_Detecno>
+                <Version>1.0</Version>
+                <Moneda><t t-esc="record.currency_id.name" /></Moneda>
+                <IDFactura><t t-esc="record.name" /></IDFactura>
+                <Conceptos>
+                    <t t-set="pos" t-value="10" />
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
+                        <Concepto t-att-NumPosicion="pos" t-att-NumOc="record.addenda_id.po" t-att-cantidad="line.quantity" t-att-valorUnitario="line.price_unit" t-att-importe="line.price_subtotal" />
+                        <t t-set="pos" t-value="pos + 10" />
+                    </t>
+                </Conceptos>
+            </Addenda_ZF_Detecno>
+        </template>
+        <record id="zf" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

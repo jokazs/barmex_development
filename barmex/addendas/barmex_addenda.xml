@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="barmex_addenda_search" model="ir.ui.view">
+        <field name="name">barmex_addenda_search</field>
+        <field name="model">barmex.addenda</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="type" />
+                <field name="l10n_mx_edi_addenda" />
+            </search>
+        </field>
+    </record>
+
+    <record id="barmex_addenda_tree" model="ir.ui.view">
+        <field name="name">barmex_addenda_tree</field>
+        <field name="model">barmex.addenda</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="type" />
+                <field name="l10n_mx_edi_addenda" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="barmex_addenda_form" model="ir.ui.view">
+        <field name="name">barmex_addenda_form</field>
+        <field name="model">barmex.addenda</field>
+        <field name="arch" type="xml">
+            <form string="Addenda">
+                <sheet>
+                    <group name="base">
+                        <field name="name" />
+                        <field name="type" />
+                        <field name="l10n_mx_edi_addenda" />
+                        <field name="company_id" readonly="1" force_save="1" />
+                    </group>
+                    <group name="hornos" string="Altos Hornos de México" attrs="{'invisible': [('type','!=','hornos')]}">
+                        <group>
+                            <field name="sociedad" />
+                            <field name="proveedor" />
+                            <field name="correo" />
+                        </group>
+                    </group>
+                    <group name="femsa" string="FEMSA" attrs="{'invisible': [('type','!=','femsa')]}">
+                        <group>
+                            <field name="correo" />
+                            <field name="proveedor" />
+                            <field name="sociedad" />
+                        </group>
+                    </group>
+                    <group name="lala" string="LALA" attrs="{'invisible': [('type','!=','lala')]}">
+                        <group>
+                            <field name="lala_seller" />
+                        </group>
+                    </group>
+                    <group name="mabe" string="MABE" attrs="{'invisible': [('type','!=','mabe')]}">
+                        <group>
+                            <field name="proveedor" />
+                            <field name="mabe_calle" />
+                            <field name="mabe_planta" />
+                            <field name="mabe_ext" />
+                            <field name="mabe_int" />
+                        </group>
+                    </group>
+                    <group name="minera" string="Minera del Norte" attrs="{'invisible': [('type','!=','minera')]}">
+                        <group>
+                            <field name="sociedad" />
+                            <field name="proveedor" />
+                            <field name="correo" />
+                        </group>
+                    </group>
+                    <group name="porcelanite" string="Porcelanite Lamosa" attrs="{'invisible': [('type','!=','porcelanite')]}">
+                        <group>
+                            <field name="por_emisor" />
+                            <field name="proveedor" />
+                            <field name="por_receptor" />
+                            <field name="por_planta" />
+                            <field name="sociedad" />
+                        </group>
+                    </group>
+                    <group name="sanmina" string="SANMINA" attrs="{'invisible': [('type','!=','sanmina')]}">
+                        <group>
+                            <field name="correo" />
+                            <field name="san_cust" />
+                            <field name="san_name" />
+                        </group>
+                    </group>
+                    <group name="sergoba" string="SERGOBA" attrs="{'invisible': [('type','!=','sergoba')]}">
+                        <group>
+                            <field name="correo" />
+                            <field name="proveedor" />
+                            <field name="sociedad" />
+                        </group>
+                    </group>
+                    <group name="envases" string="Envases Universales" attrs="{'invisible': [('type','!=','envases')]}">
+                        <group>
+                            <field name="env_id" />
+                            <field name="env_trans" />
+                        </group>
+                    </group>
+                    <group name="sabritas" string="Sabritas Pepsico" attrs="{'invisible': [('type','!=','sabritas')]}">
+                        <group>
+                            <field name="sab_tipo" />
+                            <field name="sab_tipoDoc" />
+                            <field name="proveedor" />
+                        </group>
+                    </group>
+                    <group name="del_valle" string="Jugos del Valle" attrs="{'invisible': [('type','!=','jugos')]}">
+                        <group>
+                            <field name="correo" />
+                            <field name="proveedor" />
+                            <field name="sociedad" />
+                        </group>
+                    </group>
+                    <group name="pilgrims" string="Pilgrims Pride" attrs="{'invisible': [('type','!=','pilgrims')]}">
+                        <group>
+                            <field name="pil_proceso" />
+                            <field name="proveedor" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="barmex_addenda_record_form" model="ir.ui.view">
+        <field name="name">barmex_addenda_record_form</field>
+        <field name="model">barmex.addenda.record</field>
+        <field name="arch" type="xml">
+            <form string="Addenda">
+                <sheet>
+                    <group name="base">
+                        <field name="name" readonly="1" force_save="1"/>
+                        <field name="type" readonly="1" force_save="1" />
+                        <field name="company_id" readonly="1" force_save="1" />
+                    </group>
+                    <group name="hornos" string="Altos Hornos de México" attrs="{'invisible': [('type','!=','hornos')]}">
+                        <group>
+                            <field name="division" />
+                            <field name="recepcion" />
+                            <field name="servicio" />
+                            <field name="transporte" />
+                        </group>
+                        <group>
+                            <field name="ejercicio" />
+                            <field name="inicio" />
+                            <field name="fin" />
+                        </group>
+                    </group>
+                    <group name="femsa" string="FEMSA" attrs="{'invisible': [('type','!=','femsa')]}">
+                        <group>
+                            <field name="fem_clase" />
+                            <field name="fem_entrada" />
+                            <field name="fem_remision" />
+                            <field name="fem_socio" />
+                        </group>
+                        <group>
+                            <field name="fem_costo" />
+                            <field name="fem_ret1" />
+                            <field name="fem_ret2" />
+                            <field name="fem_ret3" />
+                            <field name="inicio" />
+                            <field name="fin" />
+                        </group>
+                    </group>
+                    <group name="lala" string="LALA" attrs="{'invisible': [('type','!=','lala')]}">
+                        <group>
+                            <field name="gln" />
+                            <field name="lala_entity" />
+                            <field name="lala_creator_id" />
+                            <field name="lala_inst" />
+                        </group>
+                        <group>
+                            <field name="lala_reference" />
+                            <field name="lala_date" />
+                            <field name="lala_address" />
+                            <field name="lala_supplier" />
+                        </group>
+                    </group>
+                    <group name="mabe" string="MABE" attrs="{'invisible': [('type','!=','mabe')]}">
+                        <group>
+                            <field name="po" />
+                        </group>
+                    </group>
+                    <group name="minera" string="Minera del Norte" attrs="{'invisible': [('type','!=','minera')]}">
+                        <group>
+                            <field name="division" />
+                            <field name="recepcion" />
+                            <field name="servicio" />
+                            <field name="transporte" />
+                        </group>
+                        <group>
+                            <field name="ejercicio" />
+                            <field name="inicio" />
+                            <field name="fin" />
+                        </group>
+                    </group>
+                    <group name="porcelanite" string="Porcelanite Lamosa" attrs="{'invisible': [('type','!=','porcelanite')]}">
+                        <group>
+                            <field name="por_folio" />
+                            <field name="recepcion" />
+                        </group>
+                    </group>
+                    <group name="pemex" string="PEMEX" attrs="{'invisible': [('type','!=','pemex')]}">
+                        <group>
+                            <field name="pem_linea" />
+                            <field name="po" />
+                            <field name="pem_part" />
+                        </group>
+                    </group>
+                    <group name="sanmina" string="SANMINA" attrs="{'invisible': [('type','!=','sanmina')]}">
+                        <group>
+                            <field name="po" />
+                        </group>
+                    </group>
+                    <group name="sergoba" string="SERGOBA" attrs="{'invisible': [('type','!=','sergoba')]}">
+                        <group>
+                            <field name="fem_clase" />
+                            <field name="fem_entrada" />
+                            <field name="fem_remision" />
+                            <field name="fem_socio" />
+                        </group>
+                        <group>
+                            <field name="fem_costo" />
+                            <field name="fem_ret1" />
+                            <field name="fem_ret2" />
+                            <field name="fem_ret3" />
+                            <field name="inicio" />
+                            <field name="fin" />
+                        </group>
+                    </group>
+                    <group name="zf" string="ZF SUSPENSION TECHNOLOGY" attrs="{'invisible': [('type','!=','zf')]}">
+                        <group>
+                            <field name="po" />
+                        </group>
+                    </group>
+                    <group name="envases" string="Envases Universales" attrs="{'invisible': [('type','!=','envases')]}">
+                        <group>
+                            <field name="env_trans" />
+                            <field name="env_sec" />
+                            <field name="po" />
+                            <field name="env_albaran" />
+                        </group>
+                    </group>
+                    <group name="calsonickansei" string="Calsonickansei Mexicana" attrs="{'invisible': [('type','!=','calsonickansei')]}">
+                        <group>
+                            <field name="po" />
+                        </group>
+                    </group>
+                    <group name="sabritas" string="Sabritas Pepsico" attrs="{'invisible': [('type','!=','sabritas')]}">
+                        <group>
+                            <field name="po" />
+                            <field name="recepcion" />
+                        </group>
+                    </group>
+                    <group name="del_valle" string="Jugos del Valle" attrs="{'invisible': [('type','!=','jugos')]}">
+                        <group>
+                            <field name="fem_clase" />
+                            <field name="fem_entrada" />
+                            <field name="fem_remision" />
+                            <field name="fem_socio" />
+                        </group>
+                        <group>
+                            <field name="fem_costo" />
+                            <field name="fem_ret1" />
+                            <field name="fem_ret2" />
+                            <field name="fem_ret3" />
+                            <field name="inicio" />
+                            <field name="fin" />
+                        </group>
+                    </group>
+                    <group name="pilgrims" string="Pilgrims Pride" attrs="{'invisible': [('type','!=','pilgrims')]}">
+                        <group>
+                            <field name="po" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

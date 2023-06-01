@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="envases" name="ENVASES UNIVERSALES">
+            <eu:AddendaEU
+                          xmlns:eu="http://factura.envasesuniversales.com/addenda/eu"
+                          xsi:schemaLocation="http://factura.envasesuniversales.com/addenda/eu http://factura.envasesuniversales.com/addenda/eu/EU_Addenda.xsd"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <eu:TipoFactura>
+                    <eu:IdFactura><t t-esc="record.partner_id.addenda_id.env_id" /></eu:IdFactura>
+                    <eu:Version>1.0</eu:Version>
+                    <eu:FechaMensaje><t t-esc="record.invoice_date.strftime('%Y-%m-%d')" /></eu:FechaMensaje>
+                </eu:TipoFactura>
+                <eu:TipoTransaccion>
+                    <eu:IdTransaccion><t t-esc="record.partner_id.addenda_id.env_trans" /></eu:IdTransaccion>
+                    <eu:Transaccion><t t-esc="record.addenda_id.env_trans" /></eu:Transaccion>
+                </eu:TipoTransaccion>
+                <eu:OrdenesCompra>
+                    <eu:Secuencia t-att-consec="record.addenda_id.env_sec">
+                        <eu:IdPedido><t t-esc="record.addenda_id.po" /></eu:IdPedido>
+                        <eu:EntradaAlmacen>
+                            <eu:Albaran><t t-esc="record.addenda_id.env_albaran" /></eu:Albaran>
+                        </eu:EntradaAlmacen>
+                    </eu:Secuencia>
+                </eu:OrdenesCompra>
+                <eu:Moneda>
+                    <eu:MonedaCve><t t-esc="record.currency_id.name" /></eu:MonedaCve>
+                    <eu:TipoCambio><t t-esc="record.rate()" /></eu:TipoCambio>
+                    <eu:SubtotalM><t t-esc="record.amount_untaxed" /></eu:SubtotalM>
+                    <eu:TotalM><t t-esc="record.amount_total" /></eu:TotalM>
+                    <eu:ImpuestoM><t t-esc="record.amount_tax" /></eu:ImpuestoM>
+                </eu:Moneda>
+            </eu:AddendaEU>
+        </template>
+        <record id="envases" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sabritas" name="SABRITAS PEPSICO">
+            <RequestCFD t-att-tipo="record.partner_id.addenda_id.sab_tipo" version="2.0" t-att-idPedido="record.addenda_id.po">
+                <Documento t-att-folioUUID="record.l10n_mx_edi_cfdi_uuid" t-att-tipoDoc="record.partner_id.addenda_id.sab_tipoDoc" />
+                <Proveedor t-att-idProveedor="record.partner_id.addenda_id.proveedor" />
+                <Recepciones>
+                    <Recepcion t-att-idRecepcion="record.addenda_id.recepcion">
+                        <t t-foreach="record.invoice_line_ids" t-as="line">
+                            <Concepto t-att-cantidad="line.quantity" t-att-descripcion="line.name" t-att-unidad="line.product_uom_id.name" t-att-valorUnitario="line.price_unit" t-att-importe="line.price_subtotal" />
+                        </t>
+                    </Recepcion>
+                </Recepciones>
+            </RequestCFD>
+        </template>
+        <record id="sabritas" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

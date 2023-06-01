@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="altos_hornos_mexico" name="Altos Hornos de México">
+            <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+            <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+            <ahmsa:AddendaAHM Version="1.0" xmlns:ahmsa="http://www.ahmsa.com/xsd/AddendaAHM1">
+                <ahmsa:Documento Tipo="1" Clase="PE">
+                    <ahmsa:Encabezado
+                                      t-att-NumSociedad="record.partner_id.addenda_id.sociedad"
+                                      t-att-NumDivision="record.addenda_id.division"
+                                      t-att-NumProveedor="record.partner_id.addenda_id.proveedor"
+                                      t-att-Correo="record.partner_id.addenda_id.correo"
+                                      t-att-Moneda="record.currency_id.name" />
+                    <ahmsa:Detalle>
+                        <ahmsa:Pedido t-att-Num="sale_id.name">
+                            <ahmsa:Recepcion>
+                                <t t-esc="record.addenda_id.recepcion" />
+                            </ahmsa:Recepcion>
+                        </ahmsa:Pedido>
+                        <ahmsa:HojaServicio t-att-Num="record.addenda_id.servicio" />
+                        <ahmsa:Transporte t-att-Num="record.addenda_id.transporte" />
+                        <ahmsa:CtaxPag t-att-Num="record.addenda_id.cuenta" t-att-Ejercicio="record.addenda_id.ejercicio" />
+                        <ahmsa:Liquidacion t-att-FechaInicio="record.addenda_id.inicio" t-att-FechaFin="record.addenda_id.fin" />
+                        </ahmsa:Detalle>
+                    </ahmsa:Documento>
+            </ahmsa:AddendaAHM>
+        </template>
+        <record id="altos_hornos_mexico" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

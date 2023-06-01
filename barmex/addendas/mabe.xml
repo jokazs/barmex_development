@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="mabe" name="MABE">
+            <mabe:Factura xmlns:mabe="http://recepcionfe.mabempresa.com/cfd/addenda/v1" xsi:schemaLocation="http://recepcionfe.mabempresa.com/cfd/addenda/v1 http://recepcionfe.mabempresa.com/cdf/addenda/v1/mabev1.xsd" version="1.0" tipoDocumento="FACTURA" t-att-folio="record.name[-4:]" t-att-fecha="record.invoice_date.strftime('%Y-%m-%d')" t-att-referencia1="record.name" t-att-ordenCompra="record.addenda_id.po" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <mabe:Moneda t-att-tipoMoneda="record.currency_id.name" />
+                <mabe:Proveedor t-att-codigo="record.partner_id.addenda_id.proveedor" />
+                <mabe:Entrega t-att-plantaEntrega="record.partner_id.addenda_id.mabe_planta" t-att-calle="record.partner_id.addenda_id.mabe_calle" t-att-noExterior="record.partner_id.addenda_id.mabe_ext" t-att-noInterior="record.partner_id.addenda_id.mabe_int" />
+                <mabe:Detalles>
+                    <t t-set="num" t-value="1" />
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
+                        <mabe:Detalle t-att-noLineaArticulo="num" t-att-codigoArticulo="line.product_id.default_code" t-att-descripcion="line.product_id.name" t-att-unidad="line.product_uom_id.name" t-att-cantidad="line.quantity" t-att-precioSinIva="line.price_unit" t-att-importeSinIva="line.price_subtotal" />
+                        <t t-set="num" t-value="num + 1" />
+                    </t>
+                </mabe:Detalles>
+                <mabe:Descuentos tipo="NA" t-att-importe="record.discount_total or 0.00" />
+                <mabe:Subtotal t-att-importe="record.amount_untaxed" />
+                <mabe:Total t-att-importe="record.amount_total" />
+            </mabe:Factura>
+        </template>
+        <record id="mabe" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

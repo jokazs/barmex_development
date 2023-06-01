@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="lala" name="LALA">
+            <requestForPayment type="SimpleInvoiceType" contentVersion="1.3.1" documentStructureVersion="AMC7.1" documentStatus="ORIGINAL" DeliveryDate="2019-06-03">
+                <requestForPaymentIdentification>
+                    <entityType><t t-esc="record.addenda_id.lala_entity" />></entityType>
+                    <uniqueCreatorIdentification><t t-esc="record.addenda_id.lala_creator_id" />></uniqueCreatorIdentification>
+                </requestForPaymentIdentification>
+                <specialInstruction code="SOC">
+                    <text><t t-esc="record.addenda_id.lala_inst" /></text>
+                </specialInstruction>
+                <orderIdentification>
+                    <referenceIdentification type="ON"><t t-esc="record.addenda_id.lala_reference" /></referenceIdentification>
+                    <ReferenceDate><t t-esc="record.addenda_id.lala_date" /></ReferenceDate>
+                </orderIdentification>
+                <AdditionalInformation>
+                    <referenceIdentification type="DIV"><t t-esc="record.addenda_id.lala_reference" /></referenceIdentification>
+                </AdditionalInformation>
+                <buyer>
+                    <gln><t t-esc="record.addenda_id.gln" /></gln>
+                </buyer>
+                <seller>
+                    <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.partner_id.addenda_id.lala_seller" /></alternatePartyIdentification>
+                </seller>
+                <shipTo>
+                    <nameAndAddress>
+                        <name><t t-esc="record.addenda_id.lala_address" /></name>
+                        <streetAddressOne>
+                        </streetAddressOne>
+                        <city></city>
+                        <postalCode></postalCode>
+                    </nameAndAddress>
+                </shipTo>
+                <currency t-att-currencyISOCode="record.currency_id.name">
+                    <currencyFunction>BILLING_CURRENCY</currencyFunction>
+                    <rateOfChange><t t-esc="record.rate()"/></rateOfChange>
+                </currency>
+                <paymentTerms paymentTermsEvent="DATE_OF_INVOICE" PaymentTermsRelationTime="REFERENCE_AFTER">
+                    <netPayment netPaymentTermsType="BASIC_NET">
+                        <paymentTimePeriod>
+                            <timePeriodDue timePeriod="DAYS">
+                                <value>030</value>
+                            </timePeriodDue>
+                        </paymentTimePeriod>
+                    </netPayment>
+                </paymentTerms>
+                <t t-set="num" t-value="1" />
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <lineItem type="SimpleInvoiceLineItemType" number="num">
+                        <alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-esc="record.addenda_id.lala_supplier" /></alternateTradeItemIdentification>
+                        <tradeItemDescriptionInformation language="ES">
+                            <longText><t t-esc="line.name" /></longText>
+                        </tradeItemDescriptionInformation>
+                        <invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.quantity" /></invoicedQuantity>
+                        <grossPrice>
+                            <Amount><t t-esc="line.price_unit" /></Amount>
+                        </grossPrice>
+                        <netPrice>
+                            <Amount><t t-esc="line.price_unit" /></Amount>
+                            </netPrice>
+                        <AdditionalInformation>
+                            <referenceIdentification type="ON"><t t-esc="record.addenda_id.lala_reference" /></referenceIdentification>
+                        </AdditionalInformation>
+                        <t t-foreach="line.tax_ids" t-as="tax">
+                            <t t-set="taxed" t-value="(line.price_subtotal * tax.amount)/100" />
+                            <tradeItemTaxInformation>
+                                <taxTypeDescription><t t-esc="tax.description" /></taxTypeDescription>
+                                <referenceNumber>V0</referenceNumber>
+                                <tradeItemTaxAmount>
+                                    <taxPercentage><t t-esc="tax.amount" /></taxPercentage>
+                                    <taxAmount><t t-esc="taxed" /></taxAmount>
+                                </tradeItemTaxAmount>
+                                <taxCategory>TRANSFERIDO</taxCategory>
+                            </tradeItemTaxInformation>
+                        </t>
+                        <totalLineAmount>
+                            <grossAmount>
+                                <Amount><t t-esc="line.price_subtotal" /></Amount>
+                            </grossAmount>
+                            <netAmount>
+                                <Amount><t t-esc="line.price_total"/></Amount>
+                            </netAmount>
+                        </totalLineAmount>
+                    </lineItem>
+                    <t t-set="num" t-value="num + 1" />
+                </t>
+
+                <totalAmount>
+                    <Amount><t t-esc="record.amount_untaxed" /></Amount>
+                </totalAmount>
+                <baseAmount>
+                    <Amount><t t-esc="record.amount_untaxed" /></Amount>
+                </baseAmount>
+                <t t-foreach="record.amount_by_group" t-as="amount_by_group">
+                    <tax type="VAT">
+                        <taxPercentage><t t-esc="amount_by_group[0]"/></taxPercentage>
+                        <taxAmount><t t-esc="amount_by_group[3]" /></taxAmount>
+                        <taxCategory>TRANSFERIDO</taxCategory>
+                    </tax>
+                </t>
+                <payableAmount>
+                    <Amount><t t-esc="record.amount_total" /></Amount>
+                </payableAmount>
+            </requestForPayment>
+        </template>
+        <record id="lala" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="del_valle" name="JUGOS DEL VALLE">
+            <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
+            <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+            <Documento>
+                <FacturaFemsa>
+                    <noVersAdd>1</noVersAdd>
+                    <claseDoc><t t-esc="record.addenda_id.fem_clase" /></claseDoc>
+                    <noSociedad><t t-esc="record.partner_id.addenda_id.sociedad" /></noSociedad>
+                    <noProveedor><t t-esc="record.partner_id.addenda_id.proveedor" /></noProveedor>
+                    <noPedido><t t-esc="sale_id.name" /></noPedido>
+                    <moneda><t t-esc="record.currency_id.name" /></moneda>
+                    <noEntrada><t t-esc="record.addenda_id.fem_entrada" /></noEntrada>
+                    <noRemision><t t-esc="record.addenda_id.fem_remision" /></noRemision>
+                    <noSocio><t t-esc="record.addenda_id.fem_socio" /></noSocio>
+                    <centroCostos><t t-esc="record.addenda_id.fem_costo" /></centroCostos>
+                    <iniPerLiq><t t-esc="record.addenda_id.inicio" /></iniPerLiq>
+                    <finPerLiq><t t-esc="record.addenda_id.fin" /></finPerLiq>
+                    <retencion1><t t-esc="record.addenda_id.fem_ret1" /></retencion1>
+                    <retencion2><t t-esc="record.addenda_id.fem_ret2" /></retencion2>
+                    <retencion3><t t-esc="record.addenda_id.fem_ret3" /></retencion3>
+                    <email><t t-esc="record.partner_id.addenda_id.correo" /></email>
+                </FacturaFemsa>
+            </Documento>
+        </template>
+        <record id="del_valle" model="ir.ui.view">
+            <field name="l10n_mx_edi_addenda_flag">True</field>
+        </record>
+    </data>
+</odoo>
