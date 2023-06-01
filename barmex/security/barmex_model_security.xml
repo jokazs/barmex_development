@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<odoo>
+    <record model="ir.module.category" id="barmex_group_al">
+        <field name="name">Barmex Almacen Digital</field>
+        <field name="sequence">130</field>
+    </record>
+    <record model="res.groups" id="almacen_digital">
+        <field name="name"> Almacen Digital Administrador</field>
+        <field name="category_id" ref="barmex_group_al"/>
+    </record>
+    <record model="res.groups" id="almacen_digital_general">
+        <field name="name"> Almacen Digital General</field>
+        <field name="category_id" ref="barmex_group_al"/>
+    </record>
+
+    <record model="ir.module.category" id="barmex_group_cyc">
+        <field name="name">Barmex Credito y Cobranza</field>
+        <field name="sequence">110</field>
+    </record>
+    <record model="res.groups" id="boton_bloqueo_cyc">
+        <field name="name">Barmex - Boton Bloqueo CyC</field>
+        <field name="category_id" ref="barmex_group_cyc"/>
+    </record>
+
+</odoo>

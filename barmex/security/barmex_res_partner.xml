@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record model="ir.module.category" id="module_category_contacts">
+            <field name="description">Helps you to manage contacts</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record model="ir.module.category" id="barmex.module_category_contacts_groups">
+            <field name="name">Contact Groups</field>
+            <field name="sequence">2</field>
+            <field name="parent_id" ref="barmex.module_category_contacts" />
+        </record>
+
+        <record id="barmex_account_receivable" model="res.groups">
+            <field name="name">Barmex Account Receivable</field>
+            <field name="category_id" ref="barmex.module_category_contacts_groups" />
+        </record>
+
+        <record id="barmex_account_payable" model="res.groups">
+            <field name="name">Barmex Account Payable</field>
+            <field name="category_id" ref="barmex.module_category_contacts_groups" />
+        </record>
+
+        <record id="barmex_sales" model="res.groups">
+            <field name="name">Barmex Sales</field>
+            <field name="category_id" ref="barmex.module_category_contacts_groups" />
+        </record>
+
+        <record id="barmex_purchases" model="res.groups">
+            <field name="name">Barmex Purchase</field>
+            <field name="category_id" ref="barmex.module_category_contacts_groups" />
+        </record>
+
+        <record model="ir.module.category" id="barmex.module_category_contacts_permission">
+            <field name="name">Access Level</field>
+            <field name="sequence">1</field>
+            <field name="parent_id" ref="barmex.module_category_contacts" />
+        </record>
+
+        <record id="contact_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="barmex.module_category_contacts_permission" />
+        </record>
+
+        <record id="contact_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('barmex.contact_user'))]"/>
+            <field name="category_id" ref="barmex.module_category_contacts_permission" />
+        </record>
+
+        <record id="contact_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="implied_ids" eval="[(4, ref('barmex.contact_manager')),(4, ref('barmex.barmex_purchases')),(4, ref('barmex.barmex_sales')),(4, ref('barmex.barmex_account_payable')),(4, ref('barmex.barmex_account_receivable'))]"/>
+            <field name="category_id" ref="barmex.module_category_contacts_permission" />
+        </record>
+
+        <record model="ir.module.category" id="barmex.module_category_contacts_types">
+            <field name="name">Contact Types</field>
+            <field name="sequence">3</field>
+            <field name="parent_id" ref="barmex.module_category_contacts" />
+        </record>
+
+        <record id="sale_contacts" model="res.groups">
+            <field name="name">Sale Contacts</field>
+            <field name="category_id" ref="barmex.module_category_contacts_types" />
+        </record>
+
+        <record id="purchase_contacts" model="res.groups">
+            <field name="name">Purchase Contacts</field>
+            <field name="category_id" ref="barmex.module_category_contacts_types" />
+        </record>
+
+        <record id="contact_modification_admin" model="ir.rule">
+            <field name="name">Edit all contacts</field>
+            <field name="model_id" ref="model_res_partner" />
+            <field name="groups" eval="[(4, ref('barmex.contact_admin'))]" />
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="contact_modification_manager" model="ir.rule">
+            <field name="name">Only edit contacts assigned</field>
+            <field name="model_id" ref="model_res_partner" />
+            <field name="groups" eval="[(4, ref('barmex.contact_manager'))]" />
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+        </record>
+
+    </data>
+</odoo>
