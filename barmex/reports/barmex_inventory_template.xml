@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="barmex_header_inventory">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <!-- Page -->
+                <div class="header">
+                    <div class="row">
+                        <div class="col-4">
+                            <img t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                        </div>
+                        <div class="col-4" />
+                        <div class="col-4" />
+                    </div>
+                    <div class="row">
+                        <div class="col-4" >
+                            <h4><t t-esc="doc.name" /><br/></h4>
+                            <t t-esc="doc.write_uid.employee_id.lco_sale_zone.name" /><br/>
+                            Created by:<t t-esc="doc.write_uid.name" /><br/>
+                            <t t-esc="doc.write_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/>
+                        </div>
+                        <div class="col-4" />
+                        <div class="col-4" />
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="barmex_inventory_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-call="barmex.barmex_header_inventory" />
+                        <div class="clearfix" style="padding: 2rem;" />
+                        <div class="row">
+                            <table class="table table-sm o_main_table" style="font-size:.8rem">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Batch/Serial</th>
+                                        <th>Package</th>
+                                        <th>Adjust Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line.location_id.name" /></td>
+                                            <td><t t-esc="line.product_id.default_code" /></td>
+                                            <td><t t-esc="line.product_id.name[:50]" /></td>
+                                            <td><t t-esc="line.prod_lot_id.name" /></td>
+                                            <td><t t-esc="line.package_id.name" /></td>
+                                            <td><t t-esc="line.difference_qty" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <t t-call="barmex.barmex_footer_template_nolang" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

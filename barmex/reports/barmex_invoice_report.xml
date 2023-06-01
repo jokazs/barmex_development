@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <report
+                id="account.account_invoices"
+                string="Invoices"
+                model="account.move"
+                report_type="qweb-pdf"
+                file="barmex.barmex_invoice_report"
+                name="barmex.barmex_invoice_report"
+                attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+                print_report_name="(object._get_report_base_filename())"
+                groups="account.group_account_invoice"
+        />
+
+    </data>
+</odoo>

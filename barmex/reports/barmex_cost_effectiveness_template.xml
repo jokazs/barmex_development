@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="barmex_sale_profit_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach='docs' t-as='doc'>
+                    <div class="page" >
+                        <!-- Header -->
+                        <div class="row">
+                            <div class="col-4">
+                                <img t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4>
+                                    <t t-esc="doc.company_id.name" />
+                                </h4>
+                                <h6>
+                                    <span>Sale Cost Report</span><br/>
+                                    <t t-if="doc.brand_ids">
+                                        Brand: <t t-esc="doc.brands()" /><br/>
+                                    </t>
+                                    Period: <t t-esc="doc.from_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/> - <t t-esc="doc.to_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/><br/>
+                                    <t t-if="doc.journal_ids">
+                                        Office: <t t-esc="doc.offices()" /><br/>
+                                    </t>
+                                    <t t-if="doc.partner_ids">
+                                        Customer: <t t-esc="doc.customers()" /><br/>
+                                    </t>
+                                    <t t-if="doc.product_ids">
+                                        Products: <t t-esc="doc.products()" /><br/>
+                                    </t>
+                                </h6>
+                            </div>
+                            <div class="col-4 text-right">
+                                <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                            </div>
+                        </div>
+                        <!-- Body -->
+                        <div class="clearfix mt-4"/>
+                        <div class="row">
+                            <table class="invoice_tbody" style="font-size:.75rem; width:100%;" >
+                                <thead style="border-top: 2px solid black; border-bottom: 2px solid black" class="text-center">
+                                    <tr>
+                                        <th style="width: 9%;">Customer</th>
+                                        <th style="width: 9%;">Customer ID</th>
+                                        <th style="width: 9%;">Invoice</th>
+                                        <th style="width: 9%;">Date</th>
+                                        <th style="width: 9%;">Product</th>
+                                        <th style="width: 10%;">Description</th>
+                                        <th style="width: 9%;">Brand</th>
+                                        <th style="width: 9%;">Quantity</th>
+                                        <th style="width: 9%;">Sale Amount</th>
+                                        <th style="width: 9%;">Cost</th>
+                                        <th style="width: 9%;">Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="invoice" t-value="doc.line_ids[0].sorted(key=lambda x: x.invoice_id).invoice_id.name" />
+                                    <t t-set="qty" t-value="0" />
+                                    <t t-set="sale" t-value="0" />
+                                    <t t-set="cost" t-value="0" />
+                                    <t t-set="profit" t-value="0" />
+                                    <t t-foreach="doc.line_ids.sorted(key=lambda x: x.invoice_id)" t-as="line">
+                                        <t t-if="line.invoice_id.name != invoice">
+                                            <tr style="border-top: 1px solid black;">
+                                                <td colspan="7"><b><t t-esc="invoice" /></b></td>
+                                                <td class="text-center" ><b><t t-esc="qty" /></b></td>
+                                                <td class="text-right" ><b><t t-esc="sale" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                                <td class="text-right" ><b><t t-esc="cost" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                                <td class="text-right" ><b><t t-esc="profit" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-light" colspan="7">.</td>
+                                            </tr>
+                                            <t t-set="qty" t-value="0" />
+                                            <t t-set="sale" t-value="0" />
+                                            <t t-set="cost" t-value="0" />
+                                            <t t-set="profit" t-value="0" />
+                                            <t t-set="invoice" t-value="line.invoice_id.name" />
+                                        </t>
+                                        <tr>
+                                            <t t-set="qty" t-value="qty + line.qty" />
+                                            <t t-set="sale" t-value="sale + line.sale_amount" />
+                                            <t t-set="cost" t-value="cost + line.cost" />
+                                            <t t-set="profit" t-value="profit + line.profit" />
+                                            <td><t t-esc="line.partner_id.name" /></td>
+                                            <td><t t-esc="line.partner_num" /></td>
+                                            <td><t t-esc="line.invoice_id.name" /></td>
+                                            <td><t t-esc="line.date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></td>
+                                            <td><t t-esc="line.product_id.name[:18]" /></td>
+                                            <td><t t-esc="line.description" /></td>
+                                            <td><t t-esc="line.brand_id.name" /></td>
+                                            <td class="text-center" ><t t-esc="line.qty" /></td>
+                                            <td class="text-right" ><t t-esc="line.sale_amount" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.cost" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.profit" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr style="border-top: 1px solid black;">
+                                        <td colspan="7"><b><t t-esc="invoice" /></b></td>
+                                        <td class="text-center" ><b><t t-esc="qty" /></b></td>
+                                        <td class="text-right" ><b><t t-esc="sale" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                        <td class="text-right" ><b><t t-esc="cost" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                        <td class="text-right" ><b><t t-esc="profit" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-light" colspan="7">.</td>
+                                    </tr>
+                                    <tr style="border-top: 2px solid black;">
+                                        <td colspan="8"><b>Total</b></td>
+                                        <td class="text-right" ><b><t t-esc="doc.sale_amount" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                        <td class="text-right" ><b><t t-esc="doc.cost" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                        <td class="text-right" ><b><t t-esc="doc.profit" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></b></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- Footer -->
+                        <div class="footer o_background_footer">
+                            <div class="text-center">
+                                <div class="text-muted">
+                                    Page:
+                                    <span class="page"/>
+                                    of
+                                    <span class="topage"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

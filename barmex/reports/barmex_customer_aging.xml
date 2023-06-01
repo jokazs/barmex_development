@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_customer_aging" model="ir.ui.view">
+        <field name="name">barmex_customer_aging</field>
+        <field name="model">barmex.customer.aging</field>
+        <field name="arch" type="xml">
+            <form string="Customer Aging">
+                <group>
+                    <group>
+                        <field name="partner_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="date" />
+                        <field name="currency_id" />
+                    </group>
+                    <group>
+                        <field name="collector_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="journal_ids" widget="many2many_tags" options="{'no_create': True}" />
+                    </group>
+                    <group>
+                        <field name="user_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="sale_zone_ids" widget="many2many_tags" options="{'no_create': True}" />
+                    </group>
+                </group>
+                <group>
+                    <group></group>
+                    <group>
+                        <group>
+                            <button name="create_report" string="Create Report" type="object" class="oe_highlight"/>
+                            <button name="print_report" string="Print Report" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                </group>
+                <group>
+                    <field name="line_ids" widget="section_and_note_one2many" mode="tree" readonly="1" nolabel="1">
+                        <tree>
+                            <field name="move_id" />
+                            <field name="partner_id" />
+                            <field name="sale_id" />
+                            <field name="due_date" />
+                            <field name="real_payment_date" />
+                            <field name="journal_id" />
+                            <field name="account_id" />
+                            <field name="expected_date" />
+                            <field name="currency_id" />
+                            <field name="to_date" attrs="{'invisible':[('to_date','=',0.0)]}" sum="Total To Date"/>
+                            <field name="range_1" attrs="{'invisible':[('range_1','=',0.0)]}" sum="Total 1 - 30"/>
+                            <field name="range_2" attrs="{'invisible':[('range_2','=',0.0)]}" sum="Total 31 - 60"/>
+                            <field name="range_3" attrs="{'invisible':[('range_3','=',0.0)]}" sum="Total 61 - 90" />
+                            <field name="range_4" attrs="{'invisible':[('range_4','=',0.0)]}" sum="Total 91 - 120"/>
+                            <field name="older" attrs="{'invisible':[('older','=',0.0)]}" sum="Total Older"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="barmex_customer_aging_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach='docs' t-as='doc'>
+                    <div class="page" >
+                        <!-- Header -->
+                        <div class="row">
+                            <div class="col-4">
+                                <img t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4>
+                                    <t t-esc="doc.company_id.name" />
+                                </h4>
+                                <h6>
+                                    <span>Customer Aging Report</span><br/>
+                                    <t t-if="doc.sale_zone_ids">
+                                        Sale Zone: <t t-esc="doc._sale_zones()" /><br/>
+                                    </t>
+                                    <t t-if="doc.partner_ids">
+                                        Customers: <t t-esc="doc._partners()" /><br/>
+                                    </t>
+                                    <t t-if="doc.user_ids">
+                                        Saleman: <t t-esc="doc._users()" /><br/>
+                                    </t>
+                                    <t t-if="doc.collector_ids">
+                                        Collector: <t t-esc="doc._collectors()" /><br/>
+                                    </t>
+                                    <t t-if="doc.journal_ids">
+                                        Journal: <t t-esc="doc._journals()" /><br />
+                                    </t>
+                                    Date: <t t-esc="doc.date" t-options='{"widget": "date", "format": "dd MMM Y"}'/>
+                                </h6>
+                            </div>
+                            <div class="col-4 text-right">
+                                <t t-esc="context_timestamp(datetime.datetime.now())" t-options='{"widget": "date", "format": "dd MMM Y"}'/>
+                            </div>
+                        </div>
+                        <!-- Body -->
+                        <div class="clearfix mt-4"/>
+                        <div class="row">
+                            <table class="invoice_tbody" style="font-size:.6rem; width:100%;" >
+                                <thead style="border-top: 2px solid black; border-bottom: 2px solid black" class="text-center">
+                                    <tr>
+                                        <th style="width: 5%;">Origin</th>
+                                        <th style="width: 10%;">Customer</th>
+                                        <th style="width: 10%;">Sale Order</th>
+                                        <th style="width: 5%;">Due Date</th>
+                                        <th style="width: 5%;">Real Payment Date</th>
+                                        <th style="width: 10%;">Journal</th>
+                                        <th style="width: 5%;">Account</th>
+                                        <th style="width: 5%;">Expected Payment Date</th>
+                                        <th style="width: 5%;">Currency</th>
+                                        <th style="width: 5%;">To <t t-esc="doc.date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></th>
+                                        <th style="width: 7%;">1 -30</th>
+                                        <th style="width: 7%;">31 -60</th>
+                                        <th style="width: 7%;">61 -90</th>
+                                        <th style="width: 7%;">91 -120</th>
+                                        <th style="width: 7%;">Older</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="to_date" t-value="0" />
+                                    <t t-set="range_1" t-value="0" />
+                                    <t t-set="range_2" t-value="0" />
+                                    <t t-set="range_3" t-value="0" />
+                                    <t t-set="range_4" t-value="0" />
+                                    <t t-set="older" t-value="0" />
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <t t-set="to_date" t-value="to_date + line.to_date" />
+                                        <t t-set="range_1" t-value="range_1 + line.range_1" />
+                                        <t t-set="range_2" t-value="range_2 + line.range_2" />
+                                        <t t-set="range_3" t-value="range_3 + line.range_3" />
+                                        <t t-set="range_4" t-value="range_4 + line.range_4" />
+                                        <t t-set="older" t-value="older + line.older" />
+                                        <tr>
+                                            <td><t t-esc="line.move_id.name" /></td>
+                                            <td class="text-center"><t t-esc="line.partner_id.name" /></td>
+                                            <td><t t-esc="line.sale_id.name" /></td>
+                                            <td><t t-esc="line.due_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></td>
+                                            <td><t t-esc="line.real_payment_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></td>
+                                            <td><t t-esc="line.journal_id.name" /></td>
+                                            <td><t t-esc="line.account_id.code" /></td>
+                                            <td><t t-esc="line.expected_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></td>
+                                            <td><t t-esc="line.currency_id.name" /></td>
+                                            <td class="text-right" ><t t-esc="line.to_date" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.range_1" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.range_2" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.range_3" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.range_4" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                            <td class="text-right" ><t t-esc="line.older" t-options="{'widget':'monetary','display_currency':line.currency_id}" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="border-top: 2px solid black;">
+                                    <tr>
+                                        <td colspan="9"></td>
+                                        <td class="text-right" ><t t-esc="to_date" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                        <td class="text-right" ><t t-esc="range_1" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                        <td class="text-right" ><t t-esc="range_2" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                        <td class="text-right" ><t t-esc="range_3" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                        <td class="text-right" ><t t-esc="range_4" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                        <td class="text-right" ><t t-esc="older" t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}" /></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- Footer -->
+                        <div class="footer o_background_footer">
+                            <div class="text-center">
+                                <div class="text-muted">
+                                    Page:
+                                    <span class="page"/>
+                                    of
+                                    <span class="topage"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

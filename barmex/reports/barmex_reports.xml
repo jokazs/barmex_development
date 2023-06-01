@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <report
+                id="stock.action_report_delivery"
+                string="BARMEX Delivery Report"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                file="barmex.barmex_delivery_template"
+                name="barmex.barmex_delivery_template"
+                print_report_name="'Delivery - %s - %s' % (object.partner_id.name or '', object.name)"
+        />
+
+        <report
+                id="barmex_delivery_report_detailed"
+                string="BARMEX Delivery Report (Detailed)"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                file="barmex.barmex_delivery_template_detailed"
+                name="barmex.barmex_delivery_template_detailed"
+                print_report_name="'Delivery - %s - %s' % (object.partner_id.name or '', object.name)"
+        />
+
+        <report
+                id="purchase.report_purchase_quotation"
+                string="BARMEX Purchase Requisition"
+                model="purchase.order"
+                report_type="qweb-pdf"
+                file="barmex.barmex_requisition_template"
+                name="barmex.barmex_requisition_template"
+                print_report_name="'Requisition - %s' % (object.name)"
+                paperformat="paperformat_reporte_sp"
+        />
+
+        <report
+                id="purchase.action_report_purchase_order"
+                string="BARMEX Purchase Order"
+                model="purchase.order"
+                report_type="qweb-pdf"
+                file="barmex.barmex_purchase_template"
+                name="barmex.barmex_purchase_template"
+                print_report_name="'Requisition - %s' % (object.name)"
+                paperformat="paperformat_reporte_oc"
+        />
+
+        <report
+                id="stock.action_report_picking"
+                string="BARMEX Reception"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                file="barmex.barmex_reception_template"
+                name="barmex.barmex_reception_template"
+                print_report_name="'Reception - %s' % (object.name)"
+        />
+
+        <report
+                id="barmex_transfer_report"
+                string="BARMEX Transfer"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                file="barmex.barmex_transfer_template"
+                name="barmex.barmex_transfer_template"
+                print_report_name="'Transfer - %s' % (object.name)"
+        />
+
+        <report
+                id="barmex_transfer_report"
+                string="BARMEX Inventory"
+                model="stock.inventory"
+                report_type="qweb-pdf"
+                file="barmex.barmex_inventory_template"
+                name="barmex.barmex_inventory_template"
+                print_report_name="'Inventory - %s' % (object.name)"
+        />
+
+        <report
+                id="barmex_sale_profit_report"
+                string="Sale Profit"
+                model="barmex.cost.effectiveness"
+                report_type="qweb-pdf"
+                file="barmex.barmex_sale_profit_template"
+                name="barmex.barmex_sale_profit_template"
+                print_report_name="'Sale_Cost_Report_%s' % time.strftime('%d%m%Y_%H%M%S')"
+                paperformat="barmex.paperformat_account_journal"
+        />
+
+        <report
+                id="sale.action_report_saleorder"
+                string="Quotation"
+                model="sale.order"
+                report_type="qweb-pdf"
+                file="barmex.barmex_quotation_template"
+                name="barmex.barmex_quotation_template"
+                print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+        />
+
+        <report
+                id="action_report_payment_receipt_barmex"
+                string="Complemento de pago"
+                model="account.payment"
+                report_type="qweb-pdf"
+                file="barmex.barmex_report_payment_receipt"
+                name="barmex.barmex_report_payment_receipt"
+                print_report_name="'Recibo de pago - %s' % (object.name)"
+        />
+
+        <report
+                id="barmex_customer_aging_report"
+                string="Customer Aging"
+                model="barmex.customer.aging"
+                report_type="qweb-pdf"
+                file="barmex.barmex_customer_aging_template"
+                name="barmex.barmex_customer_aging_template"
+                print_report_name="'Inventory - %s - %s' % (object.name, object.date)"
+                paperformat="barmex.paperformat_account_journal"
+        />
+
+        <report
+                id="nota_cargo"
+                string="NOTA DE CARGO"
+                model="account.move"
+                report_type="qweb-pdf"
+                file="barmex.barmex_note_cargo_template"
+                name="barmex.barmex_note_cargo_template"
+                print_report_name="'Nota de cargo - %s' %  object.name"
+        />
+
+       
+
+    </data>
+</odoo>

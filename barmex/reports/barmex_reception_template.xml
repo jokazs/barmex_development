@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="barmex_header_reception">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                <!-- Page -->
+                <div class="header">
+                    <div class="text-right"> Fecha impresión: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> </div>
+                    <div class="row" style="padding:1px;">
+                        <div class="col-2">
+                            <img src="/web/binary/company_logo" class="float-left"
+                                 style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                        </div>
+                        <div class="col-10 col-xs-10 col-sm-10 col-lg-10 text-center"
+                             style="border: solid 1px;padding:0px;">
+                            <span t-field="doc.company_id.name"/>
+                            <br></br>
+                            <br></br>
+                            <div t-field="doc.company_id.partner_id"
+                                         t-options="{&quot;widget&quot;: &quot;contact&quot;,
+                                                    &quot;fields&quot;: [&quot;address&quot;,
+                                                    &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:1px;">
+                        <div class="col-6" style="font-size:12px;border: solid 1px;">
+                            <div>
+                                Cliente: <span t-esc="doc.partner_id.name"/>
+                            </div>
+                            <div>
+                                RFC: <span t-esc="doc.partner_id.vat"/>
+                            </div>
+                            <div>
+                                DIRECCION: <div t-field="doc.partner_id"
+                                         t-options="{&quot;widget&quot;: &quot;contact&quot;,
+                                                    &quot;fields&quot;: [&quot;address&quot;,
+                                                    &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                            </div>
+                        </div>
+                        <div class="col-3"
+                             style="font-size:12px;border-top: solid 1px;border-bottom: solid 1px;border-left: solid 1px;">
+                            <div>
+                                Ubicación de origen:
+                                <span t-esc="doc.location_id.name"/>
+                            </div>
+                            <br></br>
+                            <div>
+                                Ubicación de destino:
+                                <span t-esc="doc.location_dest_id.name"/>
+                            </div>
+                            <br></br>
+                            <div>
+                                Notas:
+                            </div>
+                        </div>
+                        <div class="col-3" style="font-size:12px;border: solid 1px;">
+                            <div>N° PEDIDO:
+                                <span t-field="doc.name"/>
+                            </div>
+                            <!-- <div>FECHA:
+                                <span t-esc="doc.date_order"/>
+                            </div> -->
+                            <!-- <div>FECHA FACTURA:
+                                <span t-field="doc.invoice_ids[0].invoice_date"/>
+                            </div> -->
+                            <div>CREDITO:
+                                <span t-field="doc.name"/>
+                            </div>
+                            <div>AGENTE:
+                                <span t-field="doc.user_id.name"/>
+                            </div>
+                            <!-- <div>ORDEN DE COMPRA:
+                                <span t-field="doc.partner_ref"/>
+                            </div> -->
+                            <div>N° COTIZACION:
+                                <span t-field="doc.name"/>
+                            </div>
+                            <div>TIPO COTIZACION:
+                                <span t-field="doc.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="barmex_reception_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-call="barmex.barmex_header_reception">
+                                <h5>Purchase Requisition</h5>
+                        </t>
+                        <div class="clearfix" style="padding: 4rem;"/>
+                        <div class="row">
+                            <table class="table table-sm o_main_table" style="font-size:.8rem">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Marca</th>
+                                        <th>UoM</th>
+                                        <th>Cantidad solicitada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.move_line_ids_without_package" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="line.product_id.default_code"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_id.name[:50]"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_id.brand_id.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_uom_id.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.qty_done"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <t t-call="barmex.barmex_footer_template"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="barmex_purchase_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-call="barmex.barmex_header_reception">
+                            <h5>Purchase Order</h5>
+                        </t>
+                        <div class="clearfix" style="padding: 4rem;"/>
+                        <div class="clearfix" style="padding: 4rem;"/>
+                        <div class="row">
+                            <table class="table table-sm o_main_table" style="font-size:.8rem">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Qty</th>
+                                        <th>UoM</th>
+                                        <th>Precio unitario</th>
+                                        <th>Importe</th>
+                                        <th>Cantidad aportada</th>
+                                        <th>Cantidad x aportar</th>
+                                        <th>No almacen</th>
+                                        <th>Fecha entrega</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.order_line" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="line.product_id.default_code"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_id.name[:50]"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_qty"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.product_uom.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.price_unit"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="line.price_subtotal"/>
+                                            </td>
+                                            <td>0</td>
+                                            <td>
+                                                <t t-esc="line.product_qty"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.picking_type_id.warehouse_id.code"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="doc.date_planned"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                        <div class="row pt-4">
+                            <div class="col-12">
+                                <table style="width: 100%;margin-top: 5px;margin-bottom: 5px;border: solid 1px;">
+                                    <tr>
+                                        <td style="background-color: #808080;color: white;">
+                                            <span>Cantidad en letra:</span>
+                                            <br></br>
+                                            <br></br>
+                                            <br></br>
+                                            <span t-esc="doc.purchase_amount_to_text()"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="row">
+                                                <div class="col-8 text-center">Subtotal:</div>
+                                                <div class="col-4 text-right">
+                                                    <span class="text-right" t-field="doc.amount_untaxed"
+                                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8 text-center">Taxes:</div>
+                                                <div class="col-4 text-right">
+                                                    <span class="text-nowrap" t-esc="doc.amount_tax"
+                                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8 text-center">Total:</div>
+                                                <div class="col-4 text-right">
+                                                    <span class="text-nowrap text-right" t-field="doc.amount_total"
+                                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="col-12 text-center">
+                            A T E N T A M E N T E
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <div class="col-12 text-center">
+                            ______________________________
+                        </div>
+                        <div class="col-12 text-center">
+                            <span t-esc="doc.user_id.name"/>
+                        </div>
+
+                        <div class="footer">
+                            <div class="row">
+                                <div class="col-8 text-muted text-right">
+                                    N° PEDIDO  <span t-esc="doc.name"/>
+                                </div>
+                                <div t-if="report_type == 'pdf'" class="col-4 text-muted text-right">
+                                    Page: <span class="page"/> / <span class="topage"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

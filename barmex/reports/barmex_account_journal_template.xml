@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="account_journal_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach='docs' t-as='doc'>
+                    <t t-set="total_print" t-value="0" />
+                    <div class="page" >
+                        <!-- Header -->
+                        <div class="header">
+                            <div class="text-right">
+                                <span>Page </span><span class="page" /> / <span class="topage" /><br/>
+                            </div>
+                            <!-- Company -->
+                            <div class="clearfix"/>
+                            <div class="row">
+                                <div class="col-3">
+                                    <img t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 64px;max-width: 64px;margin-top: 14px" alt="Logo"/>
+                                </div>
+                                <!-- -->
+                                <div class="col-6 text-center" style="font-size: 10px;">
+                                        <t t-esc="doc.company_id.name" />, <t t-esc="doc.company_id.street" />, <t t-esc="doc.company_id.street2" /><br />
+                                        ,<t t-esc="doc.company_id.city" />, <t t-esc="doc.company_id.state_id.name" />, <t t-esc="doc.company_id.zip" />, <t t-esc="doc.company_id.country_id.name" /><br />
+                                        <t t-esc="doc.company_id.vat" />
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <hr></hr>
+                        <!-- Day -->
+                        <div class="clearfix" style="padding-top: 6rem;" />
+                        <t t-foreach="doc.day_ids" t-as="day">
+                            <t t-if="day.journal_ids">
+                                          
+                                <!-- Day Resume -->
+                                <div class="row" style="padding-top: 1rem;" >
+                                    <div class="col-4">
+                                        Journals: <t t-esc="day.names" />
+                                    </div>
+                                </div>
+
+                                <t t-set="voucher" t-value="0" />
+                                <t t-foreach="day.journal_ids" t-as="journal">
+                                    <t t-set="total_print" t-value="total_print + 1" />
+                                    <!-- Day Journals -->
+                                    <div class="row" style="padding-top: 2rem;">
+                                        <div class="col-2">
+                                            Date: <t t-esc="day.date" t-options='{"widget": "date", "format": "dd MMM Y"}'/>
+                                        </div>
+                                        <div class="col-2">
+                                            Type: <span t-if="journal.move_id.type == 'entry'">Journal Entry</span>
+                                                  <span t-if="journal.move_id.type == 'out_invoice'">Customer Invoice</span>
+                                                  <span t-if="journal.move_id.type == 'out_refund'">Customer Credit Note</span>
+                                                  <span t-if="journal.move_id.type == 'in_invoice'">Vendor Invoice</span>
+                                                  <span t-if="journal.move_id.type == 'in_refund'">Vendor Credit Note</span>
+                                                  <span t-if="journal.move_id.type == 'out_receipt'">Sales Receipt</span>
+                                                  <span t-if="journal.move_id.type == 'in_receipt'">Purhcase Receipt</span>
+                                        </div>
+                                        <div class="col-3">
+                                            Number: <t t-esc="journal.move_id.name" />
+                                        </div>
+                                        <div class="col-3">
+                                            Journal: <t t-esc="journal.move_id.journal_id.name" />
+                                        </div>
+                                        <div class="col-2">
+                                            Concept: <t t-esc="journal.move_id.ref" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <table class="invoice_tbody" style="font-size:.75rem; width:100%;" >
+                                            <thead style="border-top: 2px solid black; border-bottom: 2px solid black" class="text-center">
+                                                <tr>
+                                                    <th style="width: 2%;">No.</th>
+                                                    <th style="width: 10%;">Reference</th>
+                                                    <th style="width: 12%;">Account</th>
+                                                    <th style="width: 10%;">Name</th>
+                                                    <th style="width: 12%;">Analytic Account</th>
+                                                    <th style="width: 12%;">Analytic Tags</th>
+                                                    <th style="width: 6%;">Currency</th>
+                                                    <th style="width: 12%;">Amount</th>
+                                                    <th style="width: 12%;">Debit</th>
+                                                    <th style="width: 12%;">Credit</th>
+                                                </tr>
+                                            </thead>
+                                            <!-- Print lines -->
+                                            <tbody>
+                                                <t t-set="lines" t-value="1" />
+                                                <t t-foreach="journal.move_id.line_ids.sorted(key=lambda x: (-x.debit))" t-as="line">
+                                                    <tr>
+                                                        <td class="text-center"><t t-esc="lines" /></td>
+                                                        <t t-if="line.name and len(line.name) &gt; 20">
+                                                            <td><t t-esc="line.name[:20]" /></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><t t-esc="line.name" /></td>
+                                                        </t>
+                                                        <td><t t-esc="line.account_id.code" /></td>
+                                                        <t t-if="line.account_id.name">
+                                                            <td><t t-esc="line.account_id.name[:35]" /></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><t t-esc="line.account_id.name" /></td>
+                                                        </t>
+                                                        <t t-if="line.analytic_account_id.name and len(line.analytic_account_id.name) &gt; 35">
+                                                            <td><t t-esc="line.analytic_account_id.display_name[:35]" /></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><t t-esc="line.analytic_account_id.display_name" /></td>
+                                                        </t>
+                                                        <td><t t-foreach="line.analytic_tag_ids" t-as="tag">
+                                                                <t t-esc="tag.name" />
+                                                            </t>
+                                                        </td>
+                                                        <td class="text-center"><t t-if="line.currency_id" t-esc="line.currency_id.name" /></td>
+                                                        <td class="text-right" >
+                                                            <t t-if="line.currency_id" t-esc="line.amount_currency" t-options="{'widget':'monetary','display_currency':doc.currency_id}" />
+                                                        </td>
+                                                            <td class="text-right" >
+                                                        <t t-esc="line.debit" t-options="{'widget':'monetary','display_currency':doc.currency_id}" />
+                                                            </td>
+                                                        <td class="text-right" >
+                                                            <t t-esc="line.credit" t-options="{'widget':'monetary','display_currency':doc.currency_id}" />
+                                                        </td>
+                                                    </tr>
+                                                    <t t-set="lines" t-value="lines +1" />
+                                                </t>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="8" class="text-right" >Total journal: </td>
+                                                    <td class="text-right" style="border-top: 1px solid black">
+                                                        <t t-esc="journal.debit" t-options="{'widget':'monetary','display_currency':journal.currency_id}" />
+                                                    </td>
+                                                    <td class="text-right" style="border-top: 1px solid black">
+                                                        <t t-esc="journal.credit" t-options="{'widget':'monetary','display_currency':journal.currency_id}" />
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+                                    <!-- CFDI -->
+                                    <t t-if="journal.move_id.type == 'out_invoice'">
+                                        <div class="clearfix" style="padding-top: 2rem;" />
+                                        <span>CFDI Related Documents</span><br/>
+
+                                        <div class="row">
+                                            <table class="invoice_tbody" style="font-size:.75rem; width:100%;" >
+                                                <thead style="border-top: 2px solid black; border-bottom: 2px solid black" class="text-center">
+                                                    <tr>
+                                                        <th style="width: 10%;">Date</th>
+                                                        <th style="width: 6%;">Type</th>
+                                                        <th style="width: 10%;">Serie</th>
+                                                        <th style="width: 6%;">Folio</th>
+                                                        <th style="width: 25%;">UUID</th>
+                                                        <th style="width: 11%;">RFC</th>
+                                                        <th style="width: 20%;">Name</th>
+                                                        <th style="width: 12%;">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- Print lines -->
+                                                <tbody>
+                                                    <!-- Self UUID -->
+                                                    <t t-set="cfdi_amount" t-value="0" />
+                                                    <t t-set="xml" t-value="journal.move_id.l10n_mx_edi_get_xml_etree()"/>
+                                                    <t t-if="xml">
+                                                    <tr>
+                                                        <td><t t-esc="journal.move_id.date" t-options='{"widget": "date", "format": "dd MMM Y"}' /></td>
+                                                        <td>
+                                                            <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'I'">Ingreso</span>
+                                                            <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'E'">Egreso</span>
+                                                            <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'T'">Traslado</span>
+                                                            <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'N'">Nómina</span>
+                                                            <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'P'">Pago</span>
+                                                        </td>
+                                                        <td><span t-esc="xml.get('serie', xml.get('Serie', 'No identificado'))"/></td>
+                                                        <td><span t-esc="xml.get('serie', xml.get('Folio', 'No identificado'))"/></td>
+                                                        <td><t t-esc="journal.move_id.l10n_mx_edi_cfdi_uuid" /></td>
+                                                        <td><t t-esc="journal.move_id.l10n_mx_edi_cfdi_customer_rfc" /></td>
+                                                        <td><t t-esc="journal.move_id.partner_id.name" /></td>
+                                                        <td class="text-right"><t t-esc="journal.move_id.l10n_mx_edi_cfdi_amount" t-options="{'widget':'monetary','display_currency':journal.currency_id}"/></td>
+                                                    </tr>
+                                                    <t t-set="cfdi_amount" t-value="cfdi_amount + journal.move_id.l10n_mx_edi_cfdi_amount" />
+                                                    </t>
+
+                                                    <!-- Related NC & DN -->
+                                                    <t t-foreach="journal.related_ids" t-as="invoice">
+                                                        <t t-if="invoice.l10n_mx_edi_cfdi_uuid">
+                                                            <t t-set="xml" t-value="invoice.l10n_mx_edi_get_xml_etree()"/>
+                                                            <t t-if="xml">
+                                                            <tr>
+                                                                <td><t t-esc="invoice.date" t-options='{"widget": "date", "format": "dd MMM Y"}' /></td>
+                                                                <td>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'I'">Ingreso</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'E'">Egreso</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'T'">Traslado</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'N'">Nómina</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'P'">Pago</span>
+                                                                </td>
+                                                                <td><span t-esc="xml.get('serie', xml.get('Serie', 'No identificado'))"/></td>
+                                                                <td><span t-esc="xml.get('serie', xml.get('Folio', 'No identificado'))"/></td>
+                                                                <td><t t-esc="invoice.l10n_mx_edi_cfdi_uuid" /></td>
+                                                                <td><t t-esc="invoice.l10n_mx_edi_cfdi_customer_rfc" /></td>
+                                                                <td><t t-esc="invoice.partner_id.name" /></td>
+                                                                <td class="text-right"><t t-esc="invoice.l10n_mx_edi_cfdi_amount" t-options="{'widget':'monetary','display_currency':journal.currency_id}"/></td>
+                                                            </tr>
+                                                            <t t-set="cfdi_amount" t-value="cfdi_amount + invoice.l10n_mx_edi_cfdi_amount" />
+                                                            </t>
+                                                        </t>
+                                                    </t>
+
+                                                    <!-- Related Payments -->
+                                                    <t t-foreach="journal.related_payments" t-as="invoice">
+                                                        <t t-if="invoice.l10n_mx_edi_cfdi_uuid">
+                                                            <t t-set="xml" t-value="invoice.l10n_mx_edi_get_xml_etree()"/>
+                                                            <t t-if="xml">
+                                                            <tr>
+                                                                <td><t t-esc="invoice.payment_date"  t-options='{"widget": "date", "format": "dd MMM Y"}' /></td>
+                                                                <td>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'I'">Ingreso</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'E'">Egreso</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'T'">Traslado</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'N'">Nómina</span>
+                                                                    <span t-if="xml.get('tipoDeComprobante', xml.get('TipoDeComprobante', 'No identificado')) == 'P'">Pago</span>
+                                                                </td>
+                                                                <td><span t-esc="xml.get('serie', xml.get('Serie', 'No identificado'))"/></td>
+                                                                <td><span t-esc="xml.get('serie', xml.get('Folio', 'No identificado'))"/></td>
+                                                                <td><t t-esc="invoice.l10n_mx_edi_cfdi_uuid" /></td>
+                                                                <td><t t-esc="invoice.l10n_mx_edi_cfdi_customer_rfc" /></td>
+                                                                <td><t t-esc="invoice.partner_id.name" /></td>
+                                                                <td class="text-right"><t t-esc="invoice.amount" t-options="{'widget':'monetary','display_currency':journal.currency_id}" /></td>
+                                                            </tr>
+                                                            <t t-set="cfdi_amount" t-value="cfdi_amount + invoice.amount" />
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="7" class="text-right">Total: </td>
+                                                        <td class="text-right" style="border-top: 1px solid black"><t t-esc="cfdi_amount" t-options="{'widget':'monetary','display_currency':journal.currency_id}" /></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </t>
+
+                                    <t t-set="voucher" t-value="voucher + 1" />
+                                    <t t-if="voucher &lt; day.journals" >
+                                        <div style="page-break-after: always;"/>
+                                    </t>
+                                </t>
+
+                                <!-- Day Totals -->
+
+                                <t t-if="total_print &lt; doc.journals">
+                                    <div style="page-break-after: always;"/>
+                                </t>
+                            </t>
+                        </t>
+                        <div class="row pt-4">
+                            <table style="font-size:.75rem; width:100%;">
+                                <tr>
+                                    <td style="width:12%;">Total Journals Printed</td>
+                                    <td style="width:5%;">: <t t-esc="doc.journals"/></td>
+                                    <td style="width:45%;"/>
+                                    <td style="width: 14%;" />
+                                    <td style="width: 12%;"/>
+                                    <td style="width: 12%;"/>
+                                </tr>
+                                <tr>
+                                    <td style="width:12%;">Total Lines Printed</td>
+                                    <td style="width:5%;">: <t t-esc="doc.lines"/></td>
+                                    <td style="width:45%;"/>
+                                    <td class="text-right" style="width: 14%;">Total General:</td>
+                                    <td class="text-right" style="border-top: 1px solid black; width: 12%;">
+                                        <t t-esc="doc.debit" t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                    </td>
+                                    <td class="text-right" style="border-top: 1px solid black; width: 12%;">
+                                        <t t-esc="doc.credit" t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+                <!-- Footer ? -->
+            </t>
+        </t>
+    </template>
+
+
+
+</odoo>

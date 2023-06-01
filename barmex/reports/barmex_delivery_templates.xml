@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="barmex_delivery_template_detailed">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" >
+                        <!-- Header -->
+                        <t t-call="barmex.barmex_header_template" t-lang="doc.partner_id.lang">
+                            <h4>Remisión (Detallada)</h4>
+                        </t>
+                        <div class="clearfix" style="padding: 1rem;" />
+                        <!-- Heading -->
+                        <div class="row">
+                            <div class="col-4" >
+                                Delivery: <t t-esc="doc.name" /><br/>
+                                <t t-if="doc._get_saleorder()">
+                                    Order: <t t-esc="doc.origin" /><br/>
+                                    Customer Order: <t t-esc="doc._get_saleorder().client_order_ref" /><br/>
+                                </t>
+                                Creation Date: <t t-esc="doc.write_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/><br/>
+                                Delivery Date: <t t-if="doc.date_done" t-esc="doc.date_done" t-options='{"widget": "date"}' />
+                                               <t t-if="not doc.date_done" t-esc="doc.scheduled_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/><br/>
+                                State: <span t-if="doc.state == 'draft'">Draft</span>
+                                       <span t-if="doc.state == 'waiting'">Waiting Another Operation</span>
+                                       <span t-if="doc.state == 'confirmed'">Confirmed</span>
+                                       <span t-if="doc.state == 'assigned'">Assigned</span>
+                                       <span t-if="doc.state == 'done'">Done</span>
+                                       <span t-if="doc.state == 'cancel'">Canceled</span>
+                                       <span t-if="doc.state == 'total_lock'">Credit Lock</span>
+                                       <span t-if="doc.state == 'lock'">Total Lock</span><br/>
+                                <t t-if="doc._get_saleorder()">
+                                    Saleman: <t t-esc="doc._get_saleorder().user_id.name" /><br/>
+                                </t>
+                                Notes: <t t-esc="doc._trim_notes()" />
+                            </div>
+                            <div class="col-4"/>
+                            <div class="col-4">
+                                <div t-field="doc.partner_id"
+                                     t-options="{&quot;widget&quot;: &quot;contact&quot;,
+                                                &quot;fields&quot;: [&quot;address&quot;,
+                                                &quot;name&quot;],
+                                                &quot;no_marker&quot;: true}"/>
+                                VAT: <t t-esc="doc.partner_id.vat" /><br/>
+                                Phone: <t t-esc="doc.partner_id.phone" /><br/>
+                                Mobile: <t t-esc="doc.partner_id.mobile" />
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="clearfix" style="padding: 1rem;" />
+                        <div class="row">
+                            <table class="table table-sm o_main_table">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Item</th>
+                                        <th>Slip Qty</th>
+                                        <th>Invoice Qty</th>
+                                        <th>UoM</th>
+                                        <th>Price</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.move_ids_without_package" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line.product_id.default_code" /></td>
+                                            <td><t t-esc="line.product_id.name" /></td>
+                                            <td><t t-esc="line.quantity_done" /></td>
+                                            <td><t t-esc="line.product_uom_qty" /></td>
+                                            <td><t t-esc="line.product_uom_category_id.name" /></td>
+                                            <td><t t-esc="line._get_saleline().price_unit"/></td>
+                                            <td><t t-esc="line._get_subtotal()"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="clearfix mt-3">
+                            <div id="total" class="row">
+                                <div class="col-6">
+                                    <div class="mr-auto text-white" style="background-color:#808080;">
+										<span>Amount in text:</span><br/>
+                                        <!-- <div class="text-center mt-1 mb-1">
+                                            <t t-esc="doc._amount_in_words()" />
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <table class="table table-md" style="page-break-inside: avoid;">
+                                        <tr class="border-black o_subtotal" >
+                                            <td>
+                                                <strong>Subtotal</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <!-- <t t-esc="doc._get_subtotal()" t-options="{'widget': 'monetary', 'display_currency': doc._get_saleorder().currency_id}" /> -->
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td>
+                                                <span class="text-nowrap">Taxes</span>
+                                            </td>
+                                            <td class="text-right o_price_total">
+                                                <!-- <span class="text-nowrap" ><t t-esc="doc._get_taxes()" t-options="{'widget': 'monetary', 'display_currency': doc._get_saleorder().currency_id}" /></span> -->
+                                            </td>
+                                        </tr>
+                                        <tr class="border-black o_total">
+                                            <td>
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <!-- <t t-esc="doc._get_subtotal() + doc._get_taxes()" t-options="{'widget': 'monetary', 'display_currency': doc._get_saleorder().currency_id}" /> -->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="page-break-after: always;"/>
+                        <!-- Footer -->
+                        <t t-call="barmex.barmex_footer_template" t-lang="doc.partner_id.lang" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="barmex_delivery_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" >
+                        <!-- Header -->
+                        <t t-call="barmex.barmex_header_template" t-lang="doc.partner_id.lang">
+                            <h4>Remisión</h4>
+                        </t>
+                        <div class="clearfix" style="padding: 1rem;" />
+                        <!-- Heading -->
+                        <div class="row">
+                            <div class="col-4" >
+                                Delivery: <t t-esc="doc.name" /><br/>
+                                <t t-if="doc._get_saleorder()">
+                                    Order: <t t-esc="doc.origin" /><br/>
+                                    Customer Order: <t t-esc="doc._get_saleorder().client_order_ref" /><br/>
+                                </t>
+                                Creation Date: <t t-esc="doc.write_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/><br/>
+                                Delivery Date: <t t-if="doc.date_done" t-esc="doc.date_done" t-options='{"widget": "date"}' />
+                                               <t t-if="not doc.date_done" t-esc="doc.scheduled_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/><br/>
+                                State: <span t-if="doc.state == 'draft'">Draft</span>
+                                       <span t-if="doc.state == 'waiting'">Waiting Another Operation</span>
+                                       <span t-if="doc.state == 'confirmed'">Confirmed</span>
+                                       <span t-if="doc.state == 'assigned'">Assigned</span>
+                                       <span t-if="doc.state == 'done'">Done</span>
+                                       <span t-if="doc.state == 'cancel'">Canceled</span>
+                                       <span t-if="doc.state == 'total_lock'">Credit Lock</span>
+                                       <span t-if="doc.state == 'lock'">Total Lock</span><br/>
+                                <t t-if="doc._get_saleorder()">
+                                    Saleman: <t t-esc="doc._get_saleorder().user_id.name" /><br/>
+                                </t>
+                                Notes: <t t-esc="doc._trim_notes()" />
+                            </div>
+                            <div class="col-4"/>
+                            <div class="col-4">
+                                <div t-field="doc.partner_id"
+                                     t-options="{&quot;widget&quot;: &quot;contact&quot;,
+                                                &quot;fields&quot;: [&quot;address&quot;,
+                                                &quot;name&quot;],
+                                                &quot;no_marker&quot;: true}"/>
+                                VAT: <t t-esc="doc.partner_id.vat" /><br/>
+                                Phone: <t t-esc="doc.partner_id.phone" /><br/>
+                                Mobile: <t t-esc="doc.partner_id.mobile" />
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="clearfix" style="padding: 1rem;" />
+                        <div class="row">
+                            <table class="table table-sm o_main_table">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Item</th>
+                                        <th>Slip Qty</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.move_ids_without_package" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line.product_id.default_code" /></td>
+                                            <td><t t-esc="line.product_id.name" /></td>
+                                            <td><t t-esc="line.quantity_done" /></td>
+                                            <td><t t-esc="line.product_uom_category_id.name" /></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div style="page-break-after: always;"/>
+                        <!-- Footer -->
+                        <t t-call="barmex.barmex_footer_template" t-lang="doc.partner_id.lang" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+        <record id="paperformat_account_journal" model="report.paperformat">
+            <field name="name">PF Account Journal</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="barmex_account_journal_report"
+                string="Account Journal"
+                model="barmex.account.journal.report.header"
+                report_type="qweb-pdf"
+                file="barmex.account_journal_report"
+                name="barmex.account_journal_report"
+                print_report_name="('%s' % (object._get_report_base_filename()))"
+                paperformat="barmex.paperformat_account_journal"
+        />
+    </data>
+</odoo>

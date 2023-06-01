@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="barmex_header_quotation">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+                <!-- Page -->
+                <div class="header">
+                    <div class="row">
+                        <div class="col-4">
+                            <img t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 116px;max-width: 116px;margin-top: 14px" alt="Logo"/>
+                        </div>
+                        <div class="col-4" />
+                        <div class="col-4" >
+                            <t t-raw="0" />
+                            RFC Barmex: <strong><t t-esc="doc.company_id.vat"/></strong><br/>
+                            Zona venta: <strong><t t-esc="doc.partner_id.lco_sale_zone.name"/></strong><br/>
+                            Customer Order: <strong><t t-esc="doc.client_order_ref"/></strong><br/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4" >
+                             <h7><strong><div t-field="doc.partner_id"
+                                  t-options="{'widget': 'contact',
+                                             'fields': ['address','name'],
+                                             'no_marker': true}"/></strong></h7>
+                        </div>
+                        <div class="col-4" />
+                        <div class="col-4" >
+                            Fecha cotización: <strong><t t-esc="doc.date_order" t-options='{"widget": "date", "format": "dd MMM Y"}'/></strong><br/>
+                            Expiration: <strong><t t-esc="doc.validity_date" t-options='{"widget": "date", "format": "dd MMM Y"}'/></strong><br/>
+                            # Cotización: <strong><t t-esc="doc.name"/></strong><br/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="barmex_quotation_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-call="barmex.barmex_header_quotation" >
+                            <h5><strong>BARMEX, S.A. DE C.V.</strong></h5>
+                        </t>
+                        <div class="clearfix" style="padding: 4rem;" />
+                        <div>
+                            <p><strong>Requisición:</strong></p>
+                            <h7>A continuación le presento la cotización solicitada:</h7><br/><br/>
+                        </div>
+                        <div class="row">
+                            <table class="table table-sm o_main_table" style="font-size:.8rem">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th>Item</th>
+                                        <th># Parte</th>
+                                        <th>Description</th>
+                                        <th>Qty</th>
+                                        <th>Unidad</th>
+                                        <th>Brand</th>
+                                        <th>Unit Price</th>
+                                        <th>% Descuento</th>
+                                        <th>Subtotal</th>
+                                        <th>Tiempo entrega</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="num" t-value="0" />
+                                    <t t-foreach="doc.order_line" t-as="line">
+                                        <t t-set="num" t-value="num + 1" />
+                                        <tr>
+                                            <td><t t-esc="num" /></td>
+                                            <td><t t-esc="line.product_id.default_code" /></td>
+                                            <td><t t-esc="line.name[:50]" /></td>
+                                            <td><t t-esc="line.product_uom_qty" /></td>
+                                            <td><t t-esc="line.product_uom.name" /></td>
+                                            <td><t t-esc="line.product_id.brand_id.name" /></td>
+                                            <td><t t-esc="line.price_unit" /></td>
+                                            <td></td>
+                                            <td class="text-right"><t t-esc="line.price_subtotal" t-options="{'widget':'monetary','display_currency':doc.currency_id}" /></td>
+                                            <td></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                        <div class="row pt-4">
+                            <div class="col-6">
+                                    <div class="mr-auto text-white" style="background-color:#808080;">
+										<span>Amount in text:</span><br/>
+                                        <div class="text-center mt-1 mb-1">
+                                            <t t-esc="doc._amount_to_words()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-6">
+								<table class="table" style="page-break-inside: avoid; width:100%;">
+									<tr class="border-black o_subtotal" style="">
+										<td>
+                                            <strong>Subtotal</strong>
+										</td>
+										<td class="text-right">
+                                            <span t-field="doc.amount_untaxed" t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                        </td>
+									</tr>
+                                    <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+											<tr style="">
+												<t t-if="len(doc.order_line.filtered(lambda line: line.tax_id)) in [0, 1] and doc.amount_untaxed == amount_by_group[2]">
+													<td>
+														<span class="text-nowrap" t-esc="amount_by_group[0]"/>
+													</td>
+													<td class="text-right o_price_total">
+														<span class="text-nowrap" t-esc="amount_by_group[3]"/>
+													</td>
+												</t>
+												<t t-else="">
+													<td>
+														<span t-esc="amount_by_group[0]"/>
+													</td>
+													<td class="text-right o_price_total">
+														<span class="text-nowrap" t-esc="amount_by_group[3]"/>
+													</td>
+												</t>
+											</tr>
+										</t>
+									<tr class="border-black o_total">
+										<td>
+                                            <strong>Total</strong>
+										</td>
+										<td class="text-right">
+                                            <span class="text-nowrap" t-field="doc.amount_total" t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+                        </div>
+                        <div style="font-size:.7rem">
+                            <br/><br/><p>Sin más por el momento y en espera de su apreciable pedido, quedamos de usted.<br/>
+                            Elaborado por: <t t-esc="doc.user_id.name"/>, correo electrónico: <t t-esc="doc.user_id.email"/><br/>
+                            Dirección: CDA. DE CEDRO NO. 501 Y 509 COL. ATLAMPA DELG. CUAUHTEMOC 06450 teléfono: (55) 53-28-26-00</p><br/>
+                        </div>
+                        <t t-if="doc.note">
+                            <h5>Terms and Conditions</h5>
+                            <div class="row text-justify">
+                                <t t-esc="doc.note"/>
+                            </div>
+                        </t>
+                        <div class="row">
+                            <t t-esc="doc.payment_term_id.note" />
+                        </div>
+
+
+                        <t t-call="barmex.barmex_footer_template" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

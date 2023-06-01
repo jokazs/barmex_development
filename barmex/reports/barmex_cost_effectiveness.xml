@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_cost_effectiveness" model="ir.ui.view">
+        <field name="name">barmex_cost_effectiveness</field>
+        <field name="model">barmex.cost.effectiveness</field>
+        <field name="arch" type="xml">
+            <form string="Cost Effectiveness">
+                <group>
+                    <group>
+                        <field name="partner_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="date" />
+                    </group>
+                    <group>
+                        <field name="brand_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="product_ids" widget="many2many_tags" options="{'no_create': True}" />
+                    </group>
+                    <group>
+                        <field name="journal_ids" widget="many2many_tags" options="{'no_create': True}" />
+                    </group>
+                </group>
+                <group>
+                    <group></group>
+                    <group>
+                        <group>
+                            <button name="create_report" string="Create Report" type="object" class="oe_highlight"/>
+                            <button name="print_report" string="Print Report" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                </group>
+                <group>
+                    <field name="line_ids" widget="section_and_note_one2many" mode="tree" readonly="1" nolabel="1">
+                        <tree>
+                            <field name="partner_id" />
+                            <field name="partner_num" />
+                            <field name="invoice_id" />
+                            <field name="date" />
+                            <field name="product_id" />
+                            <field name="description" />
+                            <field name="brand_id" />
+                            <field name="qty" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="sale_amount" sum="Total Sale" />
+                            <field name="cost" sum="Total Cost"/>
+                            <field name="profit" sum="Total Profit" />
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>
