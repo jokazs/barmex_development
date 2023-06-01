@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="barmex_foreign_trade_menu_root"
+                  parent="stock.menu_stock_config_settings"
+                  name="Foreign trade" />
+
+        <menuitem id="barmex_foreign_trade_menu"
+                  parent="barmex_foreign_trade_menu_root"
+                  action="barmex_foreign_trade_action"
+                  name="Petition management" />
+
+        <menuitem id="barmex_foreign_trade_customs_menu"
+                  parent="barmex_foreign_trade_menu_root"
+                  action="barmex_foreign_trade_customs_action"
+                  name="Customs" />
+
+        <menuitem id="barmex_petition_relation_menu"
+                  parent="barmex_foreign_trade_menu_root"
+                  action="barmex_petition_relation_action"
+                  name="Pedimentos asignados a facturas" />
+
+        <menuitem id="barmex_imports_menu_root"
+                  parent="purchase.menu_purchase_root"
+                  name="Imports" />
+
+        <menuitem id="barmex_imports_petitions_menu"
+                  parent="barmex_imports_menu_root"
+                  action="barmex_foreign_trade_action"
+                  name="Petitions" />
+
+        <menuitem id="barmex_imports_petition_relation_menu"
+                  parent="barmex_imports_menu_root"
+                  action="barmex_petition_relation_action"
+                  name="Pedimentos asignados a facturas" />
+
+        <menuitem id="barmex_vendor_type_menu"
+                  parent="purchase.menu_purchase_config"
+                  action="barmex_vendor_type_action"
+                  name="Vendor type" />
+
+        <menuitem id="barmex_product_classification_report_menu_root"
+                  parent="stock.menu_warehouse_report"
+                  name="Inventory classification" />
+
+        <menuitem id="barmex_product_classification_report_menu"
+                  parent="barmex_product_classification_report_menu_root"
+                  action="barmex_product_classification_action"
+                  name="Classification" />
+
+        <menuitem id="barmex_product_classification_menu_root"
+                  parent="stock.menu_stock_config_settings"
+                  name="Inventory classification" />
+
+        <menuitem id="barmex_product_classification_menu"
+                  parent="barmex_product_classification_menu_root"
+                  action="barmex_classification_action"
+                  name="Classification" />
+
+        <menuitem id="barmex_product_classification_process_menu"
+                  parent="barmex_product_classification_menu_root"
+                  action="barmex_classification_process_action"
+                  name="Product Classification Process" />
+
+        <menuitem id="barmex_conversion_menu"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  action="barmex_conversion_action"
+                  name="Unit conversion" />
+
+        <menuitem id="barmex_payment_menu"
+                  parent="account.menu_finance_receivables"
+                  action="barmex_payment_action"
+                  name="Barmex payments" />
+
+        <menuitem id="barmex_reason_menu"
+                  parent="account.account_invoicing_menu"
+                  action="barmex_reason_action"
+                  name="Credit note reason" />
+
+        <menuitem id="barmex_invoice_menu"
+                  parent="account.menu_finance_payables"
+                  action="barmex_invoice_action"
+                  name="Barmex invoices" />
+
+        <menuitem id="barmex_sale_zone_root"
+                  name="Sale zone"
+                  parent="sale.menu_sale_config" />
+
+        <menuitem id="barmex_sale_zone_menu"
+                  name="Configure sale zone"
+                  parent="barmex_sale_zone_root"
+                  action="barmex_sale_zone_action" />
+
+        <menuitem id="barmex_corporate_menu"
+                  name="Corporativos"
+                  parent="sale.menu_sale_config"
+                  action="barmex_corporate_action" />
+
+        <menuitem id="barmex_product_barmex_menu_root"
+                  parent="stock.menu_stock_config_settings"
+                  name="Barmex product" />
+
+        <menuitem id="barmex_product_group_menu"
+                  parent="barmex_product_barmex_menu_root"
+                  action="barmex_product_group_action"
+                  name="Group" />
+
+        <menuitem id="barmex_product_subgroup_menu"
+                  parent="barmex_product_barmex_menu_root"
+                  action="barmex_product_subgroup_action"
+                  name="Sub Group" />
+
+        <menuitem id="barmex_product_brand_menu"
+                  parent="barmex_product_barmex_menu_root"
+                  action="barmex_product_brand_action"
+                  name="Brand" />
+
+        <menuitem id="barmex_product_speciallity_menu"
+                  parent="barmex_product_barmex_menu_root"
+                  action="barmex_product_speciallity_action"
+                  name="Speciallity" />
+
+        <menuitem id="barmex_product_subline_menu"
+                  parent="barmex_product_barmex_menu_root"
+                  action="barmex_product_subline_action"
+                  name="Sub Line" />
+
+        <menuitem id="barmex_writeoff_reason_menu"
+                  parent="account.account_invoicing_menu"
+                  action="barmex_writeoff_reason_action"
+                  name="Write-off Reasons" />
+
+        <menuitem id="barmex_sale_lock_menu_root"
+                  parent="sale.sale_menu_root"
+                  groups="sales_team.group_sale_manager"
+                  name="Locked Orders" />
+
+        <menuitem id="barmex_sale_lock_menu"
+                  parent="barmex_sale_lock_menu_root"
+                  action="barmex_sale_lock_action"
+                  name="Pending Approvation" />
+
+        <menuitem id="barmex_account_lock_menu_root"
+                  parent="account_accountant.menu_accounting"
+                  groups="account.group_account_manager"
+                  name="Locked Documents" />
+
+        <menuitem id="barmex_account_lock_menu"
+                  parent="barmex_account_lock_menu_root"
+                  action="barmex_account_lock_action"
+                  name="Pending Approvation" />
+
+        <menuitem id="menu_action_account_report_aged_receivable_real"
+                  name="Aged Receivable (Real Payment)"
+                  action="action_account_report_ar_real"
+                  parent="account_reports.account_reports_partners_reports_menu"/>
+
+        <menuitem id="menu_action_account_journal_report"
+                  name="Account Journal Report"
+                  action="barmex_action_account_journal_report"
+                  parent="account_reports.account_reports_partners_reports_menu"/>
+
+        <menuitem id="menu_barmex_cost_effectiveness_action"
+                  name="Cost Effectiveness"
+                  action="barmex_cost_effectiveness_action"
+                  parent="account_reports.account_reports_partners_reports_menu"/>
+
+        <menuitem id="menu_barmex_customer_aging_action"
+                  name="Customer Aging"
+                  action="barmex_customer_aging_action"
+                  parent="account_reports.account_reports_partners_reports_menu"/>
+
+        <menuitem id="barmex_addenda_menu"
+                  name="Addenda"
+                  action="barmex_addenda_action"
+                  parent="account.account_invoicing_menu"/>
+
+    </data>
+</odoo>

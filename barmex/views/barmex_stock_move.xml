@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_stock_move_line_tree" model="ir.ui.view">
+        <field name="name">barmex_stock_move_line_tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="after">
+                <field name="origin" string="Origin document" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

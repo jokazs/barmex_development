@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="barmex_account_bank_statement_custom" model="ir.ui.view">
+        <field name="name">barmex_account_bank_statement_custom</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="statements_line_ids_custom" string="Ingreso">
+                    <field name="line_ingresos_ids" context="{'date':date}" domain="[('validador_ei','=',True)]">
+                        <tree editable="bottom" string="Statement lines" decoration-muted="journal_entry_ids" limit="500">
+                            <field name="sequence" widget="handle"/>
+                            <field name="journal_entry_ids"/>
+                            <field name="date" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="name" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="partner_id" domain="['|',('parent_id','=',False),('is_company','=',True)]" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="ref" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }" groups="base.group_no_one"/>
+                            <field name="transaction_type" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }" optional="hidden"/>
+                            <field name="note" optional="hidden"/>
+                            <field name="amount" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="journal_currency_id" invisible="1"/>
+                            <field name="bank_account_id" invisible="1"/>
+                            <field name="account_number" optional="hidden"/>
+                            <field name="amount_currency" optional="hidden"/>
+                            <field name="currency_id" optional="hidden"/>
+                            <field name="state" invisible="1"/>
+                            <button name="button_cancel_reconciliation" attrs="{'invisible': ['|',('journal_entry_ids', '=', []), ('state', '=', 'confirm')]}" string="Revert reconciliation" type="object" icon="fa-undo"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="statements_line_ids_custom" string="Egreso">    
+                    <field name="line_egresos_ids" context="{'date':date}" domain="[('validador_ei','=',False)]">
+                        <tree editable="bottom" string="Statement lines" decoration-muted="journal_entry_ids" limit="500">
+                            <field name="sequence" widget="handle"/>
+                            <field name="journal_entry_ids"/>
+                            <field name="date" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="name" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="partner_id" domain="['|',('parent_id','=',False),('is_company','=',True)]" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }"/>
+                            <field name="ref" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }" groups="base.group_no_one"/>
+                            <field name="transaction_type" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }" optional="hidden"/>
+                            <field name="note" optional="hidden"/>
+                            <field name="amount" attrs="{'readonly' : [('journal_entry_ids', '!=', [])] }" />
+                            <field name="journal_currency_id" invisible="1"/>
+                            <field name="bank_account_id" invisible="1"/>
+                            <field name="account_number" optional="hidden"/>
+                            <field name="amount_currency" optional="hidden"/>
+                            <field name="currency_id" optional="hidden"/>
+                            <field name="state" invisible="1"/>
+                            <button name="button_cancel_reconciliation" attrs="{'invisible': ['|',('journal_entry_ids', '=', []), ('state', '=', 'confirm')]}" string="Revert reconciliation" type="object" icon="fa-undo"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

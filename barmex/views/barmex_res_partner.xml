@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="barmex_res_partner_kanban" model="ir.ui.view">
+        <field name="name">barmex_res_partner_kanban</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_kanban_partner_links')]" position="before">
+                <field name="barmex_id_cust" />
+            </xpath>
+            <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[1]/ul[1]/li[7]/field[@name='city']" position="replace"/>
+            <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[1]/ul[1]/li[5]/field[@name='city']" position="replace"/>
+            <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[1]/strong[1]/field[@name='display_name']" position="after">
+                <field display="full" name="lco_sale_zone"/>
+            </xpath>
+            <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[1]/ul[1]/li[6]/field[@name='country_id']" position="after">
+                <field display="full" name="barmex_id_cust"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="barmex_res_partner_form" model="ir.ui.view">
+        <field name="name">barmex_res_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <form string="Partners">
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': [('same_vat_partner_id', '=', False)]}">
+                  A partner with the same <span><span class="o_vat_label">Tax ID</span></span> already exists (<field name="same_vat_partner_id"/>), are you sure to create a new one?
+                </div>
+                <sheet>
+                    <!-- Buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <!-- Calendar -->
+                        <button class="oe_stat_button o_res_partner_tip_opp"
+                                type="object"
+                                name="action_view_opportunity"
+                                icon="fa-star"
+                                groups="barmex.barmex_sales,barmex.barmex_account_receivable"
+                                context="{'default_partner_id': active_id}">
+                            <field string="Opportunities" name="opportunity_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button"
+                                type="object"
+                                name="schedule_meeting"
+                                icon="fa-calendar"
+                                groups="barmex.barmex_sales,barmex.barmex_account_receivable"
+                                context="{'partner_id': active_id, 'partner_name': name}">
+                            <field string="Meetings" name="meeting_count" widget="statinfo"/>
+                        </button>
+                        <!-- Sales -->
+                        <button class="oe_stat_button"
+                                type="action"
+                                name="298"
+                                groups="barmex.barmex_sales,barmex.barmex_account_receivable"
+                                icon="fa-usd"
+                                context="{'default_partner_id': active_id, 'search_default_partner_id': active_id}">
+                                <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                   <field name="sale_order_count" widget="statinfo"/>
+                                </span>
+                                <span class="o_stat_text">Ventas</span>
+                            </div>
+                            
+                        </button>
+                        <!-- Purchase -->
+                        <button class="oe_stat_button"
+                                name="377"
+                                type="action"
+                                groups="barmex.barmex_account_payable,barmex.barmex_purchases"
+                                icon="fa-shopping-cart"
+                                context="{'default_partner_id': active_id, 'search_default_partner_id': active_id}">
+                                <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                   <field name="purchase_order_count" widget="statinfo"/>
+                                </span>
+                                <span class="o_stat_text">Compras</span>
+                            </div>
+
+                            
+                        </button>
+
+                        
+                        <!-- Account Followup -->
+                        <button type="object"
+                                class="oe_stat_button"
+                                name="open_action_followup"
+                                icon="fa-list"
+                                groups="barmex.barmex_sales,barmex.barmex_account_receivable"
+                                attrs="{'invisible': [('total_due', '=', 0)]}">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="total_due"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </span>
+                                <span class="o_stat_text">Due</span>
+                            </div>
+                        </button>
+                        <!-- Customer Invoice -->
+                        <button type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                name="action_view_partner_invoices"
+                                groups="barmex.barmex_sales,barmex.barmex_account_receivable"
+                                context="{'default_partner_id': active_id}">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="total_invoiced"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </span>
+                                <span class="o_stat_text">Invoiced</span>
+                            </div>
+                        </button>
+                        <!-- Vendor Invoice -->
+                        <button class="oe_stat_button"
+                                name="208"
+                                type="action"
+                                icon="fa-pencil-square-o"
+                                groups="barmex.barmex_account_payable,barmex.barmex_purchases"
+                                help="Vendor Bills"
+                                context="{'default_partner_id': active_id, 'search_default_partner_id': active_id}">
+                                <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                   <field name="supplier_invoice_count" widget="statinfo"/>
+                                </span>
+                                <span class="o_stat_text">Facturas de proveedor</span>
+                            </div>
+                        </button>
+                            
+                        <!-- Ledger -->
+                        <button type="object"
+                                class="oe_stat_button"
+                                id="partner_ledger_button"
+                                icon="fa-pencil-square-o"
+                                name="open_partner_ledger"
+                                string="Partner Ledger"
+                                groups="barmex.barmex_account_payable,barmex.barmex_purchases,barmex.barmex_sales,barmex.barmex_account_receivable"
+                                context="{'default_partner_id': active_id}">
+                        </button>
+
+                    </div>
+
+                    <!-- Header -->
+                    <div class="oe_title">
+                        <field name='cxc' invisible="1"/>
+                        <field name='cxp' invisible="1"/>
+                        <field name='sale' invisible="1"/>
+                        <field name='purchase' invisible="1"/>
+                        <field name="is_company" invisible="1"/>
+                        <field name="commercial_partner_id" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                        <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                        </h1>
+                        <div class="o_row">
+                            <field name="parent_id"
+                                   widget="res_partner_many2one"
+                                   placeholder="Company"
+                                   domain="[('is_company', '=', True)]"
+                                   context="{'default_is_company': True, 'show_vat': True}"
+                                   attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
+                                <field name="company_name"
+                                       attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
+                                <button name="create_company"
+                                        type="object"
+                                        class="oe_edit_only btn-link"
+                                        attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}">
+                                       <span class="fa fa-plus-square"/>
+                                       Create company
+                                </button>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="type" groups="base.group_no_one" attrs="{'invisible': [('is_company','=', True)], 'readonly': [('user_ids', '!=', [])]}"/>
+                            <label for="" name="address_name">
+                                <b attrs="{'invisible': [('type', '!=', 'contact')]}">Company Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'invoice')]}">Invoice Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'delivery')]}">Delivery Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'other')]}">Other Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'private')]}">Private Address</b>
+                                <b attrs="{'invisible': [('type', '!=', False)]}">Address</b>
+                            </label>
+                            <div class="o_address_format">
+                                <field name="street"
+                                       placeholder="Street..."
+                                       class="o_address_street"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2"
+                                       placeholder="Street 2..."
+                                       class="o_address_street"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city"
+                                       placeholder="City"
+                                       class="o_address_city"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id"
+                                       class="o_address_state"
+                                       placeholder="State"
+                                       options="{&quot;no_open&quot;: True}"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                       context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="zip"
+                                       placeholder="ZIP"
+                                       class="o_address_zip"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id"
+                                       placeholder="Country"
+                                       class="o_address_country"
+                                       options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+                            <field name="vat"
+                                   placeholder="e.g. BE0477472701"
+                                   required="True"
+                                   attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                            <field name="x_l10n_mx_edi_payment_method_id" attrs="{'invisible': [('is_company','=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="function"
+                                   placeholder="e.g. Sales Director"
+                                   attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="phone"
+                                   widget="phone"/>
+                            <field name="mobile"
+                                   widget="phone"/>
+                            <field name="user_ids"
+                                   invisible="1"/>
+                            <field name="email"
+                                   widget="email"
+                                   context="{'gravatar_image': True}"
+                                   attrs="{'required': [('user_ids','!=', [])]}"/>
+                            <field name="email_notas_credito"
+                                   widget="email"/>
+                            <field name="email_complementos_pago"
+                                   widget="email"/>
+                            <field name="website"
+                                   widget="url"
+                                   placeholder="e.g. https://www.odoo.com"/>
+                            <field name="title"
+                                   options="{&quot;no_open&quot;: True}"
+                                   placeholder="e.g. Mister"
+                                   attrs="{'invisible': [('is_company', '=', True)]}"/>
+                            <field name="active_lang_count"
+                                   invisible="1"/>
+                            <label for="lang"
+                                   attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
+                            <div class="o_row"
+                                 attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}">
+                                <field name="lang"/>
+                                <button type="action"
+                                        name="55"
+                                        class="btn-sm btn-link mb4 fa fa-globe"
+                                        aria-label="More languages"
+                                        groups="base.group_system"
+                                        title="More languages"/>
+                            </div>
+                            <field name="category_id"
+                                   widget="many2many_tags"
+                                   options="{'color_field': 'color', 'no_create_edit': True}"
+                                   placeholder="Tags..."/>
+                        </group>
+                    </group>
+
+                    <!-- Tabs -->
+                    <notebook colspan="4">
+
+                        <page string="Administration"
+                              name='barmex_administration'
+                              groups="barmex.contact_admin">
+                            <group>
+                                <group>
+                                    <field name='company_id' />
+                                    <field name='employee' />
+                                    <field name='property_stock_customer' />
+                                    <field name='property_stock_supplier' />
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Purchase"
+                          name='barmex_purchase'
+                          groups="barmex.barmex_account_payable,
+                                  barmex.barmex_purchases"
+                                  attrs ="{'invisible':[('supplier_rank','!=',1)]}">
+                            <group>
+                                <group>
+                                    <field name='type_vendor' />
+                                    <field name='property_supplier_payment_term_id' />
+                                    <field name='supplier_rank' />
+                                    <field name='tax_id' />
+                                    <field name="barmex_id_vend" />
+                                    <field name='vendor_type' />
+                                    <field name='customer_rank' invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Accounting"
+                          name='barmex_accounting'
+                          groups="barmex.barmex_account_payable,
+                                  barmex.barmex_purchases,
+                                  barmex.barmex_sales,
+                                  barmex.barmex_account_receivable">
+                            <group>
+                                <field name="bank_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="bank_id"/>
+                                        <field name="office" />
+                                        <field name="acc_number"/>
+                                        <field name="acc_holder_name" invisible="1"/>
+                                        <field name="l10n_mx_edi_clabe" />
+                                        <field name="barmex_aba" />
+                                        <field name="barmex_swift" />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name='property_account_receivable_id' attrs="{'required':[('cxc','=',True)]}"/>
+                                <field name='property_account_payable_id' attrs="{'required':[('cxp','=',True)]}" />
+                                <field name='l10n_mx_type_of_operation' />
+                            </group>
+                        </page>
+
+                        <page string="Contacts"
+                              name='barmex_contacts'
+                              groups="barmex.barmex_account_payable,
+                                      barmex.barmex_purchases,
+                                      barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <field name="child_ids"
+                                   mode="kanban"
+                                   context="{
+                                            'default_parent_id': active_id,
+                                            'default_street': street,
+                                            'default_street2': street2,
+                                            'default_city': city,
+                                            'default_state_id': state_id,
+                                            'default_zip': zip,
+                                            'default_country_id': country_id,
+                                            'default_lang': lang,
+                                            'default_type': 'other'}">
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="color"/>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="type"/>
+                                    <field name="email"/>
+                                    <field name="parent_id"/>
+                                    <field name="is_company"/>
+                                    <field name="function"/>
+                                    <field name="phone"/>
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="zip"/>
+                                    <field name="city"/>
+                                    <field name="country_id"/>
+                                    <field name="mobile"/>
+                                    <field name="state_id"/>
+                                    <field name="image_128"/>
+                                    <field name="lang"/>
+                                    <field name="comment"/>
+                                    <field name="display_name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                <div class="o_kanban_image">
+                                                    <img alt="" t-if="record.image_128.raw_value" t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)"/>
+                                                    <t t-if="!record.image_128.raw_value">
+                                                        <img alt="Delivery" t-if="record.type.raw_value === 'delivery'" t-att-src="_s + &quot;/base/static/img/truck.png&quot;"/>
+                                                        <img alt="Invoice" t-if="record.type.raw_value === 'invoice'" t-att-src="_s + &quot;/base/static/img/money.png&quot;"/>
+                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                            <img alt="Logo" t-if="record.is_company.raw_value === true" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
+                                                            <img alt="Avatar" t-if="record.is_company.raw_value === false" t-att-src="_s + &quot;/base/static/img/avatar_grey.png&quot;"/>
+                                                        </t>
+                                                    </t>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <field name="name"/>
+                                                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                    <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                                                    <div t-if="record.type.raw_value != 'contact'">
+                                                        <div>
+                                                            <field name="zip"/>
+                                                            <field name="city"/>
+                                                        </div>
+                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                        <field name="country_id"/>
+                                                    </div>
+                                                    <div t-if="record.phone.raw_value">Phone: <field name="phone" widget="phone"/></div>
+                                                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile" widget="phone"/></div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="Contact / Address">
+                                    <sheet>
+                                        <field name='cxc' invisible="1"/>
+                                        <field name='cxp' invisible="1"/>
+                                        <field name="type"
+                                               widget="radio"
+                                               options="{'horizontal': true}"
+                                               attrs="{'required' : ['|',('cxp', '=', True),('cxc', '=', True)]}"/>
+                                        <field name="parent_id" invisible="1"/>
+                                        <hr/>
+                                        <group col="12">
+                                            <group colspan="5">
+                                                <field name="name" string="Contact Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                                <field name="title" placeholder="e.g. Mr." attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                                <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                                <label for="street" string="Address" attrs="{'invisible': [('type','=', 'contact')]}"/>
+                                                <div attrs="{'invisible': [('type','=', 'contact')]}">
+                                                    <div class="o_address_format" name="div_address">
+                                                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                        <field name="city" placeholder="City" class="o_address_city"/>
+                                                        <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" context="{'country_id': country_id, 'zip': zip}"/>
+                                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                                    </div>
+                                                </div>
+                                                <field name="comment" placeholder="Internal notes..."/>
+                                            </group>
+                                            <group colspan="5">
+                                                <field name="email" widget="email"/>
+                                                <field name="phone" widget="phone"/>
+                                                <field name="mobile" widget="phone"/>
+                                                <field name="company_id" invisible="1"/>
+                                            </group>
+                                            <group colspan="1">
+                                                <field name="image_1920" widget="image" class="oe_avatar" nolabel="1" options="{'image_preview': 'image_128'}"/>
+                                            </group>
+                                        </group>
+                                        <field name="lang" invisible="True"/>
+                                        <field name="user_id" invisible="True"/>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+
+                        <page string="Statistics"
+                          name='barmex_statistics'
+                              groups="barmex.barmex_account_payable,
+                                      barmex.barmex_purchases,
+                                      barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <group>
+                                <field name='debit' readonly="1"/>
+                                <field name='credit'
+                                       readonly="1"
+                                       groups="barmex.barmex_sales,
+                                               barmex.barmex_account_receivable" />
+                                <field name='total_invoiced' readonly="1" />
+                                <field name='total_overdue'
+                                       readonly="1"
+                                       groups="barmex.barmex_sales,
+                                               barmex.barmex_account_receivable" />
+                            </group>
+                        </page>
+
+                        <page string="Geolocation"
+                              name='barmex_geolocation'
+                              groups="barmex.barmex_account_payable,
+                                      barmex.barmex_purchases,
+                                      barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <group>
+                                <group>
+                                    <field name='partner_latitude' attrs="{'readonly': ['|',('sale','=',True),('purchase','=',True)]}"/>
+                                    <field name='partner_longitude' attrs="{'readonly': ['|',('sale','=',True),('purchase','=',True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Credit Limit"
+                              name='barmex_credit_limit'
+                              groups="barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <group>
+                                <group string='General Limits'>
+                                    <group style="border-top: 1px solid #dee2e6; text-align: right;" class="o_group_col_10">
+                                        <label for="sale_order_include" />
+                                        <div style="text-align: left;">
+                                            <field name="sale_order_include" class="oe_inline" />
+                                            <button type="object" name="related_orders" class="oe_link pt-0 oe_inline" >
+                                                <field name='sale_order_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="draft_invoice_include"/>
+                                        <div style="text-align: left;">
+                                            <field name="draft_invoice_include" class="oe_inline" />
+                                            <button type="object" name="related_invoices_draft" class="oe_link pt-0 oe_inline" >
+                                                <field name='draft_invoice_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="open_invoice_include" />
+                                        <div style="text-align: left;">
+                                            <field name="open_invoice_include" class="oe_inline" />
+                                            <button type="object" name="related_invoices_open" class="oe_link pt-0 oe_inline" >
+                                                <field name='open_invoice_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="partially_payed_invoice_include" />
+                                        <div style="text-align: left;">
+                                            <field name="partially_payed_invoice_include" class="oe_inline" />
+                                            <button type="object" name="related_invoices_partial" class="oe_link pt-0 oe_inline" >
+                                                <field name='partially_payed_invoice_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="open_account_include" />
+                                        <div style="text-align: left;">
+                                            <field name="open_account_include" class="oe_inline" />
+                                            <button type="object" name="related_moves" class="oe_link pt-0 oe_inline" >
+                                                <field name='open_account_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="partially_open_account_include" />
+                                        <div style="text-align: left;">
+                                            <field name="partially_open_account_include" class="oe_inline" />
+                                            <button type="object" name="related_moves_partial" class="oe_link pt-0 oe_inline" >
+                                                <field name='partially_open_account_risk' />
+                                            </button>
+                                        </div>
+
+                                        <label for="total_risk" />
+                                        <div style="border-top: 1px solid #dee2e6; text-align:left;" >
+                                            <field name="total_risk" class="oe_inline" style="margin-left: 2.75rem;"  />
+                                        </div>
+                                    </group>
+                                </group>
+                                <group string='Specific Limits'>
+                                    <group style="border-top: 1px solid #dee2e6; text-align: right;" class="o_group_col_10">
+                                        <label for="sale_order_amount" />
+                                        <div style="text-align: left;">
+                                            <field name='sale_order_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Sale Orders Credit Exceeded" attrs="{'invisible':[('sale_order_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="sale_order_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1"/>
+                                        </div>
+
+                                        <label for='draft_invoice_amount' />
+                                        <div style="text-align: left;">
+                                            <field name='draft_invoice_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Draft Invoices Credit Exceeded" attrs="{'invisible':[('draft_invoice_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="draft_invoice_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1" />
+                                        </div>
+
+                                        <label for="open_invoice_amount" />
+                                        <div style="text-align: left;">
+                                            <field name='open_invoice_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Open Invoices Credit Exceeded" attrs="{'invisible':[('open_invoice_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="open_invoice_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1" />
+                                        </div>
+
+                                        <label for="partially_payed_invoice_amount" />
+                                        <div style="text-align: left;">
+                                            <field name='partially_payed_invoice_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Partially Payed Invoices Credit Exceeded" attrs="{'invisible':[('partially_payed_invoice_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="partially_payed_invoice_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1"/>
+                                        </div>
+
+                                        <label for="open_account_amount" />
+                                        <div style="text-align: left;">
+                                            <field name='open_account_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Open Account Moves Credit Exceeded" attrs="{'invisible':[('open_account_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="open_account_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1" />
+                                        </div>
+
+                                        <label for="partially_open_account_amount" />
+                                        <div style="text-align: left;">
+                                            <field name='partially_open_account_amount' class="oe_inline" style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Partially Open Account Moves Credit Exceeded" attrs="{'invisible':[('partially_open_account_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="partially_open_account_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1" />
+                                        </div>
+
+                                        <label for="general_limit" />
+                                        <div style="border-top: 1px solid #dee2e6; text-align:left;" >
+                                            <field name="general_limit"
+                                                   class="oe_inline"
+                                                   style="margin-left: 2.75rem;" />
+                                            <span class="fa fa-exclamation-triangle text-warning" title="Customer Credit Exceeded" attrs="{'invisible':[('credit_exceeded', '=', False)] }" style="margin-left: .75rem;"/>
+                                            <field name="credit_exceeded" class="oe_inline" style="margin-left: .75rem;" invisible="1"/>
+                                        </div>
+                                    </group>
+                                </group>
+
+                                <group string='Information'>
+                                    <group>
+                                        <field name="credit_currency" />
+                                        <field name="due_invoice_lock" />
+                                    </group>
+                                    <group>
+                                        <field name="credit_exceeded" />
+                                        <field name="exceed_limit" />
+                                    </group>
+                                    <group>
+                                        <field name="credit_days"
+                                               attrs="{'required':['|',('cxp','=',True),('cxc','=',True)]}" />
+                                    </group>
+                                    <group>
+                                        <field name="sale_order_available" invisible="1" />
+                                        <field name="credit_available" invisible="1" />
+                                    </group>
+                                </group>
+
+                            </group>
+                        </page>
+
+                        <page string="Notes"
+                              name='barmex_notes'
+                              groups="barmex.barmex_account_payable,
+                                      barmex.barmex_purchases,
+                                      barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <group>
+                                <field name='sale_warn'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                                <field name='sale_warn_msg'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name='purchase_warn'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                                <field name='purchase_warn_msg'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name='picking_warn'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                                <field name='picking_warn_msg'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name='comment'
+                                       attrs="{'readonly':[('cxc','=',False),('cxp','=',False)]}"/>
+                            </group>
+                        </page>
+
+                        <page string="Product Relation"
+                              name='barmex_product'
+                              groups="barmex.barmex_account_payable,
+                                      barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                            <field name="product_reference_id"
+                                   widget="section_and_note_one2many"
+                                   mode="tree"
+                                   attrs="{'readonly':[('sale','=',False)]}" >
+                                <tree string="Product Reference" editable="top" delete="true">
+                                    <field name="product_id" />
+                                    <field name="name" />
+                                    <field name="reference" />
+                                    <field name="uom" />
+                                    <field name="invoice" />
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Sale"
+                              name='barmex_sale'
+                              groups="barmex.barmex_sales,
+                                      barmex.barmex_account_receivable"
+                              attrs ="{'invisible':[('customer_rank','!=',1)]}">
+                            <!-- <field name='cobrador_employee_ids'
+                                   nolabel="1"
+                                   context="{'default_partner_id':active_id}"
+                                   groups="barmex.barmex_sales,
+                                      barmex.barmex_account_receivable">
+                                <tree editable='bottom'>
+                                    <field name="sequence" widget="handle" />
+                                    <field name="partner_id" invisible="1" />
+                                    <field name="user_id"  />
+                                    <field name="name" string="Cobrador"/>
+                                </tree>
+                            </field> -->
+                            <group>
+                                <group>
+                                    <field name="cobrador_employee_ids" />
+                                    <field name="is_admin" invisible="1"/>
+                                    <field name="is_new" invisible="1"/>
+                                    <field name="lco_customer_type" />
+                                    <field name="corporate_res_partner" string="Corporativo"/>
+                                    <field name="barmex_id_cust" />
+                                    <field name="lco_partner_modify_salesperson" groups="sales_team.group_sale_manager" />
+                                    <!-- <field name="user_id" invisible="1"/>
+                                    <field name="user_id" attrs="{'invisible':[('is_new','=',False)]}" force_save="1"/>
+                                    <field name='user_id' attrs="{'invisible': [('is_new','=',True)],'readonly':[('lco_partner_modify_salesperson','=',False)]}" force_save="1"/>
+                                    <field name='lco_sale_zone' attrs="{'readonly':[('is_admin','=',False)]}" required="1" force_save="1"/> -->
+                                    <field name="proveedor_employee" />
+                                    <field name='lco_sale_zone' attrs="{'readonly':[('is_admin','=',False)]}" required="1" force_save="1"/>
+                                    <field name='team_id' attrs="{'readonly':[('sale','=',False)]}"/>
+                                    <field name='lco_fact_global' />
+                                    <field name='invoicing_currency' groups="barmex.barmex_account_receivable"/>
+                                    <field name='l10n_mx_edi_external_trade' />
+                                    <field name='lco_is_prospect' />
+                                    <field name='supplier_rank' invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name='currency_id' />
+                                    <field name='property_account_position_id' />
+                                    <field name='property_payment_term_id' />
+                                    <fiedl name='property_position_id' />
+                                    <field name='industry_id' />
+                                    <field name='property_product_pricelist' invisible='1'/>
+                                    <field name='lco_property_product_pricelist' string= 'Tarífa' domain="[('lco_customer_type', '=', lco_customer_type)]"/>
+                                    <field name='lco_property_product_pricelist_usd' domain="[('lco_customer_type', '=', lco_customer_type)]"/>
+                                    <field name='lco_property_product_pricelist_extra' domain="[('lco_customer_type', '=', lco_customer_type)]"/>
+                                    <field name='lco_property_product_pricelist_extra_usd' domain="[('lco_customer_type', '=', lco_customer_type)]"/>
+                                    <field name='x_studio_codigo_de_proveedor' />
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Automated Mail">
+                                    <group>
+                                        <group>
+                                            <field name="invoicing_mail" />
+                                            <field name="payment_mail" />
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </page>
+
+                        <page string="Addenda"
+                              attrs="{'invisible': [('is_company', '=', False)]}"
+                              groups="barmex.barmex_account_receivable,barmex.barmex_sales">
+                            <group>
+                                <field name="addenda_id" />
+                                <field name="l10n_mx_edi_addenda"
+                                       attrs="{'readonly':[('cxc','=',False)]}" invisible="1"/>
+                                <field name="l10n_mx_edi_addenda_doc"
+                                       attrs="{'invisible': [('l10n_mx_edi_addenda', '=', False)]}" invisible="1"/>
+                            </group>
+                        </page>
+
+
+                    </notebook>
+
+                </sheet>
+                 <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+</odoo>

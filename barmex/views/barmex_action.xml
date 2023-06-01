@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="barmex_foreign_trade_action" model="ir.actions.act_window">
+        <field name="name">Foreign trade</field>
+        <field name="res_model">barmex.foreign.trade</field>
+        <field name="view_mode">tree,pivot,form</field>
+        <field name="context">{'search_default_group_vendor_id': 1}</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_foreign_trade_customs_action" model="ir.actions.act_window">
+        <field name="name">Foreign trade customs</field>
+        <field name="res_model">barmex.foreign.trade.customs</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="barmex_petition_relation_action" model="ir.actions.act_window">
+        <field name="name">Petition Relation</field>
+        <field name="res_model">barmex.petition.relation</field>
+        <field name="view_mode">tree,pivot,form</field>
+    </record>
+
+    <record id="barmex_vendor_type_action" model="ir.actions.act_window">
+        <field name="name">Vendor type</field>
+        <field name="res_model">barmex.vendor.type</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_classification_action" model="ir.actions.act_window">
+        <field name="name">Classification</field>
+        <field name="res_model">barmex.classification</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_product_classification_action" model="ir.actions.act_window">
+        <field name="name">Product classification</field>
+        <field name="res_model">barmex.product.classification</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_classification_process_action" model="ir.actions.act_window">
+        <field name="name">Product Classification</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">barmex.classification.process</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_conversion_action" model="ir.actions.act_window">
+        <field name="name">Unit conversion</field>
+        <field name="res_model">barmex.conversion</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_payment_action" model="ir.actions.act_window">
+        <field name="name">Barmex payments</field>
+        <field name="res_model">barmex.payment</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_reason_action" model="ir.actions.act_window">
+        <field name="name">Credit note reason</field>
+        <field name="res_model">barmex.reason</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_action_account_proposal_invoice_from_list" model="ir.actions.server">
+        <field name="name">Payment Proposal</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_create_payment_proposal()
+        </field>
+    </record>
+
+    <record id="barmex_invoice_action" model="ir.actions.act_window">
+        <field name="name">Barmex Invoices</field>
+        <field name="res_model">barmex.invoice</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_sale_zone_action" model="ir.actions.act_window">
+        <field name="name">Sale zone</field>
+        <field name="res_model">barmex.sale.zone</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="barmex_corporate_action" model="ir.actions.act_window">
+        <field name="name">Corporativos</field>
+        <field name="res_model">barmex.corporate</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="barmex_product_group_action" model="ir.actions.act_window">
+        <field name="name">Product group</field>
+        <field name="res_model">barmex.product.group</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="barmex_product_subgroup_action" model="ir.actions.act_window">
+        <field name="name">Product subgroup</field>
+        <field name="res_model">barmex.product.subgroup</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="barmex_product_brand_action" model="ir.actions.act_window">
+        <field name="name">Product brand</field>
+        <field name="res_model">barmex.product.brand</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="barmex_product_speciallity_action" model="ir.actions.act_window">
+        <field name="name">Product speciallity</field>
+        <field name="res_model">barmex.product.speciallity</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="barmex_product_subline_action" model="ir.actions.act_window">
+        <field name="name">Product subline</field>
+        <field name="res_model">barmex.product.subline</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="barmex_writeoff_reason_action" model="ir.actions.act_window">
+        <field name="name">Write-off Reasons</field>
+        <field name="res_model">barmex.writeoff.reason</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="barmex_sale_lock_action" model="ir.actions.act_window">
+        <field name="name">Locked Sales</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','lock')]</field>
+    </record>
+
+    <record id="barmex_account_lock_action" model="ir.actions.act_window">
+        <field name="name">Locked Documents</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','lock')]</field>
+    </record>
+
+    <record id="action_account_report_ar_real" model="ir.actions.client">
+        <field name="name">Aged Receivable (Real Date)</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'model': 'account.aged.receivable.real'}" />
+    </record>
+
+    <record id="barmex_action_account_journal_report" model="ir.actions.act_window">
+        <field name="name">Journal Report</field>
+        <field name="res_model">barmex.account.journal.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="contacts.action_contacts_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="barmex_res_partner_form"/>
+        <field name="act_window_id" ref="contacts.action_contacts"/>
+    </record>
+
+
+    <record id="barmex_cost_effectiveness_action" model="ir.actions.act_window">
+        <field name="name">Cost Effectivenes</field>
+        <field name="res_model">barmex.cost.effectiveness</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="barmex_customer_aging_action" model="ir.actions.act_window">
+        <field name="name">Customer Aging</field>
+        <field name="res_model">barmex.customer.aging</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="barmex_addenda_action" model="ir.actions.act_window">
+        <field name="name">Addenda</field>
+        <field name="res_model">barmex.addenda</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

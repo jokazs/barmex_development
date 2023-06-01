@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_stock_production_lot_form" model="ir.ui.view">
+        <field name="name">barmex_stock_production_lot_form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='alert_date']" position="after">
+                <field name="lote_creation_date" string="Fecha de fabricación" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

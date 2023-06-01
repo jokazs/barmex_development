@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_res_partner_salezone" model="ir.ui.view">
+        <field name="name">barmex.rp.salezone.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="lco_ventas_mostrador" />
+                <field name="address_filter" invisible="1" />
+                <field name="employee_sale_zone" />
+            </xpath>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="lco_opportunities" string="Opportunities">
+                    <field name="lco_opportunity_ids">
+                        <tree string="Opportunities">
+                            <field name="name" />
+                            <field name="create_date"/>
+                            <field name="partner_name" />
+                            <field name="stage_id" />
+                            <field name="team_id" />
+                            <field name="user_id" />
+                            <field name="probability" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="before">
+                <field name="x_studio_empleado_dado_de_baja" string="Empleado dado de baja" help="Marcar este cuadro cuando el empleado este dado de baja pero los tramites administrativos no se han ejecutado"/>
+            </xpath>
+            <xpath expr="//field[@name='mobile_phone']" position="replace">
+
+            </xpath>
+            <xpath expr="//field[@name='lco_ventas_mostrador']" position="after">
+                <field name="x_studio_rea" string="Área"/>
+                <field name="x_studio_subrea" string="Subárea"/>
+                <field name="x_studio_roles" string="Grupo de Acceso 1"/>
+                <field name="x_studio_rol_2" string="Grupo de Acceso 2"/>
+                <field name="x_studio_corporativo" string="Corporativo"/>
+            </xpath>
+            <xpath expr="//field[@name='visa_no']" position="before">
+                <field name="x_studio_nmero_de_seguridad_social" string="Número de seguridad social"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

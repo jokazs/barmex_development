@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="barmex_product_normal_form_view" model="ir.ui.view">
+        <field name="name">barmex_product_normal_form_view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='seller_ids']" position="replace"/>
+            <xpath expr="//form[1]/header[1]" position="inside">
+                <button name="set_classification" string="Update classification" class="oe_highlight" type="object" />
+            </xpath>
+            <xpath expr="//group[@name='group_standard_price']" position="inside">
+                <field name="last_currency" />
+                <field name="last_price" />
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="customer_reference" string="Product relationship">
+                    <field name="customer_reference" widget="section_and_note_one2many" mode="tree" >
+                        <tree string="Product codes table" editable="top" delete="true" >
+                            <control>
+                              <create name="add_code_control" string="Add a reference" />
+                            </control>
+                            <field name="partner_id" />
+                            <field name="reference"/>
+                            <field name="name"/>
+                            <field name="uom" />
+                            <field name="invoice"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='general_information']/group[1]/group[@name='group_general']/field[@name='type']" position="after">
+                <field name="x_studio_producto_especial" string="Producto especial"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

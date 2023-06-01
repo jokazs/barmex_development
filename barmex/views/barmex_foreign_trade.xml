@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_search">
+        <field name="name">barmex.foreign_trade_search</field>
+        <field name="model">barmex.foreign.trade</field>
+        <field name="arch" type="xml">
+            <search string="Foreign trade search">
+                <field name="partner_id" />
+                <field name="year" />
+                <field name="customs" />
+                <field name="agent" />
+                <field name="petition" />
+                <field name="petition_date" />
+                <group expand="1" string="Group by:">
+                    <filter string="Vendor" name="group_vendor_id" context="{'group_by':'partner_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_tree">
+        <field name="name">barmex.foreign_trade_tree</field>
+        <field name="model">barmex.foreign.trade</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml" >
+            <tree string="Foreign trade" >
+                <field name="name" width="150px"/>
+                <field name="partner_id" width="150px"/>
+                <field name="tax_id" width="150px"/>
+                <field name="year" width="150px"/>
+                <field name="customs" width="150px"/>
+                <field name="agent" width="150px"/>
+                <field name="petition" width="150px"/>
+                <field name="petition_date" width="150px"/>
+                <field name="exchange_rate" width="150px"/>
+                <field name="usd_amount" width="150px"/>
+                <field name="customs_value" width="150px"/>
+                <field name="insurance_amount" width="150px"/>
+                <field name="insurance" width="150px"/>
+                <field name="freight" width="150px"/>
+                <field name="packaging" width="150px"/>
+                <field name="other" width="150px"/>
+                <field name="dta" width="150px"/>
+                <field name="vat" width="150px"/>
+                <field name="prv" width="150px"/>
+                <field name="igi" width="150px"/>
+                <field name="additional_1" width="150px"/>
+                <field name="additional_2" width="150px"/>
+                <field name="val_mon_fac" width="150px"/>
+                <field name="rate_invoice_cur" width="150px"/>
+                <field name="val_dls_fac" width="150px"/>
+                <field name="brand" width="150px"/>
+                <field name="invoice_num" width="150px"/>
+                <field name="invoice_date" width="150px"/>
+                <field name="invoice_val_mxn" width="150px"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_form">
+        <field name="name">barmex.foreign_trade_form</field>
+        <field name="model">barmex.foreign.trade</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Foreign trade">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <div class="o_td_label">
+                                <label for="name" />
+                            </div>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <!-- <field name="petition_no" width="150px"/> -->
+                            <group string = "Número de Pedimento" colspan="2">
+                                <div colspan="2">
+                                    <field name="petition" required="1" />
+                                    <h3>HINT: [2] DIGITOS PARA EL AÑO + [2] ADUANA + [4] PATENTE + [1] DIGITO CHECK y [6] CONSECUTIVOS</h3>
+                                    <h4>NOTA IMPORTANTE: SEPARAR CON 2 ESPACIOS</h4>
+                                </div>
+                            
+                            </group>
+                            <group colspan="2">
+                            <field name="partner_id" string="Agente Aduanal" force_save="1" domain="[('supplier_rank','=',1)]"/>
+                            <field name="tax_id" force_save="1"/>
+                            <field name="year" string="Año (ultimos 2 digitos)" required="1"/>
+                            <field name="customs" required="1" options='{"no_create": True}'/>
+                            <field name="agent" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="petition_date" />
+                            <field name="exchange_rate" />
+                            <field name="usd_amount" />
+                            <field name="insurance_amount" />
+                            <field name="insurance" />
+                        </group>
+                        <group>
+                            <field name="freight" />
+                            <field name="packaging" />
+                            <field name="other" />
+                            <field name="dta" />
+                            <field name="vat" string="VAT" />
+                        </group>
+                        <group>
+                            <field name="prv" />
+                            <field name="igi" />
+                            <field name="additional_1" />
+                            <field name="additional_2" />
+                            <field name="val_mon_fac" />
+                            <field name="val_dls_fac" />
+                            <field name="iva" />
+                        </group>
+                    </group>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Pivot view -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_pivot">
+        <field name="name">barmex.foreign_trade_pivot</field>
+        <field name="model">barmex.foreign.trade</field>
+        <field name="type">pivot</field>
+        <field name="arch" type="xml">
+            <pivot string="Petitions">
+                <field name="qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_product_subline_search">
+        <field name="name">view_barmex_product_subline_search</field>
+        <field name="model">barmex.product.subline</field>
+        <field name="arch" type="xml">
+            <search string="Product sub line search">
+                <field name="code" />
+                <field name="name" />
+                <field name="speciallity_id" />
+                <group expand="1" string="Group by:">
+                    <filter string="Group" name="group" context="{'group_by':'speciallity_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_product_subline_tree">
+        <field name="name">view_barmex_product_subline_tree</field>
+        <field name="model">barmex.product.subline</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Sub line" editable="bottom">
+                <field name="code" />
+                <field name="name" />
+                <field name="speciallity_id" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

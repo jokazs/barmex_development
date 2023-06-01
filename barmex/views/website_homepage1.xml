@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<odoo>
+<template id="website_homepage" customize_show="True" inherit_id="website.homepage">
+    <xpath expr="//div[@id='wrap']" position="replace">
+        <div t-ignore="true">
+            <form action="/website_form/" method="post" data-model_name="res.partner" data-success_page="/contactus-thank-you" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-editable-form="false">
+                <!-- <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="vat">RFC</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="vat" required="" t-att-value="request.params.get('vat', '')"/>
+                    </div>
+                </div> -->
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="name">Nombre</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="name" required="" t-att-value="request.params.get('name', '')"/>
+                    </div>
+                </div>
+                <!-- <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="phone">Telefono</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="phone" required="" t-att-value="request.params.get('phone', '')"/>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="email">Correo electronico</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="email" required="" t-att-value="request.params.get('email', '')"/>
+                    </div>
+                </div>                        
+                <div class="form-group row form-field o_website_form_required_custom" data-type="many2one">
+                    <label class="col-lg-3 col-md-4 col-form-label " for="lco_customer_type">Tipo de Cliente</label>
+                    <div class="col-lg-7 col-md-8">
+                      <select class="form-control s_website_form_input" name="lco_customer_type">
+                        <option value="3" selected="selected">Distribuidor</option>
+                        <option value="4" selected="">Fabricante de Equipo Original (FEO)</option>
+                        <option value="2" selected="">Integrador</option>
+                        <option value="1" selected="">Usuario</option>
+                        <option value="5" selected="">Revendedor</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom" data-type="many2one">
+                    <label class="col-lg-3 col-md-4 col-form-label " for="x_studio_tipo_de_mercado_1">Tipo de Cliente</label>
+                    <div class="col-lg-7 col-md-8">
+                        <select class="form-control s_website_form_input" name="x_studio_tipo_de_mercado_1" t-att-value="request.params.get('x_studio_tipo_de_mercado_1', '')">
+                            <option value="ALIMENTICIA" selected="selected">ALIMENTICIA</option>
+                            <option value="ENERGIA" selected="">ENERGIA</option>
+                            <option value="COMERCIALIZADOR" selected="">COMERCIALIZADOR</option>
+                            <option value="SERVICIOS INDUSTRIALES" selected="">SERVICIOS INDUSTRIALES</option>
+                            <option value="BEBIDAS" selected="">BEBIDAS</option>
+                            <option value="AZUCARERA" selected="">AZUCARERA</option>
+                            <option value="MINERA" selected="">MINERA</option>
+                            <option value="METAL-MECANICA" selected="">METAL-MECANICA</option>
+                            <option value="AGRICOLA" selected="">AGRICOLA</option>
+                            <option value="AUTOMOTRIZ Y AUTOPARTES" selected="">AUTOMOTRIZ Y AUTOPARTES</option>
+                            <option value="INDUSTRIAL EN GENERAL" selected="">INDUSTRIAL EN GENERAL</option>
+                            <option value="OTROS" selected="">OTROS</option>
+                            <option value="CONSTRUCCION" selected="">CONSTRUCCION</option>
+                            <option value="PLASTICO" selected="">PLASTICO</option>
+                            <option value="PAPELERA" selected="">PAPELERA</option>
+                            <option value="MAQUILADORA" selected="">MAQUILADORA</option>
+                            <option value="ACERERA" selected="">ACERERA</option>
+                            <option value="CEMENTERA" selected="">CEMENTERA</option>
+                            <option value="MADERA" selected="">MADERA</option>
+                            <option value="QUIMICA" selected="">QUIMICA</option>
+                            <option value="PESQUERA" selected="">PESQUERA</option>
+                            <option value="FARMACEUTICA" selected="">FARMACEUTICA</option>
+                            <option value="VIDRIO" selected="">VIDRIO</option>
+                            <option value="ALGODONERA" selected="">ALGODONERA</option>
+                            <option value="TEXTIL" selected="">TEXTIL</option>
+                            <option value="AERONAUTICA" selected="">AERONAUTICA</option>
+                            <option value="TRANSPORTE" selected="">TRANSPORTE</option>
+                            <option value="PETROQUIMICA" selected="">PETROQUIMICA</option>
+                            <option value="HULERA" selected="">HULERA</option>
+                            <option value="CERAMICA" selected="">CERAMICA</option>
+                            <option value="SIDERURGICA" selected="">SIDERURGICA</option>
+                            <option value="ENSERES" selected="">ENSERES</option>
+                            <option value="SALINERA" selected="">SALINERA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="origen_cliente">Como se entero de nosotros</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="origen_cliente" required="" t-att-value="request.params.get('origen_cliente', '')"/>
+                    </div>
+                </div>                           
+                <div class="form-group row form-field o_website_form_required_custom" data-type="many2one">
+                    <label class="col-lg-3 col-md-4 col-form-label " for="l10n_mx_edi_usage">Tipo de Cliente</label>
+                    <div class="col-lg-7 col-md-8">
+                        <select class="form-control s_website_form_input" name="l10n_mx_edi_usage" t-att-value="request.params.get('l10n_mx_edi_usage', '')">
+                            <option value="G01" selected="selected">Adquisicion de mercancias</option>
+                            <option value="G02" selected="">Devoluciones, descuentos o bonificaciones</option>
+                            <option value="G03" selected="">Gastos generales</option>
+                            <option value="I01" selected="">Construcciones</option>
+                            <option value="I02" selected="">Inversion en mobiliario y equipo de oficina</option>
+                            <option value="I03" selected="">Equipo de transporte</option>
+                            <option value="I04" selected="">Equipos y accesorios informaticos</option>
+                            <option value="I05" selected="">Dados, troqueles, moldes, matrices y utillaje</option>
+                            <option value="I06" selected="">Comunicaciones telefonicas</option>
+                            <option value="I07" selected="">Comunicaciones por satelite</option>
+                            <option value="I08" selected="">Otras maquinas y equipos</option>
+                            <option value="D01" selected="">Gastos medicos, dentales y hospitalarios</option>
+                            <option value="D02" selected="">Gastos medicos por invalidez</option>
+                            <option value="D03" selected="">Gastos funerarios</option>
+                            <option value="D04" selected="">Donaciones</option>
+                            <option value="D05" selected="">Intereses reales efectivamente pagados por prestamos hipotecarios (casa habitacion)</option>  
+                            <option value="D06" selected="">Aportaciones voluntarias al SAR</option>  
+                            <option value="D07" selected="">Primas de seguro medico</option>  
+                            <option value="D08" selected="">Gastos de transporte escolar obligatorio</option>  
+                            <option value="D09" selected="">Depositos en cuentas de ahorro, primas basadas en planes de pensiones</option>  
+                            <option value="D10" selected="">Pagos por servicios educativos (Colegiatura)</option>
+                            <option value="P01" selected="">A definir</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="metodo_pago">Metodo de pago</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="metodo_pago" required="" t-att-value="request.params.get('metodo_pago', '')"/>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="forma_pago">Forma de pago</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="forma_pago" required="" t-att-value="request.params.get('forma_pago', '')"/>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="property_account_receivable_id">Cuentas por cobrar</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="property_account_receivable_id" required="" t-att-value="request.params.get('property_account_receivable_id', '')"/>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="property_account_payable_id">Cuentas por pagar</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="property_account_payable_id" required="" t-att-value="request.params.get('property_account_payable_id', '')"/>
+                    </div>
+                </div>
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="company_type">Compania</label>
+                    <div class="col-lg-7 col-md-8">
+                        <input type="text" class="form-control s_website_form_input" name="company_type" required="" t-att-value="request.params.get('company_type', '')"/>
+                    </div>
+                </div>-->
+                <div class="form-group row">
+                    <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                        <a href="#" role="button" class="btn btn-primary btn-lg o_website_form_send">Enviar</a>
+                        <span id="o_website_form_result"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </xpath>
+</template>
+</odoo>

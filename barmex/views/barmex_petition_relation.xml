@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_petition_relation_search">
+        <field name="name">barmex.petition_relation_search</field>
+        <field name="model">barmex.petition.relation</field>
+        <field name="arch" type="xml">
+            <search string="Foreign trade search">
+                <field name="product_id" />
+                <field name="petition" />
+                <field name="date" />
+                <field name="available" />
+
+                <group expand="1" string="Group by:">
+                    <filter string="Pedimento" name="group_petition_id" context="{'group_by':'petition'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_petition_relation_tree">
+        <field name="name">barmex.petition_relation_tree</field>
+        <field name="model">barmex.petition.relation</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml" >
+            <tree string="Foreign trade" >
+                <field name="product_id" />
+                <field name="foreign_trade_id" />
+                <field name="petition" />
+                <field name="date" />
+                <field name="available" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record model="ir.ui.view" id="view_barmex_petition_relation_form">
+        <field name="name">barmex.petition_relation_form</field>
+        <field name="model">barmex.petition.relation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Foreign trade">
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="petition" />
+                            <field name="foreign_trade_id" />
+                            <field name="date" />
+                            <field name="available" />
+                            <field name="historial" />
+
+                            
+                        </group>
+                      
+                    </group>
+                </sheet>
+                 <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Pivot view -->
+    <record model="ir.ui.view" id="view_barmex_petition_relation_pivot">
+        <field name="name">barmex.petition_relation_pivot</field>
+        <field name="model">barmex.petition.relation</field>
+        <field name="type">pivot</field>
+        <field name="arch" type="xml">
+            <pivot string="Petitions">
+                <field name="available" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

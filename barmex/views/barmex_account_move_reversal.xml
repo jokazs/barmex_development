@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="barmex_account_move_reversal_form" model="ir.ui.view">
+        <field name="name">barmex_account_move_reversal_form</field>
+        <field name="model">account.move.reversal</field>
+        <field name="inherit_id" ref="account.view_account_move_reversal" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reason']" position="replace">
+                <field name='reason' options='{"no_create": True}' attrs="{'required':[('move_type','!=','entry')],'invisible': [('move_type', '==', 'entry')], 'reason': [('move_type', '==', 'entry')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

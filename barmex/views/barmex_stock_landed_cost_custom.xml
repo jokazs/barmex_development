@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="barmex_stock_landed_cost_custom" model="ir.ui.view">
+        <field name="name">barmex_stock_landed_cost_custom</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_ids']" position="replace">
+                <field name="picking_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='vendor_bill_id']" position="replace">
+                <field name="factura_aduanal"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="pedimento_id"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
+                <page name="facturas_costes_views_ids" string="Facturas">
+                    <field name="facturas_costes_ids" widget="section_and_note_one2many" mode="tree,kanban">
+                        <tree string="Facturas" editable="bottom">
+                            <field name="name" domain="['&amp;',('state','=','posted'),('type','=','in_invoice')]"/>
+                            <field name="productos"/>
+                            <field name="flete"/>
+                            <field name="otros"/>
+                            <field name="seguro"/>
+                            <field name="total_valor_aduana"/>
+                            <field name="valor_aduana"/>
+                            <field name="derecho_de_tramite_aduanal"/>
+                            <field name="igi"/>
+                            <field name="iva"/>
+                            <field name="total" sum="Total"/>
+                        </tree>
+                    </field>
+                    <button name="button_calculo_costo" string="Calculo de Prorrateo" type="object" class="oe_right btn-secondary"/>
+                </page>
+                <page name="facturas_gastos_views_ids" string="Facturas gastos">
+                    <field name="facturas_gastos_ids"  mode="tree">
+                        <tree string="Facturas gastos" editable="bottom">
+                            <field name="name" domain="['&amp;',('state','=','posted'),('type','=','in_invoice')]"/>
+                            <field name="monto_mxn" string="Total MXN" sum = "Total"/>
+                            <field name="notas"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+    
+</odoo>

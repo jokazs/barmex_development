@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="barmex_credit_note" model="ir.ui.view">
+            <field name="name">barmex_credit_note</field>
+            <field name="model">barmex.credit.note</field>
+            <field name="arch" type="xml">
+                <form string="Reverse Journal Entry">
+                    <group>
+                        <group>
+                            <field name='reason' domain="[('discount','=',True)]" options='{"no_create": True}'/>
+                            <field name='date' />
+                        </group>
+                        <group>
+                            <field name='journal_id' />
+                        </group>
+                    </group>
+                    <footer>
+                        <button string='Reverse' name="create_credit" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+
+</odoo>

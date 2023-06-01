@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lco_pricelist_modify_product" model="ir.ui.view">
+        <field name="name">lco_pricelist_modify_product</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[@name='pricelist_settings']/field[@name='company_id']" position="replace">
+                <field name="company_id" required="1"/>
+                <field name="lco_customer_type" required="0" attrs="{}" force_save="True" />
+                <field name="is_modify_listprice" />
+                <field name="reseller_price" />
+                <field name="sublista_valido" />
+                <field name="global_cliente" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="lco_pricelist_product_form" model="ir.ui.view">
+        <field name="name">lco_pricelist_product_form</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="lco_customer" string="Customer" attrs="{'invisible': [('currency_id','!=', 33)]}">
+                    <field name="customer_ids" widget="section_and_note_one2many" mode="tree" >
+                        <tree string="Customer Reference table" editable="top" delete="true" >
+                            <control>
+                              <create name="add_code_control" string="Add a customer" />
+                            </control>
+                            <field name="partner_id" />
+                            <field name="pricelist_id"/>
+                            <field name="pricelist_extra_id" />
+                        </tree>
+                    </field>
+                </page>
+                <page name="lco_customer" string="Customer" attrs="{'invisible': [('currency_id','!=', 2)]}">
+                    <field name="customer_pricelist_ids" widget="section_and_note_one2many" mode="tree" >
+                        <tree string="Customer Reference table" editable="top" delete="true" >
+                            <control>
+                              <create name="add_code_control" string="Add a customer" />
+                            </control>
+                            <field name="partner_id" />
+                            <field name="pricelist_usd_id"/>
+                            <field name="pricelist_extra_id" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

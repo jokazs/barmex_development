@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- Search -->
+    <record model="ir.ui.view" id="barmex_account_invoice_search_view">
+        <field name="name">barmex_account_invoice_search_view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="barmex_uuid"/>
+                <field name="credit_notes"/>
+                <field name="ref" />
+                <field name="folio_cliente" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_account_move_form_view" model="ir.ui.view">
+        <field name="name">barmex_account_move_form_view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/div[@name='button_box']/button[@name='action_open_asset_ids'][2]" position="after">
+                <field name="xml_ids" invisible="1"/>
+                <button class="oe_stat_button" icon="fa-file" type="object" name="related_xml" attrs="{'invisible':[('type','!=','in_invoice')]}" context=" {'default_invoice_id':id}">
+                    <span attrs="{'invisible':[('xml_ids','=','False')]}">Add XML File</span>
+                    <span attrs="{'invisible':[('xml_ids','!=','False')]}">View XML File</span>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='preview_invoice']" position="before">
+                <button name="approve_invoice" string="Approve" class="oe_highlight" type="object" attrs="{'invisible': [('state','!=','lock')]}" groups="account.group_account_manager" />
+            </xpath>
+            <xpath expr="//field[@name='l10n_mx_edi_usage']" position="after" >
+                <field name="barmex_reason" attrs="{'required':[('type','=','out_refund')], 'invisible':[('type','!=','out_refund')]}" options='{"no_create": True}'/>
+                <label for="cfdi_relacionados" string="CFDI relacionados" nolabel="1" attrs="{'invisible': [('state','!=','draft')]}"/>
+                <div>
+                    <field name="cfdi_relacionados" class="oe_inline" force_save="1" attrs="{'invisible': [('state','!=','draft')]}" readonly="1"/>
+                    <button string="Agregar CFDI relacionado" name="%(action_barmex_cfdi_relacionado)d" type="action" class="oe_inline oe_highlight" attrs="{'invisible': [('state','!=','draft')]}"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after" >
+                <field name="barmex_uuid" attrs="{'invisible':[('type','!=','in_invoice')]}" force_save="1" />
+            </xpath>
+            <xpath expr="//field[@name='l10n_mx_edi_usage']" position="attributes" >
+                <attribute name="attrs">{"invisible": [["type","not in",["out_invoice","out_refund"]]]}</attribute>
+                <attribute name="attrs">{"readonly": [["type","not in",["out_refund"]]]}</attribute>
+                <attribute name="force_save">True</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="attributes" >
+                <attribute name="readonly">False</attribute>
+                <attribute name="force_save">True</attribute>
+            </xpath>
+            
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_unit']" position="after">
+                <field name="lco_price_dist" attrs="{'readonly':[('line_type', '!=', 'out_invoice')] }"/>
+                <field name="lco_price_diff" attrs="{'readonly':[('line_type', '!=', 'out_invoice')] }"/>
+                <field name="discount_amount_lco" attrs="{'readonly':[('line_type', '!=', 'in_invoice')] }"/>
+                <field name="discount_percentage_lco" attrs="{'readonly':[('line_type', '!=', 'in_invoice')] }"/>
+                <field name="line_type" invisible="1"/>
+            </xpath>
+
+            <!-- -->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="after">
+                <group name="barmex_currency_parent">
+                    <group name="barmex_currency_child">
+                        <field name="barmex_currency_rate" required="1"/>
+                    </group>
+                </group>  
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="folio_cliente" attrs="{'invisible':[('type', '!=', 'out_invoice')] }"/>
+                <field name="sucursal_id" attrs="{'invisible':[('type', '!=', 'out_invoice')] }"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <field name="partner_cobrador"/>
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="amount_currency_usd" invisible="1"/>
+                <field name="amount_total_signed" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook[last()]" position="inside">
+                <page string="Adenda">
+                    <group>
+                        <field name="addenda_num" invisible="1" />
+                        <field name="partner_addenda_id" readonly="1" force_save="1" />
+                        <field name="addenda_id" options="{'no_create': True, 'no_create_edit':True}"  attr="{'required': [('partner_addenda_id','!=',False)]}" />
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/field[@name='line_ids']/tree[1]" position="attributes">
+                <attribute name="create">true</attribute>
+                <attribute name="edit">true</attribute>
+              </xpath>
+        </field>
+    </record>
+
+
+    <record id="barmex_account_invoice_tree_view" model="ir.ui.view">
+        <field name="name">barmex_account_invoice_tree_view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree[1]/field[@name='amount_untaxed_signed']" position="after">
+                <field name="discount_total" invisible="context.get('default_type') != ('out_invoice')" />
+            </xpath>
+            <xpath expr="//tree[1]/field[@name='name']" position="after">
+                <field name="barmex_uuid"/>
+                <field name="folio_cliente" invisible="context.get('default_type') not in ('out_invoice', 'out_refund','out_receipt')"/>
+                <!-- <field name="customer_id_tree"/> -->
+            </xpath>
+            <field name="amount_untaxed_signed" position="replace"> 
+                <field name="amount_untaxed_signed" string="Subtotal MXN"/>
+                <field name="amount_tax_signed" string="Impuestos MXN"/>
+                
+            </field>
+            <field name="amount_total_signed" position="replace"> 
+                <field name="amount_total_signed" string="Total MXN"/>
+                <field name="barmex_currency_rate"/>
+                <field name="amount_currency_usd" string="Total USD"/>
+            </field>
+            <field name="invoice_user_id" position="after">
+                <field name="partner_cobrador"/>
+            </field>
+            <xpath expr="//tree[1]/field[@name='invoice_origin']" position="after">
+                <field name="credit_notes" invisible="context.get('default_type') not in ('out_invoice','in_invoice')" />
+                <field name="barmex_reason" invisible="context.get('default_type') != ('out_refund')" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

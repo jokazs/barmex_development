@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="barmex_product_classification_dialog">
+        <field name="name">Product classification</field>
+        <field name="model">barmex.classification.process</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Product classification process will be executed</p>
+                <p>This process can slow down your system</p>
+                <group>
+                    <footer>
+                        <button name="process" string="Run" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" type="object" class="btn btn-default" />
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>

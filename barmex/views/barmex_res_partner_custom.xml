@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="barmex_res_partner_form_custom_view" model="ir.ui.view">
+        <field name="name">barmex_res_partner_form_custom_view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="barmex.barmex_res_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="string">RFC</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='barmex_purchase']/group[1]/group[1]" position="attributes">
+                <attribute name="string">Compras</attribute>
+            </xpath>
+                <xpath expr="//field[@name='type_vendor']" position="before">
+                <xpath expr="//field[@name='barmex_id_vend']" position="move"/>
+                <xpath expr="//field[@name='vendor_type']" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='type_vendor']" position="attributes">
+                <attribute name="string">Tipo de Proveedor</attribute>
+            </xpath>
+            <xpath expr="//field[@name='type_vendor']" position="after">
+                <field name="x_studio_es_acreedor" string="Es acreedor" help="Marcar este campo si es acreedor"/>
+            </xpath>
+            <xpath expr="//field[@name='tax_id']" position="after">
+                <field name="x_studio_solicitado_por_1" options="{&quot;no_create&quot;:true}" string="Solicitado por"/>
+            </xpath>
+            <xpath expr="//field[@name='l10n_mx_type_of_operation']" position="after">
+                <field name="l10n_mx_edi_usage"/>
+            </xpath>
+            <xpath expr="//field[@name='lco_customer_type']" position="after">
+                <field name="x_studio_tipo_de_mercado_1" string="Tipo de Mercado"/>
+                <!-- <field name="x_studio_corporativo" string="Corporativo"/> -->
+            </xpath>
+            <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='barmex_sale']/group[1]/group[1]/field[@name='user_id']" position="attributes">
+                <attribute name="string">Agente de ventas</attribute>
+            </xpath> -->
+            <xpath expr="//field[@name='lco_sale_zone']" position="attributes">
+                <attribute name="attrs">{"readonly": [["is_admin","=",False]]}</attribute>
+                <attribute name="required"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='industry_id']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath> -->
+            <xpath expr="//field[@name='lco_property_product_pricelist_extra']" position="after">
+                <field name="x_studio_cdigo_de_proveedor" string="Código de proveedor" help="Número de proveedor que fue asignado por parte del cliente"/>
+            </xpath>
+            <xpath expr="//field[@name='barmex_id_vend']" position="attributes">
+                <attribute name="string">Numero de Proveedor</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vendor_type']" position="attributes">
+                <attribute name="string">Origen de Proveedor</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_res_partner_tree_custom_view" model="ir.ui.view">
+        <field name="name">barmex_res_partner_tree_custom_view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="replace">
+                <field name="lang"/>
+                <field name="lco_sale_zone"/>
+              </xpath>
+              <xpath expr="//field[@name='display_name']" position="before">
+                <field name="barmex_id_vend" string="Clave de Proveedor"/>
+                <field name="barmex_id_cust"/>
+              </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_search_custom_view" model="ir.ui.view">
+        <field name="name">barmex_res_partner_search_custom_view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="barmex_id_cust" string="ID Cliente"/>                 	
+                <field name="barmex_id_vend" string="ID Proveedor"/>
+                <field name="corporate_res_partner" string="Corporativo"/>
+                <group expand="1" string="Group By">
+                    <filter name="corporate_res_partner" string="Corporativo" context ="{'group_by': 'corporate_res_partner'}"/>
+                </group>
+             </field>
+         </field>
+    </record> 
+
+</odoo>

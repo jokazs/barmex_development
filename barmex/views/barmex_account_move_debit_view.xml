@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+        <field name="domain">[('type','in', ['out_invoice']), ('out_debit_note','=', False), ('in_debit_note','=', False)]</field>
+    </record>
+
+    <record id="account.action_move_out_refund_type" model="ir.actions.act_window">
+        <field name="domain">[('type','in', ['out_refund']), ('out_debit_note','=', False), ('in_debit_note','=', False)]</field>
+    </record>
+
+    <record id="account.action_move_in_invoice_type" model="ir.actions.act_window">
+        <field name="domain">[('type','in', ['in_invoice']), ('out_debit_note','=', False), ('in_debit_note','=', False)]</field>
+    </record>
+
+    <record id="account.action_move_in_refund_type" model="ir.actions.act_window">
+        <field name="domain">[('type','in', ['in_refund']), ('out_debit_note','=', False), ('in_debit_note','=', False)]</field>
+    </record>
+    
+    <record id="action_invoice_debit_out" model="ir.actions.act_window">
+        <field name="name">Debit notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="domain">[('out_debit_note','=', True)]</field>
+        <field name="context">{'default_type':'out_invoice', 'type':'out_invoice', 'out_debit_note': True, 'create': False}</field>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Views customer Debit Notes.
+            </p>
+            <p>
+                List views customer Debit Notes of invoices
+            </p>
+        </field>
+    </record>
+
+    <record id="action_invoice_debit_in" model="ir.actions.act_window">
+        <field name="name">Debit notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="domain">[('in_debit_note','=', True)]</field>
+        <field name="context">{'default_type':'in_invoice', 'type':'in_invoice', 'in_debit_note': True, 'create': False}</field>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Views supplier Debit Notes.
+            </p>
+            <p>
+                List views supplier Debit Notes of invoices
+            </p>
+        </field>
+    </record>
+    
+    <menuitem action="action_invoice_debit_out"
+        id="menu_action_invoice_out_debit"
+        parent="account.menu_finance_receivables"
+        groups="account.group_account_invoice"
+        sequence="1"/>
+
+    <menuitem action="action_invoice_debit_in"
+        id="menu_action_invoice_in_debit"
+        parent="account.menu_finance_payables"
+        groups="account.group_account_invoice"
+        sequence="1"/>
+</odoo>

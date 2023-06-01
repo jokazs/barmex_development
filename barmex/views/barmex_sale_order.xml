@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_sale_order_form" model="ir.ui.view">
+        <field name="name">barmex_sale_order_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm']" position="before">
+                <button name="approve_order" string="Approve" class="oe_highlight" type="object" attrs="{'invisible': ['|',('state','!=','lock'),('state','=','bloqueo_cyc')]}" groups="sales_team.group_sale_manager"/>
+                <button name="total_lock" string="Total lock" class="oe_highlight" type="object" attrs="{'invisible': ['|',('state','=','cancel'),('state','=','total_lock')]}" groups="account.group_account_manager"/>
+                <button name="action_bloqueocyc" string="Bloqueo Credito y Cobranza" class="oe_highlight" type="object" attrs="{'invisible': ['|',('state','=','cancel'),('state','=','bloqueo_cyc')]}" groups="barmex.boton_bloqueo_cyc"/>
+                <button name="unlock" string="Unlock" class="oe_highlight" type="object" attrs="{'invisible': ['|',('state','!=','bloqueo_cyc'),('state','=','cancel'),'|',('state','!=','total_lock')]}" groups="account.group_account_manager"/>
+
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_id']" position="after">
+                <field name="lco_prod_prospecto"/>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="replace">
+                <field name="pricelist_id" domain="[('lco_customer_type', '=', lco_sale_customer_type)]"/>
+                <field name="lco_sale_customer_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']" position="after">
+                <field name="lco_price_dist" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='sequence']" position="after">
+                <field name="is_listprice_modified" invisible="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_information']/group[1]/group[@name='sales_person']/field[@name='client_order_ref']" position="replace">
+                <field name="client_order_ref" invisible="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="client_order_ref"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="replace">
+                <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}" options="{&quot;always_reload&quot;: True}" domain="[('parent_id', '=', partner_id)]" />
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="replace">
+                <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}" options="{&quot;always_reload&quot;: True}" domain="[('parent_id', '=', partner_id)]"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="attributes">
+                <attribute name="attrs">{'readonly': [('is_listprice_modified', '=', False)]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ('draft','sent','sale'))]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ('draft','sent'))]}</attribute>
+            </xpath>
+            <!-- <xpath expr="//page[@name='other_information']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', 'not in', ('draft','sent'))]}</attribute>
+            </xpath> -->
+            <xpath expr="//page[@name='optional_products']" position="attributes">
+                <attribute name="attrs"></attribute>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', '!=', ('draft','sent'))]}</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page string="Credit Limit">
+                    <group>
+                        <field name="credit_currency" />
+                        <field name="sale_order_available" />
+                        <field name="customer_credit_available" />
+                    </group>
+                </page>
+                <page string="Adenda">
+                    <group>
+                        <field name="addenda_num" invisible="1" />
+                        <field name="partner_addenda_id" readonly="1" force_save="1" />
+                        <field name="addenda_id" options="{'no_create': True, 'no_create_edit':True}"  attr="{'required': [('partner_addenda_id','!=',False)]}" />
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='note']" position="after">
+                <field name="x_studio_field_PR9lL" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_sale_order_tree" model="ir.ui.view">
+        <field name="name">barmex.sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="client_order_ref" string="Referencia cliente"/>
+            </xpath>
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="lco_fact_global_related" string="Global invoicing"/>
+            </xpath>
+            <field name="invoice_status" position="after">
+                <field name="origin"/>
+            </field>
+        </field>
+    </record>
+</odoo>

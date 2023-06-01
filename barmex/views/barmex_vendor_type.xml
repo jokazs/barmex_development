@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_vendor_type_search">
+        <field name="name">barmex.vendor_type_search</field>
+        <field name="model">barmex.vendor.type</field>
+        <field name="arch" type="xml">
+            <search string="Vendor type">
+                <field name="name" />
+                <field name="description" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_vendor_type_tree">
+        <field name="name">barmex.vendor_type_tree</field>
+        <field name="model">barmex.vendor.type</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Vendor type" editable="top">
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="barmex_product_template_product_form" model="ir.ui.view">
+        <field name="name">barmex_product_template_product_form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <!-- <field name="l10n_mx_edi_tariff_fraction_id" position="replace"/>
+            <field name="l10n_mx_edi_umt_aduana_id" position="replace"/>
+            <field name="weight" position="replace"/> -->
+
+            <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]" position="inside">
+                <page name="barmex_importaciones" string="Importaciones">
+                    <group name="grupo_importaciones">
+                        <group name="importaciones_izqiuerda">
+                            <field name="l10n_mx_edi_tariff_fraction_id" />
+                            <field name="tasa_advalorem_igi" />
+                            <field name="l10n_mx_edi_umt_aduana_id" />
+                            <field name="weight" />
+                        </group>
+                    </group>
+                </page>                
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

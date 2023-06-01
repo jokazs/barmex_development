@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_customs_search">
+        <field name="name">barmex.foreign_trade_customs_search</field>
+        <field name="model">barmex.foreign.trade.customs</field>
+        <field name="arch" type="xml">
+            <search string="Foreign trade customs search">
+                <field name="name" />
+                <field name="code" />
+
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_foreign_trade_customs_tree">
+        <field name="name">barmex.foreign_trade_customs_tree</field>
+        <field name="model">barmex.foreign.trade.customs</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml" >
+            <tree string="Foreign trade customs" >
+                <field name="name" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+</odoo>

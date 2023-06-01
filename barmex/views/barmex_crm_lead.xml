@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id = "barmex_crm_lead_view_form" model="ir.ui.view">
+        <field name="name">barmex.crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form" />
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="lco_participant_ids">
+                    <tree string="Participants">
+                        <field name="name" />
+                        <field name="department_id" />
+                        <field name="job_id" />
+                        <field name="parent_id" />
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_product_classification_search">
+        <field name="name">barmex_product_classification_search</field>
+        <field name="model">barmex.product.classification</field>
+        <field name="arch" type="xml">
+            <search string="Product classification search">
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="classification_id" />
+                <field name="days" string="Days in classification"/>
+                <group expand="1" string="Group by:">
+                    <filter string="Product" name="product" context="{'group_by':'product_id'}" />
+                    <filter string="Location" name="location" context="{'group_by':'location_id'}" />
+                    <filter string="Classification" name="classification" context="{'group_by':'classification_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_product_classification_tree">
+        <field name="name">barmex_product_classification_tree</field>
+        <field name="model">barmex.product.classification</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Classification" create="false" edit="false">
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="classification_id" />
+                <field name="days" string="Days in classification"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

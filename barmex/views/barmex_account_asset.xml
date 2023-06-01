@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search -->
+    <record model="ir.ui.view" id="barmex_account_asset_search_view">
+        <field name="name">barmex_account_asset_search_view</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="employee_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_account_asset_form" model="ir.ui.view">
+        <field name="name">barmex_account_asset_form</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/div[3]" position="inside">
+                <label for="employee_id" name="employee_label" class="oe_edit_only" attrs="{'invisible': [('state', '=', 'model')]}"/>
+                <label for="employee_id" name="model_employee_label" string="Employee" class="oe_edit_only" attrs="{'invisible': [('state', '!=', 'model')]}"/>
+                <h3>
+                    <field name="employee_id" />
+                </h3>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="barmex_account_asset_tree" model="ir.ui.view">
+        <field name="name">barmex_account_asset_tree</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_purchase_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="employee_id" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="barmex_sale_zone_tree" model="ir.ui.view">
+        <field name="name">barmex_sale_zone_tree</field>
+        <field name="model">barmex.sale.zone</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="barmex_sale_zone_form" model="ir.ui.view">
+        <field name="name">barmex_sale_zone_form</field>
+        <field name="model">barmex.sale.zone</field>
+        <field name="arch" type="xml">
+            <form string="Sale zone">
+                <sheet>
+                    <group name="top">
+                        <field name="name" />
+                        <field name="active" />
+                        <field name="journal_id" />
+                        <field name="company_id" invisible="1" force_save="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="barmex_sale_zone_search" model="ir.ui.view">
+        <field name="name">barmex_sale_zone_search</field>
+        <field name="model">barmex.sale.zone</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <filter name="active" string="Active zones" domain="[('active','=',True)]" />
+                <filter name="inactive" string="Inactive zones" domain="[('active','=',False)]" />
+            </search>
+        </field>
+    </record>
+
+</odoo>

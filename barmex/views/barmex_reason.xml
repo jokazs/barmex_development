@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="barmex_view_reason_search">
+        <field name="name">barmex_reason_search</field>
+        <field name="model">barmex.reason</field>
+        <field name="arch" type="xml">
+            <search string="Search reason">
+                <field name="name" />
+                <field name="description" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="barmex_view_reason_tree">
+        <field name="name">barmex_reason_tree</field>
+        <field name="model">barmex.reason</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Reason" editable="top">
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

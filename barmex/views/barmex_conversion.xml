@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_conversion_search">
+        <field name="name">barmex_conversion_search</field>
+        <field name="model">barmex.conversion</field>
+        <field name="arch" type="xml">
+            <search string="Search conversion">
+                <field name="orig_uom" />
+                <field name="dest_uom" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_conversion_tree">
+        <field name="name">barmex_conversion_tree</field>
+        <field name="model">barmex.conversion</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Conversion" editable="top">
+                <field name="qty" force_save="1"/>
+                <field name="orig_uom" options='{"no_create": True}' force_save="1" />
+                <field name="dest_uom" options='{"no_create": True}' force_save="1" />
+                <field name="result" force_save="1" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--View search-->
+        <record id="barmex_corporate_search" model="ir.ui.view">
+            <field name="name">barmex.corporate.search</field>
+            <field name="model">barmex.corporate</field>
+            <field name="arch" type="xml">
+                <search string="corporates search">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        
+        <!--View tree-->
+        <record id="barmex_corporate_tree" model="ir.ui.view">
+            <field name="name">barmex.corporate.tree</field>
+            <field name="model">barmex.corporate</field>
+            <field name="arch" type="xml">
+                <tree string="corporates tree">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+        
+        <!--View form-->
+        <record id="barmex_corporate_form" model="ir.ui.view">
+            <field name="name">barmex.corporate.form</field>
+            <field name="model">barmex.corporate</field>
+            <field name="arch" type="xml">
+                <form string="corporates form">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

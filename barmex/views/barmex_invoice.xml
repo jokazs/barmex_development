@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="barmex_view_invoice_search">
+        <field name="name">barmex_invoice_search</field>
+        <field name="model">barmex.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Search invoice">
+                <field name="partner_id" />
+                <field name="uuid" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="barmex_view_invoice_tree">
+        <field name="name">barmex_invoice_tree</field>
+        <field name="model">barmex.invoice</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Invoice" editable="top">
+                <field name="invoice_id" domain="([('type','=','in_invoice'),('partner_id','=',partner_id),('state','=','posted'),('xml_ids','=',False)])" />
+                <field name="file" filename="name" widget="binary"/>
+                <field name="name" force_save="1" />
+                <field name="date" force_save="1" />
+                <field name="vendor" force_save="1" />
+                <field name="partner_id" force_save="1" />
+                <field name="amount" force_save="1" />
+                <field name="currency_id" force_save="1" />
+                <field name="uuid" force_save="1" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

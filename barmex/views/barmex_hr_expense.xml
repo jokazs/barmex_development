@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="barmex_hr_expense_form" model="ir.ui.view">
+        <field name="name">barmex_hr_expense_form</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[3]/label[1]" position="before">
+                <field name="partner_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

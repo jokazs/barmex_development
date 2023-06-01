@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search -->
+    <record model="ir.ui.view" id="view_barmex_classification_search">
+        <field name="name">barmex_classification_search</field>
+        <field name="model">barmex.classification</field>
+        <field name="arch" type="xml">
+            <search string="Classification search">
+                <field name="classification" />
+                <field name="min_factor" />
+                <field name="max_factor" />
+                <field name="days" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record model="ir.ui.view" id="view_barmex_classification_tree">
+        <field name="name">barmex_classification_tree</field>
+        <field name="model">barmex.classification</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Classification" editable="bottom">
+                <field name="classification" />
+                <field name="min_factor" />
+                <field name="max_factor" />
+                <field name="days" />
+                <field name="default" />
+                <field name="approbation" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

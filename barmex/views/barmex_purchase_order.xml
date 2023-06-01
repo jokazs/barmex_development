@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_barmex_form" model="ir.ui.view">
+        <field name="name">purchase_order_barmex_form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='button_confirm']" position="replace">
+                <button name="action_validate_order" string="Confirm" class="oe_highlight" type="object" states="sent" groups="base.group_user"/>
+                <button name="approve_order" string="Approve" class="oe_highlight" type="object" states="pending,offer" groups="purchase.group_purchase_manager"/>
+            </xpath>
+            <xpath expr="//header/button[@id='draft_confirm']" position="replace">
+                    <button name="action_validate_order" type="object" states="draft" string="Confirm" id="order_confirm"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/div[2]" position="replace">
+                <div class="oe_title">
+                    <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quotation </span>
+                        <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent','offer','pending'))]}">Purchase Order </span>
+                    <span class="o_form_label" attrs="{'invisible': [('state','!=','offer')]}">Offer Validation </span>
+                    <span class="o_form_label" attrs="{'invisible': [('state','!=','pending')]}">Pending Approbation </span>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                </div>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='company_id']" position="before">
+                <field name="approved" invisible="1"/>
+                <field name="offer" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='company_id']" position="after">
+                <field name="purch_type"/>
+                <field name="transfer" invisible="1"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='company_id']" position="replace"/> -->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{"readonly": [["state","in",("to approve","done","cancel","pending","offer")]]}</attribute>
+                <attribute name="context">{'default_state': 'draft', 'default_transfer': transfer}</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]" position="attributes">
+                <attribute name="decoration-success">offer==False</attribute>
+                <attribute name="decoration-warning">offer==True</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="before">
+                <group colspan="2">
+                    <button string="Mover productos" name="%(action_barmex_move_products)d" type="action" class="oe_highlight"/>
+                </group>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="before">
+                <field name="discount_amount_lco" />
+                <field name="discount_percentage_lco" />
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='product_id']" position="before">
+                <field name="offer" readonly="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='price_subtotal']" position="after">
+                <field name="location_dest" domain="[('usage','=','internal')]"/>
+                <field name="transfer" invisible="1" />
+                <field name="attachment" filename="file_name" widget="binary" />
+                <field name="file_name" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='incoterm_id']" position="after">
+                <field name="shipping_id" />
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="replace">
+                <field name="origin" />
+            </xpath>
+            <xpath expr="//field[@name='date_approve']" position="after">
+                <field name="date_planned" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_barmex_tree" model="ir.ui.view">
+        <field name="name">purchase_order_barmex_tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="offer" readonly="1" />
+                <field name="approved" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
